@@ -1,0 +1,17 @@
+<ion-list class="ion-padding-top" class="wallet-menu-popover">
+  <ion-item (click)="walletWithdrawal()"  lines="none">
+    <ion-label>
+     {{ 'TRANSACTION_WITHDRAWAL' | translate }}
+    </ion-label>
+  </ion-item>
+  <ion-item (click)="walletTransaction()" lines="none">
+    <ion-label>
+     {{ 'TRANSACTIONS_HISTORY' | translate }}
+    </ion-label>
+  </ion-item>
+  <ion-item (click)="openTontines()"  lines="none">
+    <ion-label>
+     {{ 'TONTINE_LIST_TEXT1' | translate }}
+    </ion-label>
+  </ion-item>
+</ion-list>

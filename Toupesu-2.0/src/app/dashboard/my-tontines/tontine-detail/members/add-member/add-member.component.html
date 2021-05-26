@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center">{{ 'TONTINE_INVITED_TEXT23' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding add-member">
+  <ion-text>
+      {{ 'M_INVITE_YOUR_FRIEND' | translate }} <b>{{ tontineData.tontine.name }}.</b><br/>
+   {{'TONTINE_NEW_MSG1' | translate }} <b>{{ tontineData.tontine.code_invitation }}</b>,
+   <span [innerHTML]="('TONTINE_CREATION_SUBTEXT2_CLONE' | translate : {hour: timeRemainHour })"></span>
+  </ion-text>
+  <app-tontine-invited></app-tontine-invited>
+</ion-content>
+
+<ion-footer class="ion-padding ion-text-center">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+          <ion-button expand="full" 
+                fill="outline"
+                color="warning" 
+                class="ion-text-uppercase"
+                shape="round" (click)="closeAddMember()">
+            {{ 'CANCEL_TEXT' | translate }}
+          </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

@@ -1,0 +1,10 @@
+ /* Following classes display/hide the 'menu'
+ // based on the state change detection in the
+ // component class */
+ .active {
+    display: block
+ }
+
+ .inactive {
+    display: none;
+ }

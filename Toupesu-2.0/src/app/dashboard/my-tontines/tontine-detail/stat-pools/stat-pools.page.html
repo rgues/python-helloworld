@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button color="primary" [defaultHref]="['/','dashboard','my-tontines',tontineId,'stat']" slot="text-only"></ion-back-button>
+    </ion-buttons>
+    <ion-avatar slot="start">
+        <ion-img [src]="'assets/join-icon.svg'" class="thumb-img"></ion-img>
+    </ion-avatar>
+    <ion-title class="ion-padding">
+      {{ 'FINANCIAL_STATISQUE' | translate }}
+    </ion-title>
+  </ion-toolbar>
+  <ion-toolbar class="ion-text-center subtitle">
+    <ion-title>{{ 'CYCLE_TEXT' | translate }} #{{currentCycle && currentCycle.numerocycle ? currentCycle.numerocycle : 0}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-refresher slot="fixed" (ionRefresh)="refreSher($event)">
+    <ion-refresher-content
+      pullingIcon="reload-outline"
+      refreshingSpinner="circles"
+      refreshingText="{{ 'M_REFRESHING_TEXT' | translate }}">
+    </ion-refresher-content>
+  </ion-refresher>
+  <p class="ion-text-center"  *ngIf="loading">
+    <ion-spinner  name="circles"></ion-spinner>
+  </p>
+  <ion-grid *ngIf="!loading">
+    <ion-row>
+      <ion-col>
+        {{ 'TOTAL_NUMBER_POOLS' | translate }}: {{defaultList.length}}
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-list>
+          <ion-item  *ngFor="let pool of seances" [routerLink]="['/', 'dashboard', 'my-tontines', tontineId, 'stat', 'pools',  pool.seance.id]" detail>
+            <ion-label>
+              <ion-text color="primary"><h2>{{pool.seance.date_debut.split(' ')[0]}}</h2></ion-text>             
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="infinteScrollData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="{{ 'M_LOADING_MORE_DATA' | translate }}">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

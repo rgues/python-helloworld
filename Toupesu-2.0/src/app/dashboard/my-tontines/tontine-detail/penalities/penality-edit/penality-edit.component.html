@@ -1,0 +1,97 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center"> <span [innerHTML]="'TONTINE_EDIT_TEXT17' | translate"></span></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="penalityEditForm">
+    <ion-grid>
+      <ion-row class="ion-align-items-end">
+        <ion-col size="8">
+          <ion-item>
+            <ion-label position="floating">{{ 'TONTINE_DETAIL_TEXT20' | translate }}</ion-label>
+            <ion-input type="number" formControlName="penaliteabsencesurlacontributionnayantpasbouffe" required="true"></ion-input>
+          </ion-item> 
+        </ion-col>
+        <ion-col size="4">
+          <ion-label></ion-label>
+          <ion-select formControlName="typepenaliteabsencesurlacontributionnayantpasbouffe">
+            <ion-select-option *ngFor="let unit of penalityUnit" [value]="unit.value">{{unit.label}}</ion-select-option>       
+          </ion-select>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-align-items-end">
+        <ion-col size="8">
+          <ion-item>
+            <ion-label position="floating">{{ 'TONTINE_DETAIL_TEXT21' | translate }}</ion-label>
+            <ion-input type="number" formControlName="penaliteretardsurlacontributionnayantpasbouffe" required="true"></ion-input>
+          </ion-item> 
+        </ion-col>
+        <ion-col size="4">
+          <ion-label></ion-label>
+          <ion-select formControlName="typepenaliteretardsurlacontributionnayantpasbouffe">
+            <ion-select-option  *ngFor="let unit of penalityUnit" [value]="unit.value">{{unit.label}}</ion-select-option>         
+          </ion-select>
+        </ion-col>
+      </ion-row>
+<!--       <ion-row class="ion-align-items-end">
+        <ion-col size="8">
+          <ion-item>
+            <ion-label position="floating">{{ 'LOAN_INTEREST_TEXT' | translate }}</ion-label>
+            <ion-input type="number" formControlName="penalitesurleremboursement" required="true"></ion-input>
+          </ion-item> 
+        </ion-col>
+        <ion-col size="4">
+          <ion-label></ion-label>
+          <ion-select formControlName="typepenalitesurleremboursement">
+            <ion-select-option  *ngFor="let unit of penalityUnit" [value]="unit.value">{{unit.label}}</ion-select-option>     
+          </ion-select>
+        </ion-col>
+      </ion-row> -->
+      <ion-row class="ion-align-items-end">
+        <ion-col size="8">
+          <ion-item>
+            <ion-label position="floating">{{'TONTINE_DETAIL_TEXT22' | translate }}</ion-label>
+            <ion-input (ionChange)="checkTime()" type="number" formControlName="dureesurleretard" required="true"></ion-input>
+          </ion-item> 
+        </ion-col>
+        <ion-col size="4">
+          <ion-label></ion-label>
+          <ion-select (ionChange)="checkTime()"  formControlName="typedureesurleretard">
+            <ion-select-option  *ngFor="let unit of timeDelayUnit" [value]="unit.value">{{unit.label}}</ion-select-option>       
+          </ion-select>
+        </ion-col>
+      </ion-row>        
+    </ion-grid>
+  </form>
+</ion-content>
+
+<ion-footer class="ion-padding ion-text-center">
+  <ion-grid>
+    <ion-row>   
+      <ion-col size="6">
+          <ion-button expand="full" [disabled]="penalityEditForm.invalid || loading || !isTimeCorrect"
+                color="warning"  (click)="updatePenalities()"
+                class="ion-text-uppercase"
+                shape="round">
+            {{ 'SAVE_TEXT' | translate }}
+          </ion-button>
+      </ion-col>   
+      <ion-col size="6">
+          <ion-button expand="full" 
+                fill="outline"
+                color="warning" 
+                class="ion-text-uppercase"
+                shape="round" (click)="closePenalityEdit('cancel')">
+            {{ 'CANCEL_TEXT' | translate }}
+          </ion-button>
+      </ion-col>
+    </ion-row>
+    <p class="ion-text-center">
+      <ion-spinner *ngIf="loading"  name="circles"></ion-spinner>
+    </p>
+  </ion-grid>
+</ion-footer>
+  
+  

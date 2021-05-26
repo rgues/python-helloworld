@@ -1,0 +1,88 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center">{{ 'VALIDATE_PAIEMENT' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="initiate-pay">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <p>{{'VALIDATION_TEXT' | translate}}</p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-text color="primary">
+          <h2>
+          <small>{{'BENEFICIARY_TEXT' | translate }}: 
+          </small><b>{{currentPaymentData.bouffe.firstname ? currentPaymentData.bouffe.firstname : ''}} {{currentPaymentData.bouffe.lastname ? currentPaymentData.bouffe.lastname : ''}}</b>
+        </h2>
+        </ion-text>
+        </ion-col>
+      </ion-row>
+      <p class="ion-text-center"  *ngIf="loading">
+        <ion-spinner  name="circles"></ion-spinner>
+      </p>
+      <ion-row  *ngFor="let chechoutItem of listCaisse; let i = index">
+        <ion-col >
+          <ion-row class="ion-align-items-center checkout-list">
+            <ion-col size="4">
+              <h6><ion-text color="primary">{{(chechoutItem.type_caisse_tontine_name | translate)}} ({{chechoutItem.currency_name}})</ion-text></h6>
+            </ion-col>
+            <ion-col size="8">
+              <ion-row>
+                <ion-col >
+                  <ion-text color="primary">{{ 'ONLINE_TEXT' | translate }}: {{chechoutItem.current_montant_online - listCaisse[i].montant_online}}</ion-text>
+                  <ion-item>                    
+                    <ion-input type="number" [disabled]="true" [(ngModel)]="listCaisse[i].montant_online" [ngModelOptions]="{standalone: true}" ></ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <ion-text color="primary">{{ 'OFFLINE_TEXT' | translate }}: {{ chechoutItem.current_montant_offline - listCaisse[i].montant_offline }}</ion-text>
+                  <ion-item>                    
+                    <ion-input type="number" [disabled]="true" [(ngModel)]="listCaisse[i].montant_offline" [ngModelOptions]="{standalone: true}" ></ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row> 
+  
+      <ion-row *ngIf="currentPaymentData.bouffe.somme > 0 && listCaisse && listCaisse.length > 0">
+        <ion-col>
+          <ion-text class="ion-float-right" color="danger"><strong>{{ 'TOTAL_TEXT' | translate }} <sup>*</sup>: {{(currentPaymentData.bouffe.somme | commadumper)}} {{currentPaymentData.bouffe.device_name}}</strong></ion-text>
+        </ion-col>
+      </ion-row>  
+      <ion-row *ngIf="listCaisse && listCaisse.length > 0">
+        <ion-col>
+            <ion-button expand="full" 
+                  color="warning" 
+                  class="ion-text-uppercase"
+                  shape="round" (click)="validatePayment()" >
+                  {{ 'VALIDATE_TEXT' | translate }}
+            </ion-button>
+          </ion-col>
+      </ion-row>
+    </ion-grid>
+  
+</ion-content>
+
+<ion-footer class="ion-padding ion-text-center">
+  <ion-grid>  
+    <ion-row>
+      <ion-col>
+          <ion-button expand="full" 
+                fill="outline"
+                color="warning" 
+                class="ion-text-uppercase"
+                shape="round" (click)="closeContribute('cancel')">
+                {{ 'CANCEL_TEXT' | translate }}
+          </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

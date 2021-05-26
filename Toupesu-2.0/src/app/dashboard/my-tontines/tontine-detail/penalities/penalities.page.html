@@ -1,0 +1,69 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button color="primary" [defaultHref]="'/dashboard/my-tontines/' + myTontine.tontine_id" slot="text-only"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="no-padding ion-text-center">
+      {{ 'PENALITIES_TEXT' | translate }}
+    </ion-title>
+    <!-- <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon name="more" color="primary"></ion-icon>
+      </ion-button>
+    </ion-buttons> -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="detail-penalities">
+  <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+            <ion-img class="inner-image" [src]="'assets/penalities.svg'"></ion-img>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+          <ion-col>
+            <ion-list>
+              <ion-item>
+                <p><b>{{ 'TONTINE_DETAIL_TEXT20' | translate }}: </b>{{myTontine.penaliteabsencesurlacontributionnayantpasbouffe || 0}} 
+                  {{ myTontine.typepenaliteabsencesurlacontributionnayantpasbouffe === 'pourcentage' ? '%' : myTontine.monnaie}}</p>
+              </ion-item>
+              <ion-item>
+                <p><b>{{ 'TONTINE_DETAIL_TEXT21' | translate }}: </b> {{myTontine.penaliteretardsurlacontributionnayantpasbouffe || 0 }} 
+                  {{myTontine.typepenaliteretardsurlacontributionnayantpasbouffe === 'pourcentage' ? '%' : myTontine.monnaie}}</p>
+              </ion-item>
+              <ion-item>
+                <p><b>{{ 'TONTINE_DETAIL_TEXT22' | translate }}: </b>{{myTontine.dureesurleretard || 0}} {{(myTontine.typedureesurleretard | translate)}}</p>
+              </ion-item>
+            <!--   <ion-item>
+                <p><b>{{'M_LOAN_INTEREST' | translate }}: </b>{{myTontine.penalitesurleremboursement || 0 }} 
+                  {{myTontine.typepenalitesurleremboursement === 'pourcentage' ? '%' : myTontine.monnaie}}</p>
+              </ion-item> -->
+            </ion-list>
+          </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
+
+<ion-footer class="ion-padding ion-text-center">
+  <ion-grid>
+    <ion-row>      
+      <ion-col *ngIf="myTontine.administrator === 1">
+        <ion-button expand="full"
+              color="warning" 
+              class="ion-text-uppercase"
+              shape="round" (click)="openPenalityEdit()">
+          {{ 'EDIT_TEXT' | translate }}
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button expand="full" 
+              color="warning" 
+              class="ion-text-uppercase"
+              shape="round" (click)="openPenalitiesList()">
+          {{ 'TONTINE_PENALTY_TEXT1' | translate }}
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

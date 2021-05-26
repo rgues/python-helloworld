@@ -1,0 +1,22 @@
+<ion-list class="member-menu-popover">
+  <ion-item  *ngIf="canAddShare()" (click)="updateShare()" lines="none">
+    <ion-label>
+      {{'M_ADD_SHARE' | translate }}
+    </ion-label>
+  </ion-item>
+  <ion-item *ngIf="canUpdateRole()" (click)="updateRole()" lines="none">
+    <ion-label>
+      {{ selectedMber.member.administrator === 1 ? ('M_UNSET_TEXT' | translate) : ('M_SET_TEXT' | translate) }} {{ 'M_AS_ADMIN' | translate }}
+  </ion-label>
+  </ion-item>
+  <ion-item  *ngIf="canRemoveShare()" (click)="reduceShare()" lines="none">
+    <ion-label>
+      {{'TEXT_REDUCE_SHARE' | translate}}
+    </ion-label>
+  </ion-item>
+  <ion-item *ngIf="canEnable()" (click)="enableOrDisableMember()" lines="none">
+    <ion-label>
+      {{ selectedMber.member.active === 1 ? ('M_DISABLE_TEXT' | translate) : ('M_ENABLE_TEXT' | translate) }} 
+  </ion-label>
+  </ion-item>
+</ion-list>

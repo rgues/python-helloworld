@@ -1,0 +1,74 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="no-padding ion-text-center">
+      {{ 'BENEFICIAL_STATUS' | translate }}
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="primary"  (click)="closeModal()" >
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <p class="ion-text-center"  *ngIf="loading">
+    <ion-spinner  name="circles"></ion-spinner>
+  </p>
+  <ion-grid>
+    <ion-row *ngIf="members.length > 0 && !loading">
+      <ion-col>
+         <p class="small"> {{ 'JACKOPT_MESSAGE' | translate }} <br/>
+            <b><ion-text color="danger">{{'ROUND_START_ALERT' | translate}}</ion-text></b>
+         </p>
+         <ion-item>
+          <ion-label>{{ 'DATE_SEANCE_TEXT' | translate }}</ion-label>
+          <ion-datetime  [(ngModel)]="dateSeance" displayFormat="DDDD D MMM, YYYY" [max]="maxDate" pickerFormat="DD MMMM YYYY">
+          </ion-datetime>
+        </ion-item>
+        <ion-list *ngIf="members && members.length > 0">
+          <ion-item *ngFor="let member of members; let i=index">
+            <ion-label>
+              <p>
+                <ion-text color="dark">
+                  <span class="ion-float-left"> {{member.name ? member.name : ''}}</span>
+                  <span class="ion-float-right"> <small>{{ 'SHARE_ID_TEXT' | translate }} : </small> {{member.numero_part}}</span>
+                </ion-text>
+              </p>
+            </ion-label>
+            <ion-checkbox slot="start" [(ngModel)]="members[i].hasJackpot" [checked]="members[i].hasJackpot" [value]="members[i].hasJackpot"></ion-checkbox>
+          </ion-item>
+      </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <div  *ngIf="members && members.length === 0 && !loading">
+    <p  class="ion-text-center">{{ 'TONTINE_USERS_TEXT12' | translate }}</p>
+  </div>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="infinteScrollData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="{{ 'M_LOADING_MORE_DATA' | translate }}">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>
+
+<ion-footer class="ion-padding ion-text-center">
+  <ion-grid>
+    <ion-row>   
+      <ion-col>
+          <ion-button expand="full" [disabled]="members && members.length < 0 || !dateSeance || loadingSave"  (click)="setJackpotBeneficiary(dateSeance)"
+                color="warning" 
+                class="ion-text-uppercase"
+                shape="round">
+            {{ 'SAVE_TEXT' | translate }}
+          </ion-button>
+      </ion-col>         
+    </ion-row>
+  </ion-grid>
+  <p class="ion-text-center"  *ngIf="loadingSave">
+    <ion-spinner  name="circles"></ion-spinner>
+  </p>
+</ion-footer>

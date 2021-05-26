@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title  [color]="(debtOption === 'validate')? 'success':'danger'" class="ion-text-center ion-text-capitalize">{{ debtOption === 'validate' ? ('VALIDATE_TEXT' | translate | lowercase) : ('REJETER_TEXT' | translate  | lowercase) }}
+      {{ 'PAYMENT_TEXT' | translate }}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="validation">
+  <ion-grid class="ion-padding-horizontal">
+    <ion-row>
+      <ion-col>
+        <p>{{ 'VALIDATION_TEXT_1' | translate }} {{ debtOption === 'validate' ? ('VALIDATE_TEXT' | translate  | lowercase) : ('REJETER_TEXT' | translate | lowercase) }} {{ 'VALIDATION_TEXT_2' | translate }} <b>{{ (debtAmount | commadumper) }} {{currency}}</b>
+           {{ 'DEBT_REF' | translate }}<b>{{reference}}</b> {{ 'OF_TEXT' | translate }} {{memberName}}.</p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label position="floating" required>{{ 'ENTER_REASON_TEXT' | translate }}...</ion-label>
+          <ion-textarea [(ngModel)]="reason"></ion-textarea>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>  
+</ion-content>
+
+<ion-footer class="ion-padding ion-text-center">
+  <ion-grid>
+    <ion-row> 
+      <ion-col>
+          <ion-button expand="full" 
+                fill="outline"
+                [color]="debtOption === 'validate'? 'success':'danger'" 
+                class="ion-text-uppercase"
+                shape="round" (click)="closeValidation('cancel')">
+            {{ 'CANCEL_TEXT' | translate }}
+          </ion-button>
+      </ion-col>
+      <ion-col>
+          <ion-button expand="full" [disabled]="(debtOption !== 'validate' && !reason) || loading" (click)="validationAdmin(debtOption)"
+                [color]="debtOption === 'validate' ? 'success':'danger'"  
+                class="ion-text-uppercase"
+                shape="round">
+            {{ debtOption === 'validate' ?  ('VALIDATE_TEXT' | translate)  : ('REJETER_TEXT' | translate) }}
+          </ion-button>
+      </ion-col>      
+    </ion-row>
+    <p *ngIf="loading" class="ion-text-center ion-padding">
+      <ion-spinner  name="circles"></ion-spinner>
+    </p>
+  </ion-grid>
+</ion-footer>

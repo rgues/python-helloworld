@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar class="with-logo2">
+    <ion-buttons slot="start">
+      <ion-back-button  color="primary" defaultHref="/dashboard"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center title-md-right">
+      <ion-img class="logo" [src]="'assets/logo-toupesu.svg'"></ion-img>
+    </ion-title>
+  </ion-toolbar>
+  <ion-toolbar class="ion-text-center subtitle">
+    <ion-title>{{ 'INVITATION_TEXT' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="refreSher($event)">
+    <ion-refresher-content pullingIcon="reload-outline" refreshingSpinner="circles"
+      refreshingText="{{ 'M_REFRESHING_TEXT' | translate }}">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <ion-grid id="my-invitations">
+    <ion-row>
+      <ion-col>
+        <ion-searchbar placeholder="{{ 'NAME_TEXT' | translate }}" type="text" debounce="500"
+          (ionChange)="searchForInvitation($event)"></ion-searchbar>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="loading">
+      <ion-col>
+        <p class="ion-text-center">
+          <ion-spinner name="circles"></ion-spinner>
+        </p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-list>
+          <my-invitation (click)="getItem(invit)" *ngFor="let invit of invitations" name="{{ invit.tontine_name }}"
+            description="{{ invit.tontine_description }}" code="{{ invit.CodeInvitation }}"
+            frequency="{{ invit.tontine_frequency ? (invit.tontine_frequency | translate) : '' }}" contribution="{{ invit.tontine_contribution }}"
+            dateStart="{{ invit.tontine_date }}" sender="{{ invit.tontine_admin_firstname }} {{ invit.tontine_admin_lastname }}"
+           >
+          </my-invitation>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <div *ngIf="invitations && invitations.length === 0 &&  !loading">
+      <p class="ion-text-center">
+        {{ 'TONTINE_INVITE_TEXT8' | translate }}
+      </p>
+  </div>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="infinteScrollData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="{{ 'M_LOADING_MORE_DATA' | translate }}">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

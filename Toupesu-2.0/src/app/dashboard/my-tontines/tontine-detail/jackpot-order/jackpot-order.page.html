@@ -1,0 +1,108 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button color="primary" [defaultHref]="'/dashboard/my-tontines/' + currentTontine.tontine.tontine_id" slot="text-only"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="no-padding ion-text-center">
+      {{ 'VIEW_JACKPOT_LIST' | translate }}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="refreSher($event)">
+    <ion-refresher-content
+      pullingIcon="reload-outline"
+      refreshingSpinner="circles"
+      refreshingText="{{ 'M_REFRESHING_TEXT' | translate }}">
+    </ion-refresher-content>
+  </ion-refresher>
+  <p class="ion-text-center"  *ngIf="loading">
+    <ion-spinner  name="circles"></ion-spinner>
+  </p>
+  <ion-grid>
+    <ion-row *ngIf="members.length > 0 && !loading">
+      <ion-col size="11">
+        <p class="small" *ngIf="canShowMessage()">{{ 'JACKPT_POSITION' | translate }}</p>
+        <ion-list>
+          <ion-reorder-group (ionItemReorder)="reorderItems($event)" [disabled]="disableReorder()">
+            <ion-reorder *ngFor="let member of members; index as id">
+              <ion-item *ngIf="id < members.length">
+                <ion-badge slot="start">{{ 1 + id }}</ion-badge>          
+                <ion-label>
+                  <p>
+                    <ion-text color="dark">
+                      <span class="ion-float-left"> {{member.name ? member.name : ''}}</span> <br/>
+                      <span class="ion-float-left"> <small>{{ 'SHARE_ID_TEXT' | translate }} : </small> {{member.numero_part}}</span>
+                    </ion-text>
+                  </p>
+                </ion-label>
+                <ion-buttons slot="end" *ngIf="isAdmin()">
+                  <ion-button>
+                    <ion-icon slot="icon-only" name="move" color="medium"></ion-icon>
+                  </ion-button>
+                </ion-buttons>
+              </ion-item>              
+            </ion-reorder>
+          </ion-reorder-group>          
+        </ion-list>
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+    <ion-row   *ngIf="jackpotList.length > 0 && !loading">
+      <ion-col>
+        <p class="small">{{ 'JACKOPT_MEMBERS' | translate }}</p>
+        <ion-list>
+          <ion-item *ngFor="let beneficiary of jackpotList; index as id1">
+            <ion-badge slot="start">{{  + id1 + 1 }}</ion-badge>          
+            <ion-label>
+              <p>
+                <ion-text color="dark">
+                  <span class="ion-float-left"> {{beneficiary.firstname ? beneficiary.firstname : ''}} {{beneficiary.lastname ? beneficiary.lastname : ''}}</span> <br/>
+                  <span class="ion-float-left"> <small>{{ 'SHARE_ID_TEXT' | translate }} : </small> {{beneficiary.numero_part}}</span>
+                </ion-text>
+              </p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <div  *ngIf="members && members.length === 0 && jackpotList && jackpotList.length ===0 && !loading">
+    <p  class="ion-text-center">{{ 'TONTINE_USERS_TEXT12' | translate }}</p>
+  </div>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="infinteScrollData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="{{ 'M_LOADING_MORE_DATA' | translate }}">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>
+
+<ion-footer class="ion-padding ion-text-center" *ngIf="members && members.length > 0 &&  isAdmin()">
+  <ion-grid>
+    <ion-row>  
+      <ion-col  *ngIf="members && members.length > 1">
+          <ion-button expand="full"  [disabled]="loadingSave" (click)="saveJackpotOrder()"
+                color="warning" 
+                class="ion-text-uppercase"
+                shape="round">
+            {{ 'SAVE_TEXT' | translate }}
+          </ion-button>
+      </ion-col>   
+      <ion-col *ngIf="canEditInfo()">
+        <ion-button expand="full"  [disabled]="loadingSave"  (click)="setJackpot()"
+              color="warning" 
+              class="ion-text-uppercase"
+              shape="round">
+          {{ 'JACKPOT_TEXT' | translate }}
+        </ion-button>
+    </ion-col>       
+    </ion-row>
+  </ion-grid>
+  <p class="ion-text-center"  *ngIf="loadingSave">
+    <ion-spinner  name="circles"></ion-spinner>
+  </p>
+</ion-footer>

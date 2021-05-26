@@ -1,0 +1,71 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center">{{ 'LIST_OF_PROOFS' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="session-proof">
+  <ion-refresher slot="fixed" (ionRefresh)="refreSher($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      refreshingSpinner="circles"
+      refreshingText="{{ 'M_REFRESHING_TEXT' | translate }}">
+    </ion-refresher-content>
+  </ion-refresher>
+  <p class="ion-text-center"  *ngIf="loading">
+    <ion-spinner  name="circles"></ion-spinner>
+  </p>
+  <ion-grid *ngIf="myProofs && myProofs.length >  0">
+    <ion-row>
+      <ion-col>
+        <ion-list>     
+          <ion-item *ngFor="let proof of myProofs">          
+            <ion-label>            
+              <p>
+                <ion-text class="ion-float-left"><b>{{ 'DATE_TEXT' | translate }}: </b>{{ proof && proof.created_at ? proof.created_at.split(' ')[0] : '' }}</ion-text>
+                <ion-text *ngIf="proof.typepaiement_id" class="ion-float-right"><b>{{'BY_TEXT' | translate}}: </b>{{ proof.name ? proof.name : ''  }}</ion-text>
+                <ion-text *ngIf="proof.currency_id" class="ion-float-right"><b>{{'BY_TEXT' | translate}}: </b>{{'TRADITIONNAL_BANKING' | translate}}</ion-text>
+              </p>
+              <p *ngIf="proof.description">
+                <ion-text class="ion-float-left"><b>{{'DESCRIPTION_TEXT' | translate}}: </b>{{ proof.description ? proof.description : ''  }}</ion-text>
+              </p>
+              <ion-text color="warning"><h3>{{'AMOUNT_TEXT' | translate}}: {{ proof.montant ? (proof.montant | commadumper) : 0  }}{{tontineData && tontineData.tontine && tontineData.tontine.monnaie ? tontineData.tontine.monnaie :'' }}</h3></ion-text>
+              <p class="ion-text-right" *ngIf="proof && (proof.receipt || proof.image)">
+                <a (click)="showProof(proof)" class="ion-text-capitalize">
+                  {{'DEBT_VIEW_PROOF' | translate}}
+                </a>
+              </p>            
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-col>      
+    </ion-row>
+  </ion-grid>
+
+  <div  *ngIf="myProofs && myProofs.length === 0  && !loading">
+    <p class="ion-padding ion-text-center" >{{ 'PROOFS_EMPTY_MSG' | translate}}</p>
+  </div>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="infinteScrollData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="{{ 'M_LOADING_MORE_DATA' | translate }}">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>
+
+<ion-footer class="ion-padding ion-text-center">
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+          <ion-button expand="full" 
+                fill="outline"
+                color="warning" 
+                class="ion-text-uppercase"
+                shape="round" (click)="closeContribute()">
+            {{ 'CANCEL_TEXT' | translate }}
+          </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

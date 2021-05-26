@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button color="primary" [defaultHref]="'/dashboard/my-tontines/' + myTontine.tontine_id" slot="text-only"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="no-padding ion-text-center">
+      {{ 'SHARE_TEXT' | translate }}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="detail-share">
+  <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+            <ion-img class="inner-image" [src]="'assets/share.svg'"></ion-img>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+          <ion-col>
+            <ion-list>
+              <ion-item>
+                <p><b>{{ 'TONTINE_DETAIL_TEXT17' | translate }} : </b>{{ myTontine.nombre_part_max_tontine || 0 }}</p>
+              </ion-item>
+              <ion-item>
+                <p><b>{{ 'TONTINE_DETAIL_TEXT18' | translate }} : </b> {{ myTontine.nombre_part_max_membre || 0 }} </p>
+              </ion-item>
+              <ion-item>
+                <p><b>{{ 'TONTINE_DETAIL_TEXT19' | translate }} : </b> {{ myTontine.numberlot || 1 }} </p>
+              </ion-item>
+            </ion-list>
+          </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
+
+<ion-footer class="ion-padding ion-text-center"  *ngIf="canEditShare()">
+  <ion-button expand="full"
+        color="warning" 
+        class="ion-text-uppercase"
+        shape="round"
+        (click)="openShareEdit()">
+        {{ 'EDIT_TEXT' | translate }}
+  </ion-button>
+</ion-footer>
+

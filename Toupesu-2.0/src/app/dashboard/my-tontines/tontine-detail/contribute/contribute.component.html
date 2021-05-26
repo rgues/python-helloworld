@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center">{{ 'CONTRIBUTE_MSG' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="tontine-contribute">
+  <h4 class="ion-padding-horizontal"><small>{{ 'PAIDMODE_MSG1' | translate }} : <b>{{ tontineName }}</b></small></h4>
+  <app-paidmode [amountPay]="contribAmount"></app-paidmode>
+</ion-content>
+
+<ion-footer class="ion-padding ion-text-center">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-button expand="full" 
+                fill="outline"
+                color="warning" 
+                class="ion-text-uppercase"
+                shape="round" (click)="closeContribute()">
+            {{ 'CANCEL_TEXT' | translate }}
+          </ion-button>
+      </ion-col>
+      </ion-row>
+    </ion-grid>
+</ion-footer>

@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button color="primary" [defaultHref]="['/','dashboard','my-tontines',currentTontine.tontine.tontine_id,'loans','my-loans',cycleId,seanceId]" slot="text-only"></ion-back-button>
+    </ion-buttons>
+    <ion-avatar slot="start">
+        <ion-img [src]="'assets/join-icon.svg'" class="thumb-img"></ion-img>
+    </ion-avatar>
+    <ion-title class="no-padding">
+      {{ 'MY_LOANS_TEXT' | translate }}
+    </ion-title>
+  </ion-toolbar>
+  <ion-toolbar class="ion-text-center subtitle">
+    <ion-title>{{ 'INTEREST_DUE_TEXT' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="loans-interests">
+  <p class="ion-text-center"  *ngIf="loading">
+    <ion-spinner  name="circles"></ion-spinner>
+  </p>
+  <ion-grid  *ngIf="!loading">
+    <ion-row>
+      <ion-col>
+        <p>{{'UNPAID_LOAN_INTERESTS_TEXT' | translate}} : {{interestsDue.length}}</p>
+        <ion-list *ngIf="interestsDue && interestsDue.length > 0">
+          <ion-item *ngFor="let interest of interestsDue">
+            <ion-checkbox (ionChange)="checkEvent($event, interest)" color="primary" slot="start"></ion-checkbox>
+            <ion-label>
+              <h2><ion-text color="warning">{{ interest.updated_at ? (interest.updated_at | toDateObj | date : 'mediumDate') : '' }}</ion-text> -  {{ interest.amount_interest ?  (interest.amount_interest | commadumper) : 0}} {{currentTontine && currentTontine.tontine ? currentTontine.tontine.monnaie : '' }}</h2>
+            </ion-label>            
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-footer class="ion-padding ion-text-center" *ngIf="totalPay != 0 && !loading">
+  <ion-button expand="full" 
+        color="warning" (click)="payLoan()"
+        class="ion-text-uppercase"
+        shape="round">
+    {{ 'PAY_TEXT' | translate }} {{ (totalPay | commadumper)  }} {{currentTontine && currentTontine.tontine ? currentTontine.tontine.monnaie : '' }} <span class="ion-text-lowercase">{{ '('+ (selectedDue ? selectedDue.length : 0) + ('INTEREST_TEXT' | translate) + '(s))' }}</span>
+  </ion-button>
+</ion-footer>

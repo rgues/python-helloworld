@@ -1,0 +1,265 @@
+<ion-header>
+  <ion-toolbar class="with-logo2">
+    <ion-buttons slot="start">
+      <ion-back-button color="primary" defaultHref="/dashboard/my-tontines"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">
+        <ion-img class="logo" [src]="'assets/logo-toupesu.svg'"></ion-img>
+    </ion-title>
+  </ion-toolbar>
+  <ion-toolbar class="ion-text-center subtitle">
+    <ion-title>{{'M_CREATE_TONTINE' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="tontine-new">
+  <form [formGroup]="createTontineForm">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">{{ 'TONTINE_EDIT_TEXT7' | translate }}</ion-label>
+            <ion-input type="text" formControlName="tontine_name" required></ion-input>
+          </ion-item>
+          <div class="validation-errors">
+              <ng-container *ngFor="let validation of validationMessages.name">
+                <div class="error-message" *ngIf="tontineName.hasError(validation.type) && (tontineName.dirty || tontineName.touched)">
+                  <ion-icon name="information-circle-outline" ></ion-icon>
+                  {{ validation.message }}
+                </div>
+              </ng-container>
+            </div> 
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">{{ 'DESCRIPTION_TEXT' | translate }}</ion-label>
+            <ion-textarea type="text" formControlName="description" required></ion-textarea>
+          </ion-item>
+          <div class="validation-errors">
+              <ng-container *ngFor="let validation of validationMessages.description">
+                <div class="error-message" *ngIf="tontineDesc.hasError(validation.type) && (tontineDesc.dirty || tontineDesc.touched)">
+                  <ion-icon name="information-circle-outline" ></ion-icon>
+                  {{ validation.message }}
+                </div>
+              </ng-container>
+            </div> 
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label>{{ 'TONTINE_DETAIL_TEXT5' | translate }}</ion-label>
+            <ion-select (ionChange)="updateType()" formControlName="type_tontine_id">
+              <ion-select-option *ngFor="let type of typeOfTontine" [value]="type.type.id">{{ type.label }}</ion-select-option>          
+            </ion-select>
+          </ion-item>
+          <div class="ion-padding-horizontal" *ngIf="!tontineType.dirty">
+            <small  [innerHTML]="'TYPE_DESCRIPTION_MSG' | translate"></small>
+          </div>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validationMessages.type">
+              <div class="error-message" *ngIf="tontineType.hasError(validation.type) && (tontineType.dirty || tontineType.touched)">
+                <ion-icon name="information-circle-outline" ></ion-icon>
+                {{ validation.message }}
+              </div>
+            </ng-container>
+          </div> 
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label>{{ 'TONTINE_PAYMENT_TYPE' | translate }}</ion-label>
+            <ion-select (ionChange)="updatePaiement()" formControlName="tontine_payment_type_id">
+              <ion-select-option *ngFor="let payment of paymentTypes" [value]="payment.value">{{ payment.label }}</ion-select-option>          
+            </ion-select>
+          </ion-item>
+          <div class="ion-padding-horizontal" *ngIf="!tontineTypePayment.dirty">
+            <small  [innerHTML]="'TYPE_PAIEMENT_MSG' | translate"></small>
+          </div>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validationMessages.typepayment">
+              <div class="error-message" *ngIf="tontineTypePayment.hasError(validation.type) && (tontineTypePayment.dirty || tontineTypePayment.touched)">
+                <ion-icon name="information-circle-outline" ></ion-icon>
+                {{ validation.message }}
+              </div>
+            </ng-container>
+          </div> 
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label>{{ 'TONTINE_EDIT_TEXT5' | translate }}</ion-label>
+            <ion-select (ionChange)="updateCurrency(createTontineForm.value.country)" formControlName="country">
+              <ion-select-option *ngFor="let state of states" [value]="state.country_name">{{ state.country_label }}</ion-select-option>          
+            </ion-select>
+          </ion-item>
+          <div class="ion-padding-horizontal" *ngIf="!tontineCountry.dirty">
+            <small  [innerHTML]="'COUNTRY_MSG' | translate"></small>
+          </div>
+          <div class="validation-errors">
+            <div class="error-message" *ngIf="createTontineForm.value.country && createTontineForm.value.active === 0">
+              <ion-icon name="information-circle-outline" ></ion-icon>
+              {{ 'NEWS_COUNTRY_NOT_ACTIVE' | translate }}
+            </div>
+            <ng-container *ngFor="let validation of validationMessages.country">
+              <div class="error-message" *ngIf="tontineCountry.hasError(validation.type) && (tontineCountry.dirty || tontineCountry.touched)">
+                <ion-icon name="information-circle-outline" ></ion-icon>
+                {{ validation.message }}
+              </div>
+            </ng-container>
+          </div> 
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <ion-item>
+            <ion-label position="floating">{{ 'TONTINE_DETAIL_TEXT3' | translate }}</ion-label>
+            <ion-input type="number" (ionChange)="updateAmount()" formControlName="contribution_amount" required></ion-input>
+            <span slot="end" class="slot-prefix ion-no-margin"> {{ createTontineForm.value.currency }} </span>
+          </ion-item>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validationMessages.amount">
+              <div class="error-message" *ngIf="tontineAmount.hasError(validation.type) && (tontineAmount.dirty || tontineAmount.touched)">
+                <ion-icon name="information-circle-outline" ></ion-icon>
+                {{ validation.message }}
+              </div>
+            </ng-container>
+          </div> 
+        </ion-col>          
+      </ion-row>
+
+    
+
+
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label>{{ 'TONTINE_DETAIL_TEXT4' | translate }}</ion-label>
+            <ion-select (ionChange)="updatePeriodicity(createTontineForm.value.frequency);getCurrentDateInfo(createTontineForm.value.startDate,createTontineForm.value.frequency)" formControlName="frequency">
+              <ion-select-option *ngFor="let period of periodicities" [value]="period.value">{{ period.label }}</ion-select-option>          
+            </ion-select>
+          </ion-item>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validationMessages.frequency">
+              <div class="error-message" *ngIf="tontineFrequency.hasError(validation.type) && (tontineFrequency.dirty || tontineFrequency.touched)">
+                <ion-icon name="information-circle-outline" ></ion-icon>
+                {{ validation.message }}
+              </div>
+            </ng-container>
+          </div> 
+        </ion-col>
+      </ion-row>
+
+
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label>{{ 'DATE_START' | translate }}</ion-label>
+            <!---->
+            <ion-datetime (ionChange)="getCurrentDateInfo(createTontineForm.value.startDate,createTontineForm.value.frequency)"  [min]="minDate" [max]="maxDate" formControlName="startDate" displayFormat="DDDD D MMM, YYYY"   pickerFormat="DD MMMM YYYY"></ion-datetime>
+          </ion-item>
+          <div class="validation-errors">
+            <ng-container *ngIf="createTontineForm.value.startDate && !isDateValid">
+              <div class="error-message" >
+                <ion-icon name="information-circle-outline" ></ion-icon>
+                <span [innerHTML]="'MIN_DATE_ERROR_TEXT' | translate"></span>
+              </div>
+            </ng-container>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row  *ngIf="MsgTontinePeriodicity && createTontineForm.value.startDate && createTontineForm.value.frequency">
+        <ion-col size="12">
+          <div class="ion-padding" color="dark" *ngIf="MsgTontinePeriodicity" >
+            <ion-icon name="information-circle-outline" ></ion-icon>
+            <span [innerHTML]="MsgTontinePeriodicity"></span>
+           </div>
+        </ion-col>
+        <ion-col  *ngIf="ShowTontinePeriodicityMonthly" >
+          <ion-list>
+            <ion-radio-group  formControlName="monthFrequencyOption" (ionChange)="OptionChange(createTontineForm.value.monthFrequencyOption,createTontineForm.value.startDate)">
+              <ion-item>
+                <ion-label>
+                  {{ 'MSG_TONTINE_MONTH2' | translate}}
+                </ion-label>
+                <ion-radio [value]="0"></ion-radio>
+              </ion-item>  
+              <ion-item>
+                <ion-label>
+                  {{ MonthDayOccurencyLabel | translate  }}
+                </ion-label>
+                <ion-radio [value]="1"></ion-radio>
+              </ion-item>
+            </ion-radio-group>
+          </ion-list>
+        </ion-col>
+        <ion-col size="12" *ngIf="MonthDayOccurencyMsg">
+          <div class="ion-padding" color="dark" >
+            <ion-icon name="information-circle-outline" ></ion-icon>
+            <span class="ml-4" [innerHTML]="MonthDayOccurencyMsg"></span>
+          </div>
+        </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12">
+        <ion-item lines="none">                
+          <ion-toggle formControlName="with_caution"  color="primary"></ion-toggle>
+          <ion-label>
+            {{ 'WITH_CAUTION_TEXT' | translate  }}
+          </ion-label>
+        </ion-item>
+        <div class="ion-padding-horizontal" *ngIf="!createTontineForm.value.with_caution">
+          <small  [innerHTML]="'CAUTION_MSG' | translate"></small>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    
+    <ion-row >
+      <ion-col size="12">
+        <ion-item [disabled]="!createTontineForm.value.with_caution">
+          <ion-label position="floating">{{ 'CAUTION_AMOUNT' | translate }}</ion-label>
+          <ion-input  type="number"  formControlName="caution_amount" required></ion-input>
+          <span slot="end" class="slot-prefix ion-no-margin"> {{ createTontineForm.value.currency }} </span>
+        </ion-item>
+        <div class="validation-errors">
+          <ng-container *ngFor="let validation of validationMessages.cautionAmount">
+            <div class="error-message" *ngIf="cautionAmount.invalid && (cautionAmount.dirty || cautionAmount.touched)">
+              <ion-icon name="information-circle-outline" ></ion-icon>
+             <span [innerHTML]="'MIN_ERROR_CAUTION_AMOUNT' | translate : {amount : 1, currency : createTontineForm.value.currency}"></span>
+            </div>
+          </ng-container>
+        </div> 
+      </ion-col>          
+    </ion-row>
+
+    <ion-row >
+      <ion-col>
+        <ion-item [disabled]="!createTontineForm.value.with_caution">
+          <ion-label>{{ 'CAUTION_TYPE' | translate }}</ion-label>
+          <ion-select formControlName="type_caution">
+            <ion-select-option *ngFor="let caution of typesCaution" [value]="caution.value">{{ caution.name }}</ion-select-option>          
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>
+
+<ion-footer class="ion-padding ion-text-center">
+  <ion-button expand="full" [disabled]="canCreateTontine()" (click)="createTontine()"
+        color="warning" 
+        class="ion-text-uppercase"
+        shape="round">
+    {{ 'SAVE_TEXT' | translate }}
+  </ion-button>
+  <p class="ion-text-center"  *ngIf="loading">
+    <ion-spinner  name="circles"></ion-spinner>
+  </p>
+</ion-footer>

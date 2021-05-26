@@ -1,0 +1,22 @@
+<ion-list class="ion-padding-top" class="wallet-menu-popover">
+  <ion-item (click)="closeMyWalletMenu()" [routerLink]="['/', 'dashboard', 'my-tontines', currentTontine.tontine.tontine_id, 'wallet']" lines="none">
+    <ion-label>
+     {{ 'OVERVIEW_TEXT' | translate }}
+    </ion-label>
+  </ion-item>
+  <ion-item  (click)="closeMyWalletMenu()" [routerLink]="['/', 'dashboard', 'my-tontines', currentTontine.tontine.tontine_id, 'wallet', 'top-up']" lines="none">
+    <ion-label>
+     {{'TONTINE_LIST_TEXT10' | translate}}
+    </ion-label>
+  </ion-item>
+  <ion-item *ngIf="isAdmin()" (click)="closeMyWalletMenu()" [routerLink]="['/', 'dashboard', 'my-tontines', currentTontine.tontine.tontine_id, 'wallet', 'withdrawal']" lines="none">
+    <ion-label>
+     {{'WITHDRAWAL_TEXT0' | translate}}
+    </ion-label>
+  </ion-item> 
+  <ion-item (click)="closeMyWalletMenu()" [routerLink]="['/', 'dashboard', 'my-tontines', currentTontine.tontine.tontine_id, 'wallet', 'history']" lines="none">
+    <ion-label>
+      {{'WALLET_TRANSACTION_HISTORY' | translate}}
+    </ion-label>
+  </ion-item>
+</ion-list>

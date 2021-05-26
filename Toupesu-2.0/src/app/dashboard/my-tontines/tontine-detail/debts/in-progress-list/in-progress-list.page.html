@@ -1,0 +1,87 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button color="primary" defaultHref="/dashboard/my-tontines/12/debts" slot="text-only"></ion-back-button>
+    </ion-buttons>
+    <ion-avatar slot="start">
+        <ion-img [src]="'assets/join-icon.svg'" class="thumb-img"></ion-img>
+    </ion-avatar>
+    <ion-title class="no-padding">
+      {{'DEBT_IN_PROCESS' | translate}}
+    </ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <form [formGroup]="periodForm">
+      <ion-grid class="header-search-bg">
+        <ion-row>
+          <ion-col size="5">
+            <ion-item>
+              <ion-label>{{'M_START_TEXT' | translate }}</ion-label>
+              <ion-datetime formControlName="dateStart" displayFormat="D MMM, YYYY" [max]="minDate"  pickerFormat="DD MMMM YYYY"></ion-datetime>
+            </ion-item>
+          </ion-col>
+          <ion-col size="5">
+            <ion-item>
+              <ion-label>{{'M_END_TEXT' | translate }}</ion-label>
+              <ion-datetime [disabled]="startOn.invalid" formControlName="dateEnd" displayFormat="D MMM, YYYY" [min]="periodForm.value.dateStart ? periodForm.value.dateStart :  minDate" pickerFormat="DD MMMM YYYY"></ion-datetime>
+            </ion-item>
+          </ion-col>
+          <ion-col size="2">
+            <ion-buttons class="edit-btn">
+              <ion-button [disabled]="periodForm.invalid" (click)="filterByDate(periodForm.value)">
+                <ion-icon slot="icon-only" name="search" color="warning"></ion-icon>
+              </ion-button>
+            </ion-buttons>            
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </form>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="in-progress-list">
+
+  <ion-refresher slot="fixed" (ionRefresh)="refreSher($event)">
+    <ion-refresher-content
+      pullingIcon="reload-outline"
+      refreshingSpinner="circles"
+      refreshingText="{{ 'M_REFRESHING_TEXT' | translate }}">
+    </ion-refresher-content>
+  </ion-refresher>
+  <p class="ion-text-center"  *ngIf="loading">
+    <ion-spinner  name="circles"></ion-spinner>
+  </p>
+<ion-grid *ngIf="myPaidDebts && myPaidDebts.length > 0">
+  <ion-row>
+    <ion-col>
+      <p>{{'DEBT_LIST_IN_PROGRESS' | translate}}</p>
+      <ion-list>
+          <ion-item  *ngFor="let paidDebt of myPaidDebts" (click)="gotoProgressDebts(paidDebt)" detail>
+            <ion-label>
+              <p>                
+                <span class="ion-float-left"><small>{{ 'DATE_TEXT' | translate }}: </small>{{paidDebt.facture && paidDebt.facture.created_at ? paidDebt.facture.created_at.split(' ')[0] : ''}}</span>
+                <span class="ion-float-right"><b><small>{{ 'CYCLE_TEXT' | translate }}/{{'SESSION_TEXT' | translate}}: </small>{{ paidDebt.liste_item && paidDebt.liste_item[0]?paidDebt.liste_item[0].numerocycle : 0 }}/{{ paidDebt.liste_item && paidDebt.liste_item[0]?paidDebt.liste_item[0].numero_seance:0 }}</b></span> 
+              </p>
+              <h2><small>Ref.: </small><b>{{ paidDebt.facture ? paidDebt.facture.reference : '' }}</b></h2>
+              <h3><small>{{'DESCRIPTION_TEXT' | translate}}: </small>{{ paidDebt.liste_item && paidDebt.liste_item[0] ? (paidDebt.liste_item[0].typecontribution_name | translate) : '' }}</h3>
+              <ion-text color="warning"><h2><small>{{ 'AMOUNT_TEXT' | translate}}: </small>{{ paidDebt.facture ? (paidDebt.facture.montant | commadumper) : 0 }} {{ paidDebt.facture ? paidDebt.facture.device_name : ''}}</h2></ion-text>
+            </ion-label>            
+          </ion-item>
+      </ion-list>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+
+<div  *ngIf="myPaidDebts && myPaidDebts.length === 0  && !loading">
+  <p class="ion-text-center" >{{ 'DEBTS_IN_PROCESS_MSG' | translate}}</p>
+</div>
+
+<ion-infinite-scroll threshold="100px" (ionInfinite)="infinteScrollData($event)">
+  <ion-infinite-scroll-content
+    loadingSpinner="bubbles"
+    loadingText="{{ 'M_LOADING_MORE_DATA' | translate }}">
+  </ion-infinite-scroll-content>
+</ion-infinite-scroll>
+
+</ion-content>

@@ -1,0 +1,90 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button color="primary" defaultHref="/dashboard/my-tontines/tontinId" slot="text-only"></ion-back-button>
+    </ion-buttons>
+    <ion-avatar slot="start">
+        <ion-img [src]="'assets/join-icon.svg'" class="thumb-img"></ion-img>
+    </ion-avatar>
+    <ion-title class="ion-padding">
+      {{ 'TRANSACTIONS_HISTORY' | translate }} ({{ tontinesHistory.length}})
+    </ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <form [formGroup]="periodForm">
+      <ion-grid class="header-search-bg">
+        <ion-row>
+          <ion-col size="5">
+            <ion-item>
+              <ion-label>{{'DATE_START' | translate }}</ion-label>
+              <ion-datetime formControlName="dateStart" displayFormat="D MMM, YYYY" [min]="currentDate.getFullYear()"  pickerFormat="DD MMMM YYYY"></ion-datetime>
+            </ion-item>
+          </ion-col>
+          <ion-col size="5">
+            <ion-item>
+              <ion-label>{{'DATE_END' | translate }}</ion-label>
+              <ion-datetime [disabled]="startOn.invalid" formControlName="dateEnd" displayFormat="D MMM, YYYY" [min]="currentDate.getFullYear()" pickerFormat="DD MMMM YYYY"></ion-datetime>
+            </ion-item>
+          </ion-col>
+          <ion-col size="2">
+            <ion-buttons class="edit-btn">
+              <ion-button [disabled]="periodForm.invalid" (click)="filterByDate(periodForm.value)">
+                <ion-icon slot="icon-only" name="search" color="warning"></ion-icon>
+              </ion-button>
+            </ion-buttons>            
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </form>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content  id="history">
+  <ion-refresher slot="fixed" (ionRefresh)="refreSher($event)">
+    <ion-refresher-content
+      pullingIcon="reload-outline"
+      refreshingSpinner="circles"
+      refreshingText="{{ 'M_REFRESHING_TEXT' | translate }}">
+    </ion-refresher-content>
+  </ion-refresher>
+  <p class="ion-text-center"  *ngIf="loading">
+    <ion-spinner  name="circles"></ion-spinner>
+  </p>
+  <ion-grid  *ngIf="!loading">
+    <ion-row>
+      <ion-col>
+        <span *ngIf="!loading">{{'TOTAL_TRANS_TEXT' | translate }}: {{tontinesHistory && tontinesHistory.length > 0 ? allData.length : tontinesHistory.length }}</span>
+        <ion-list>
+          <ion-item *ngFor="let transaction of tontinesHistory">                          
+            <ion-label>
+              <ion-text color="primary"><h2><small>{{'TONTINE_USERS_TEXT5' | translate }}: </small><b>{{transaction.firstname ? transaction.firstname : ''}} {{transaction.lastname ? transaction.lastname : ''}}</b>
+                <span> 
+                  <ion-icon [color]="transaction.status === 'entrant' ? 'success' :  'danger'" [name]="transaction.status === 'entrant' ? 'arrow-back' :  'arrow-forward'" ></ion-icon>
+                 </span>
+              </h2></ion-text>
+              <p><small>Ref.:</small>  {{transaction.reference_transaction ? transaction.reference_transaction : ''}}</p>              
+              <p><small>{{'DATE_TEXT' | translate }}: </small> {{transaction.updated_at ? transaction.updated_at : ''}} </p>                
+              <p>
+                <ion-text color="dark">
+                  <span class="ion-float-left"><small>{{'TYPE_TEXT' | translate }}: </small>{{transaction.status ? getTransactionFlux(transaction.status) : ''}}</span> 
+                  <span class="ion-float-right"><small>{{ 'REASON_TEXT' | translate}}: </small>{{transaction.motif ? getTransactionType(transaction.motif) : ''}}</span>
+                </ion-text>
+              </p>              
+              <h2><ion-text color="warning"><small>{{'AMOUNT_TEXT' | translate}}: </small><b>{{transaction.somme ? (transaction.somme | commadumper) : ''}} {{transaction.device_name ? transaction.device_name : ''}}</b></ion-text></h2>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <div  *ngIf="tontinesHistory && tontinesHistory.length === 0 && !loading">
+    <p  class="ion-text-center"> {{ 'HISTORY_TEXT3' | translate }}</p>
+  </div>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="infinteScrollData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="{{ 'M_LOADING_MORE_DATA' | translate }}">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

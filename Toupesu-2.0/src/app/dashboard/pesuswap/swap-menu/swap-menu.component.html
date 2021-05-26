@@ -1,0 +1,18 @@
+<ion-list class="swap-menu-popover">
+  <ion-item lines="none" *ngIf="canEditSwap(curentParams)"  (click)="onEditSwapModal()">
+    <ion-label >
+      {{'EDIT_TEXT' | translate}}
+    </ion-label>
+  </ion-item>
+  <ion-item  *ngIf="canDeleteSwap(curentParams)" lines="none" (click)="onDeletePopover()" >
+    <ion-label>
+      {{ 'REMOVE_TEXT' | translate }}
+    </ion-label>
+  </ion-item>
+
+  <ion-item  *ngIf="canArchiveSwap(curentParams)" lines="none" (click)="onArchivePopover()" >
+    <ion-label>
+      {{ 'MENU_ARCHIVE_TEXT' | translate }}
+    </ion-label>
+  </ion-item>
+</ion-list>

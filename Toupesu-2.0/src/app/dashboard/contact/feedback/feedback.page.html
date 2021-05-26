@@ -1,0 +1,128 @@
+<ion-header>
+  <ion-toolbar class="with-logo2">
+    <ion-buttons slot="start">
+      <ion-back-button color="primary"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center title-md-right">
+      <ion-img class="logo" [src]="'assets/logo-toupesu.svg'"></ion-img>
+    </ion-title>
+  </ion-toolbar>
+  <ion-toolbar class="ion-text-center subtitle">
+    <ion-title>{{ 'MENU_FEEDBACK' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="user-profil">
+  <form [formGroup]="contactForm">
+    <ion-grid>
+      <ion-row>
+        <ion-col class="ion-padding">
+          <ion-label color="dark">
+            <span [innerHTML]="'CONTACT_MSG1' | translate"></span>
+            <span [innerHTML]="'CONTACT_MSG2' | translate"></span>
+            <span [innerHTML]="'CONTACT_MSG3' | translate"></span>
+          </ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">{{ 'USERNAME_TEXT' | translate }}</ion-label>
+            <ion-input type="text" formControlName="username"></ion-input>
+          </ion-item>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validationMessages.username">
+              <div class="error-message"
+                *ngIf="username.hasError(validation.type) && (username.dirty || username.touched)">
+                <ion-icon name="information-circle-outline"></ion-icon>
+                <span [innerHTML]="validation.message"></span>
+              </div>
+            </ng-container>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">{{'EMAIL_TEXT' | translate }}</ion-label>
+            <ion-input type="email" formControlName="email"></ion-input>
+          </ion-item>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validationMessages.email">
+              <div class="error-message" *ngIf="email.hasError(validation.type) && (email.dirty || email.touched)">
+                <ion-icon name="information-circle-outline"></ion-icon>
+                <span [innerHTML]="validation.message"></span>
+              </div>
+            </ng-container>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label>{{ 'TYPE_TEXT' | translate }}</ion-label>
+            <ion-select formControlName="typeSurvey">
+              <ion-select-option [value]="1">{{ 'COMMENTS_TEXT' | translate }}</ion-select-option>
+              <ion-select-option [value]="2">{{ 'BUG_REPORTS_TEXT' | translate }}</ion-select-option>
+              <ion-select-option [value]="3">{{ 'CUSTOMER_EXPERIENCE_TEXT' | translate }}</ion-select-option>
+              <ion-select-option [value]="4">{{ 'QUESTIONS_TEXT' | translate }}</ion-select-option>
+              <ion-select-option [value]="5">{{ 'OTHERS_TEXT' | translate }}</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validationMessages.typeSurvey">
+              <div class="error-message"
+                *ngIf="typeSurvey.hasError(validation.type) && (typeSurvey.dirty || typeSurvey.touched)">
+                <ion-icon name="information-circle-outline"></ion-icon>
+                <span [innerHTML]="validation.message"></span>
+              </div>
+            </ng-container>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">{{ 'FEEDBACK_TEXT2' | translate }}</ion-label>
+            <ion-textarea type="text" formControlName="suggestion"></ion-textarea>
+          </ion-item>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validationMessages.message">
+              <div class="error-message"
+                *ngIf="suggestion.hasError(validation.type) && (suggestion.dirty || suggestion.touched)">
+                <ion-icon name="information-circle-outline"></ion-icon>
+                <span [innerHTML]="validation.message"></span>
+              </div>
+            </ng-container>
+          </div>
+        </ion-col>
+      </ion-row>
+
+<!--       <ion-row>
+        <ion-col>
+          <rating formControlName="rating" readonly="false" size="default"></rating>
+          <div class="validation-errors">
+            <ng-container *ngIf="ratingMsg">
+              <div class="error-message">
+                <ion-icon name="information-circle-outline"></ion-icon>
+                <span [innerHTML]="'REQUIRED_FIELD_INVALID' | translate"></span>
+              </div>
+            </ng-container>
+          </div>
+        </ion-col>
+      </ion-row> -->
+
+    </ion-grid>
+  </form>
+
+</ion-content>
+
+<ion-footer class="ion-padding ion-text-center">
+  <ion-button expand="full" [disabled]="loading || contactForm.invalid" (click)="saveFeedbacks()" color="warning"
+    class="ion-text-uppercase" shape="round">
+    {{'SEND_TEXT' | translate}}
+  </ion-button>
+  <ion-spinner *ngIf="loading" name="circles"></ion-spinner>
+</ion-footer>

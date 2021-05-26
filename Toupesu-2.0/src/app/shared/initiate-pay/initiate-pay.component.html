@@ -1,0 +1,157 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center">{{type ==='new' ? ('NEW_PAYMENT' | translate) : ('INITIATE_PAIEMENT' | translate)
+      }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="initiate-pay">
+  <p class="ion-text-center" *ngIf="loading">
+    <ion-spinner name="circles"></ion-spinner>
+  </p>
+  <ion-grid>
+    <form [formGroup]="formPayment">
+      <ion-row *ngIf="type ==='new'">
+        <ion-col>
+          <h4><small>{{ 'INIT_PAY_TEXT_1' | translate }} {{(currentPaymentData.argent_a_bouffer_avant_toute_coupure |
+              commadumper)}} {{currentPaymentData.device_name}} {{ 'INIT_PAY_TEXT_2' | translate }}.</small></h4>
+        </ion-col>
+      </ion-row>
+      <ion-row  *ngIf="listCaisse && listCaisse.length > 0">
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">{{'REASON_TEXT' | translate}}</ion-label>
+            <ion-textarea placeholder="{{ 'ENTER_TEXT' | translate }}" formControlName="reason"></ion-textarea>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="listCaisse && listCaisse.length > 0">
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">{{'CHECKOUT_SELECT_MSG' | translate}}</ion-label>
+            <ion-select formControlName="chechoutList" (ionChange)="updateChoice(formPayment.value.chechoutList)"
+              multiple="true" placeholder="">
+              <ion-select-option *ngFor="let chechoutItem of listCaisse" [value]="chechoutItem.choice_name">
+                {{(chechoutItem.type_caisse_tontine_name | translate)}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validationMessages.chechoutList">
+              <div class="error-message"
+                *ngIf="chechoutList.hasError(validation.type) && (chechoutList.dirty || chechoutList.touched)">
+                <ion-icon name="information-circle-outline"></ion-icon>
+                {{ validation.message }}
+              </div>
+            </ng-container>
+          </div>
+        </ion-col>
+      </ion-row>
+    </form>
+    <ion-row *ngFor="let chechoutItem of listCaisse; let i = index">
+      <ion-col *ngIf="chechoutItem.choice">
+        <ion-row class="ion-align-items-center checkout-list">
+          <ion-col size="4">
+            <h6>
+              <ion-text color="primary">{{(chechoutItem.type_caisse_tontine_name | translate)}}
+                ({{chechoutItem.currency_name}})</ion-text>
+            </h6>
+          </ion-col>
+          <ion-col size="8">
+            <ion-row>
+              <ion-col *ngIf="chechoutItem.current_montant_online > 0">
+                <ion-text color="primary">{{ 'ONLINE_TEXT' | translate }}: {{chechoutItem.current_montant_online -
+                  listCaisse[i].montant_online }}</ion-text>
+                <ion-item>
+                  <ion-input type="number"
+                    (ionChange)="validateAmount(chechoutItem.current_montant_online, listCaisse[i].montant_online, i, 'online'); updateChoice(formPayment.value.chechoutList)"
+                    [(ngModel)]="listCaisse[i].montant_online" [ngModelOptions]="{standalone: true}"></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col *ngIf="chechoutItem.current_montant_offline > 0">
+                <ion-text color="primary">{{ 'OFFLINE_TEXT' | translate }}: {{ chechoutItem.current_montant_offline -
+                  listCaisse[i].montant_offline}}</ion-text>
+                <ion-item>
+                  <ion-input type="number"
+                    (ionChange)="validateAmount(chechoutItem.current_montant_offline, listCaisse[i].montant_offline, i, 'offline'); updateChoice(formPayment.value.chechoutList)"
+                    (ionChange)="validateAmount()" [(ngModel)]="listCaisse[i].montant_offline"
+                    [ngModelOptions]="{standalone: true}"></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+
+        <div class="validation-errors" *ngIf="listCaisse[i].online_error">
+          <div class="error-message">
+            <ion-icon name="information-circle-outline"></ion-icon>
+            <span>{{(chechoutItem.type_caisse_tontine_name | translate)}} {{ 'ONLINE_TEXT' | translate }}
+              {{ 'INITIATE_ERROR_MSG' | translate }} {{chechoutItem.current_montant_online}}
+              {{chechoutItem.currency_name}} </span>
+          </div>
+        </div>
+
+        <div class="validation-errors" *ngIf="listCaisse[i].offline_error">
+          <div class="error-message">
+            <ion-icon name="information-circle-outline"></ion-icon>
+            <span>{{(chechoutItem.type_caisse_tontine_name | translate)}} {{ 'OFFLINE_TEXT' | translate }}
+              {{ 'INITIATE_ERROR_MSG' | translate }} {{ chechoutItem.current_montant_offline}}
+              {{chechoutItem.currency_name}} </span>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="formPayment.valid && currentPaymentData.somme !== totalAmount">
+      <div class="validation-errors">
+        <div class="error-message">
+          <ion-icon name="information-circle-outline"></ion-icon>
+          {{ 'BOUFFE_AMOUNT_ERROR' | translate }} {{currentPaymentData.somme}} {{currentPaymentData.device_name}}
+        </div>
+      </div>
+    </ion-row>
+
+    <ion-row *ngIf="currentPaymentData.somme > 0 && !loading && listCaisse && listCaisse.length > 0">
+      <ion-col>
+        <p>
+          <ion-text class="ion-float-right" color="danger"><strong>{{ 'TOTAL_TEXT' | translate }} <sup>*</sup>:
+              {{currentPaymentData.somme}} {{currentPaymentData.device_name}}</strong></ion-text>
+        </p>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="!loading && listCaisse && listCaisse.length > 0">
+      <ion-col>
+        <ion-button expand="full" [disabled]="hasError() || formPayment.invalid  
+            || (currentPaymentData.somme !== totalAmount) || totalAmount === 0" color="warning"
+          class="ion-text-uppercase" shape="round" (click)="iniatePayment()">
+          {{ 'SUBMIT_TEXT' | translate }}
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  
+  <ion-row *ngIf="!loading && listCaisse && listCaisse.length === 0">
+    <ion-col>
+      <p class="ion-text-center">
+          {{ 'RECHARGE_CAISSE_MSG' | translate }}
+      </p>
+    </ion-col>
+  </ion-row>
+
+</ion-content>
+
+<ion-footer class="ion-padding ion-text-center">
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-button expand="full" fill="outline" color="warning" class="ion-text-uppercase" shape="round"
+          (click)="closeContribute()">
+          {{ 'CANCEL_TEXT' | translate }}
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

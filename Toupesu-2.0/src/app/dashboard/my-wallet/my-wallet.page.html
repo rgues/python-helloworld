@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar class="with-logo2">
+    <ion-buttons slot="start">
+      <ion-back-button color="primary" defaultHref="/dashboard" slot="text-only"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">
+        <ion-img class="logo" [src]="'assets/logo-toupesu.svg'"></ion-img>
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="openContextMenu($event)">
+        <ion-icon name="ellipsis-vertical" color="primary"></ion-icon>
+      </ion-button>
+    </ion-buttons> 
+  </ion-toolbar>
+  <ion-toolbar class="ion-text-center subtitle">
+    <ion-title>{{ 'WALLET_TEXT1' | translate }}: <ion-text color="primary" class="ion-text-capitalize">{{ 'TONTINE_LIST_TEXT10' | translate }}</ion-text></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="wallet">
+
+  <app-top-up></app-top-up>
+</ion-content>

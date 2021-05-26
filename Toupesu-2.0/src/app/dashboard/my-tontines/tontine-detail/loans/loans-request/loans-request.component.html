@@ -1,0 +1,109 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center">{{ 'LOANS_REQUEST_TEXT' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="loans-request">
+
+  <ion-refresher slot="fixed" (ionRefresh)="refreSher($event)">
+    <ion-refresher-content
+      pullingIcon="reload-outline"
+      refreshingSpinner="circles"
+      refreshingText="{{ 'M_REFRESHING_TEXT' | translate }}">
+    </ion-refresher-content>
+  </ion-refresher>
+  <p class="ion-text-center"  *ngIf="loading">
+    <ion-spinner  name="circles"></ion-spinner>
+  </p>
+
+  <form [formGroup]="loanRequestForm">
+    <ion-grid>
+      <ion-row  *ngIf="!hasContribute">
+        <ion-col class="ion-padding">
+          <ion-text color="dark">
+            {{ 'CONTRIBUTION_MSG' | translate }}
+          </ion-text>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="!loading">
+        <ion-col>
+          <div class="cash ion-padding-horizontal">
+            <span class="subtitle">{{'CASH_AVALAIBLE' | translate}}</span>
+            <span class="subamount"><ion-text color="danger"><b>{{currentLoanRequest && currentLoanRequest.length > 0 ? (currentLoanRequest[0].cash_loan_available | commadumper) : 0}} {{currentTontine ? currentTontine.tontine.monnaie : ''}}</b></ion-text></span>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row  *ngIf="!loading">
+        <ion-col>
+          <div class="ion-padding-horizontal">
+            <p>
+          {{ 'CURRENT_MAX_LOAN' | translate }} <b>{{currentLoanRequest && currentLoanRequest.length > 0 ? (currentLoanRequest[0].current_maximum_for_loan | commadumper) : 0}} {{currentTontine ? currentTontine.tontine.monnaie : ''}}</b><br />
+              {{'CASH_REQUEST_TEXT' | translate }}
+            </p>            
+          </div>          
+        </ion-col>
+      </ion-row> 
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label>{{ 'A_SHARE_TEXT' | translate }}</ion-label>
+            <ion-select  formControlName="numero_part">
+              <ion-select-option *ngFor="let part of listParts; let k = index" [value]="part.numpart">{{part.share}} {{k+1}} </ion-select-option>          
+            </ion-select>
+          </ion-item> 
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">{{ 'ENTER_AMOUNT_TEXT' | translate }}</ion-label>
+            <ion-input type="number" (ionChange)="checkCurrentMaximumLoan(loanRequestForm.value.amount)" formControlName="amount" required></ion-input>
+            <span slot="end" class="slot-prefix ion-no-margin"> {{currentTontine ? currentTontine.tontine.monnaie : ''}} </span>
+          </ion-item>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validationMessages.amountLoan">
+              <div class="error-message" *ngIf="amountLoan.hasError(validation.type) && (amountLoan.dirty || amountLoan.touched)">
+                <ion-icon name="information-circle-outline" ></ion-icon>
+                <span [innerHTML]="validation.message"></span> 
+              </div>
+            </ng-container>
+          </div> 
+          <div class="validation-errors" *ngIf="!currentAmountValid">
+              <div class="error-message">
+                <ion-icon name="information-circle-outline" ></ion-icon>
+                {{'CURRENT_LOAN_AMOUNT_REQUEST_ERROR' | translate }} {{currentLoanRequest && currentLoanRequest.length > 0 ? currentLoanRequest[0].current_maximum_for_loan < currentLoanRequest[0].cash_loan_available ? (currentLoanRequest[0].current_maximum_for_loan | commadumper): (currentLoanRequest[0].cash_loan_available | commadumper) : 0}} {{currentTontine ? currentTontine.tontine.monnaie : ''}}
+              </div>
+          </div> 
+        </ion-col>          
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>
+
+<ion-footer class="ion-padding ion-text-center">
+  <ion-grid>
+    <ion-row>   
+      <ion-col>
+          <ion-button expand="full" 
+                color="warning" [disabled]="loanRequestForm.invalid || loadingRequest || !currentAmountValid  || !hasContribute"
+                class="ion-text-uppercase" (click)="makeLoanRequest(loanRequestForm.value)"
+                shape="round">
+            {{ 'SEND_TEXT' | translate }}
+          </ion-button>
+      </ion-col>   
+      <ion-col>
+          <ion-button expand="full" 
+                fill="outline"
+                color="warning" 
+                class="ion-text-uppercase"
+                shape="round" (click)="closeLoansRequest('exit')">
+            {{ 'CANCEL_TEXT' | translate }}
+          </ion-button>
+      </ion-col>      
+    </ion-row>
+    <p class="ion-text-center">
+      <ion-spinner *ngIf="loadingRequest" name="circles"></ion-spinner>
+    </p>
+  </ion-grid>
+</ion-footer>

@@ -1,0 +1,208 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center">{{'EDIT_LOANS' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="loans-edit">
+
+  <form [formGroup]="infoLoansForm">
+    <ion-grid>
+      <ion-row  *ngIf="!canEditLoanRequest()">
+        <ion-col class="ion-padding">
+          <ion-text color="dark">
+            {{ 'SESSION_EDIT_MSG' | translate }}
+          </ion-text>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item> 
+            <ion-label position="floating">{{ 'INTEREST_LOAN' | translate }}</ion-label>
+            <ion-input type="text" formControlName="interest" required></ion-input>
+            <span slot="end" class="slot-prefix ion-no-margin"> % </span>
+          </ion-item>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validationMessages.interestRate">
+              <div class="error-message" *ngIf="interestRate.hasError(validation.type) && (interestRate.dirty || interestRate.touched)">
+                <ion-icon name="information-circle-outline" ></ion-icon>
+                <span [innerHTML]="validation.message"></span>
+              </div>
+            </ng-container>
+          </div> 
+        </ion-col>          
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">{{ 'INTEREST_OF_TEXT' | translate }} {{ 'INTEREST_TEXT' | translate }}</ion-label>
+            <ion-input type="text" formControlName="interest_of_interest" required></ion-input>
+            <span slot="end" class="slot-prefix ion-no-margin"> % </span>
+           </ion-item>
+          <small class="ion-padding-horizontal">{{ 'INTEREST_CONDITION_TEXT' | translate }}</small>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validationMessages.interestOfInterest">
+              <div class="error-message" *ngIf="interestOfInterest.hasError(validation.type) && (interestOfInterest.dirty || interestOfInterest.touched)">
+                <ion-icon name="information-circle-outline" ></ion-icon>
+                <span [innerHTML]="validation.message"></span>
+              </div>
+            </ng-container>
+          </div> 
+        </ion-col>          
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-radio-group (ionChange)="updateLoanType(infoLoansForm.value.typeOfTarget)" class="ion-padding-horizontal" formControlName="typeOfTarget" required>
+            <ion-label class="text-share">{{ 'TYPE_TARGET' | translate }}:</ion-label>
+            <ion-item>
+               <ion-label>{{ 'NONE_TEXT' | translate }}</ion-label>
+               <ion-radio
+               slot="start"
+               [value]="0"
+               ></ion-radio>
+            </ion-item>            
+            <ion-item>
+              <ion-label>{{ 'INTEREST_TEXT' | translate }}</ion-label>
+              <ion-radio
+              slot="start"
+              [value]="1"
+              ></ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-label>{{ 'LOAN_TEXT' | translate }}</ion-label>
+              <ion-radio
+              slot="start"
+              [value]="2"
+              ></ion-radio>
+            </ion-item>
+          </ion-radio-group>
+        </ion-col>
+      </ion-row> 
+      <ion-row *ngIf="infoLoansForm.value.typeOfTarget === 1">
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">{{ 'INTEREST_TARGET' | translate }}</ion-label>
+            <ion-input type="text" formControlName="value_type_of_target" required></ion-input>
+            <span slot="end" class="slot-prefix ion-no-margin"> {{currentTontine && currentTontine.tontine ? currentTontine.tontine.monnaie : ''}} </span>
+          </ion-item>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validationMessages.interestTargetValue">
+              <div class="error-message" *ngIf="interestTargetValue.hasError(validation.type) && (interestTargetValue.dirty || interestTargetValue.touched)">
+                <ion-icon name="information-circle-outline" ></ion-icon>
+                <span [innerHTML]="validation.message"></span>
+              </div>
+            </ng-container>
+          </div> 
+        </ion-col>          
+      </ion-row>
+      <ion-row *ngIf="infoLoansForm.value.typeOfTarget === 2">
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">{{ 'LOAN_TARGET' | translate }}</ion-label>
+            <ion-input type="text" formControlName="value_type_of_target" required></ion-input>
+            <span slot="end" class="slot-prefix ion-no-margin"> {{currentTontine && currentTontine.tontine ? currentTontine.tontine.monnaie : ''}}  </span>
+          </ion-item>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validationMessages.loanTargetValue">
+              <div class="error-message" *ngIf="loanTargetValue.hasError(validation.type) && (loanTargetValue.dirty || loanTargetValue.touched)">
+                <ion-icon name="information-circle-outline" ></ion-icon>
+                <span [innerHTML]="validation.message"></span>
+              </div>
+            </ng-container>
+          </div> 
+        </ion-col>          
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label class="text-share">{{ 'LEND_CASH_TEXT' | translate }}</ion-label>
+            <ion-toggle formControlName="share_cash_between_member"></ion-toggle>
+          </ion-item>
+          <div  class="ion-padding-horizontal">
+            <small [innerHTML]="'LEND_CASH_MSG' | translate">
+            </small>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-label class="ion-padding-horizontal">{{ 'MAXIMUM_LEND_PER_MEMBER' | translate }}</ion-label>
+          <ion-row class="ion-padding-start ion-align-items-end">
+            <ion-col size="8">
+              <ion-item>
+                <ion-label position="floating">{{ 'MAX_BASE_CONTRIBUTION' | translate }}</ion-label>
+                <ion-input (ionChange)="checkMaxBaseContribution(infoLoansForm.value.type_max_base_on_contribution)"   type="number" formControlName="max_base_contribution" required></ion-input>
+              </ion-item>               
+            </ion-col>
+            <ion-col size="4">
+              <ion-label></ion-label>
+              <ion-select (ionChange)="checkMaxBaseContribution(infoLoansForm.value.type_max_base_on_contribution)" formControlName="type_max_base_on_contribution">
+                <ion-select-option [value]="'currency_name'">{{currentTontine && currentTontine.tontine ? currentTontine.tontine.monnaie : ''}} </ion-select-option> 
+                <ion-select-option [value]="'member_contribution'">x ({{ 'MEMBER_CONTRIBUTION' | translate }})</ion-select-option>         
+              </ion-select>
+            </ion-col>
+          </ion-row>
+          <div class="ion-padding-start validation-errors">
+            <ng-container *ngFor="let validation of validationMessages.MaxLoanContrib">
+              <div class="error-message" *ngIf="MaxLoanContrib.hasError(validation.type) && (MaxLoanContrib.dirty || MaxLoanContrib.touched)">
+                <ion-icon name="information-circle-outline" ></ion-icon>
+                <span [innerHTML]="validation.message"></span>
+              </div>
+            </ng-container>
+          </div> 
+          <div class="ion-padding-start validation-errors" *ngIf="!isMaxBaseValid">
+              <div class="error-message">
+                <ion-icon name="information-circle-outline" ></ion-icon>
+                <span [innerHTML]="'MAX_BASE_CONTRIBUTION_ERROR' | translate"></span> <span *ngIf="totalMembersContribution"> {{totalMembersContribution}} {{currentTontine && currentTontine.tontine ? currentTontine.tontine.monnaie : ''}}</span>
+              </div>
+          </div>
+          <ion-row class="ion-padding-start ion-align-items-end">
+            <ion-col>
+              <ion-item>
+                <ion-label position="floating">{{'MAX_BASE_CASH_AVALAIBLE' | translate}}</ion-label>
+                <ion-input type="text" formControlName="max_base_on_cash_available" required></ion-input>
+                <span slot="end" class="slot-prefix ion-no-margin"> % </span>
+              </ion-item>
+              <div class="validation-errors">
+                <ng-container *ngFor="let validation of validationMessages.MaxLoanCash">
+                  <div class="error-message" *ngIf="MaxLoanCash.hasError(validation.type) && (MaxLoanCash.dirty || MaxLoanCash.touched)">
+                    <ion-icon name="information-circle-outline" ></ion-icon>
+                    <span [innerHTML]="validation.message"></span>
+                  </div>
+                </ng-container>
+              </div> 
+            </ion-col>          
+          </ion-row>
+
+        </ion-col>          
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>
+
+<ion-footer class="ion-padding ion-text-center">
+  <ion-grid>
+    <ion-row>   
+      <ion-col>
+          <ion-button expand="full" 
+                color="warning" 
+                class="ion-text-uppercase" [disabled]="infoLoansForm.invalid || loadingRequest || !isMaxBaseValid ||  !canEditLoanRequest()" (click)="editLoanRequest(infoLoansForm.value)"
+                shape="round">
+            {{ 'SAVE_TEXT' | translate }}
+          </ion-button>
+      </ion-col>   
+      <ion-col>
+          <ion-button expand="full" 
+                fill="outline"
+                color="warning" 
+                class="ion-text-uppercase"
+                shape="round" (click)="closeLoansEdit('cancel')">
+            {{ 'CANCEL_TEXT' | translate }}
+          </ion-button>
+      </ion-col>      
+    </ion-row>
+    <p class="ion-text-center">
+      <ion-spinner *ngIf="loadingRequest" name="circles"></ion-spinner>
+    </p>
+  </ion-grid>
+</ion-footer>

@@ -1,0 +1,32 @@
+<ion-list class="ion-padding-top" class="event-detail-menu-popover">
+    <ion-item (click)="inviteJoin()" *ngIf="canIniviteForEvent()"  lines="none">
+      <ion-label>
+       {{ 'TONTINE_INVITED_TEXT1' | translate }}
+      </ion-label>
+    </ion-item>
+    <ion-item *ngIf="canShareCode()" (click)="shareCode()" lines="none">
+      <ion-label>
+        {{ 'MENU_SHARE_CODE_TONTINE' | translate }}
+      </ion-label>
+    </ion-item>
+    <ion-item *ngIf="canSendNotification()" (click)="sendNotification()" lines="none">
+      <ion-label>
+      {{ 'M_SEND_MESSAGE' | translate }}
+      </ion-label>
+    </ion-item>
+    <ion-item  *ngIf="isCurrentUser()"  (click)="ticketsTontine()" lines="none">
+      <ion-label>
+       {{'MY_TICKETS_TEXT' | translate }}
+      </ion-label>
+    </ion-item>
+    <ion-item *ngIf="canUpdateEvent()" (click)="updateTontine()" lines="none">
+      <ion-label>
+      {{ 'M_UPDATE' | translate }}
+      </ion-label>
+    </ion-item>
+    <ion-item  *ngIf="canDeleteEvent()" (click)="deleteTontine()" lines="none">
+      <ion-label>
+        {{ 'TEXT_DELETE' | translate }}
+      </ion-label>
+    </ion-item>
+</ion-list>

@@ -1,0 +1,173 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button color="primary"
+        [defaultHref]="'/dashboard/my-tontines/'+ currentTontine.tontine.tontine_id +'/debts/in-approval'"
+        slot="text-only"></ion-back-button>
+    </ion-buttons>
+    <ion-avatar slot="start">
+      <ion-img [src]="'assets/join-icon.svg'" class="thumb-img"></ion-img>
+    </ion-avatar>
+    <ion-title class="no-padding">
+      {{ 'DEBT_IN_APPROVAL' | translate }} {{'DETAIL_TEXT' | translate}}
+    </ion-title>
+  </ion-toolbar>
+  <ion-toolbar class="ion-text-center subtitle" *ngIf="currentFacture">
+    <ion-title>ref.: {{currentFacture ? currentFacture.reference : ''}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="in-approval-detail">
+  <ion-refresher slot="fixed" (ionRefresh)="refreSher($event)">
+    <ion-refresher-content pullingIcon="reload-outline" refreshingSpinner="circles"
+      refreshingText="{{ 'M_REFRESHING_TEXT' | translate }}">
+    </ion-refresher-content>
+  </ion-refresher>
+  <p class="ion-text-center" *ngIf="loading">
+    <ion-spinner name="circles"></ion-spinner>
+  </p>
+  <ion-grid>
+    <ion-row class="ion-align-items-stretch" *ngIf="currentUser || validation">
+      <ion-col size="12">
+        <ion-text><b>{{ 'M_NAME_TEXT' | translate }}: </b> {{currentUser ? currentUser.firstname : ''}}
+          {{currentUser ? currentUser.lastname : ''}}</ion-text>
+      </ion-col>
+      <ion-col size="6">
+        <ion-text><b>{{ 'PHONE_TEXT' | translate }}: </b><br /> {{currentUser ? currentUser.phone : ''}}</ion-text>
+      </ion-col>
+      <ion-col size="6">
+        <ion-text><b>{{ 'EMAIL_TEXT' | translate }}: </b><br /> {{currentUser ? currentUser.email : ''}}</ion-text>
+      </ion-col>
+      <ion-col size="6">
+        <ion-text><b>{{ 'DEBT_SUBMIT_ON' | translate }}: </b><br />
+          {{validation && validation.submit_on ? validation.submit_on.split(' ')[0] : ''}}</ion-text>
+      </ion-col>
+      <ion-col size="6">
+        <ion-text><b>{{ 'VALIDATE_ON' | translate }}: </b><br />
+          {{validation && validation.validate_on ? validation.validate_on.split(' ')[0] : ''}}</ion-text>
+      </ion-col>
+      <ion-col size="6">
+        <ion-text><b>{{ 'VALIDATION_QUOTA' | translate}}: </b>
+          {{validation ? validation.nbre_admin_ayant_valide : ''}}/{{validation ? validation.nbre_admin_devant_valide : ''}}
+        </ion-text>
+      </ion-col>
+      <ion-col size="6">
+        <span><b>{{ 'TONTINE_INVITE_TEXT5' | translate }}: </b>
+          <ion-text color="danger"> {{currentFacture ? (currentFacture.status | translate) : ''}}</ion-text>
+        </span>
+      </ion-col>
+      <!-- <ion-col size="12">
+        <span><b>{{ 'REASON_TEXT' | translate }}: </b>
+          <ion-text color="danger">unreadable proof</ion-text>
+        </span>
+      </ion-col> -->
+    </ion-row>
+    <ion-row *ngIf="myDebts && myDebts.length > 0">
+      <ion-col>
+        <ion-text color="primary">
+          <h4 class="ion-no-margin">{{'DETAIL_OF_DEBTS' | translate}}</h4>
+        </ion-text>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="myDebts && myDebts.length > 0">
+      <ion-col>
+        <ion-list>
+          <ion-item *ngFor="let debt of myDebts">
+            <ion-label>
+              <p>
+                <span class="ion-float-left"><small>{{ 'DATE_TEXT' | translate }}:
+                  </small>{{  debt && debt.created_at ? (debt.created_at.split(' ')[0] | date :'mediumDate') : ''}}</span>
+                <span class="ion-float-right"><b><small>{{ 'CYCLE_TEXT' | translate }}/{{'SESSION_TEXT' | translate}}:
+                    </small>{{ debt && debt.numerocycle ? debt && debt.numerocycle : 0 }}/{{ debt && debt.numero_seance ? debt.numero_seance : 0 }}</b></span>
+              </p>
+              <h3>{{ debt.typecontribution_name ? (debt.typecontribution_name | translate) : '' }}</h3>
+              <h2>
+                <ion-text color="warning">{{ debt.montant ? (debt.montant | commadumper) : 0}} {{currentTontine.tontine.monnaie }}
+                </ion-text>
+              </h2>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>
+              <div class="ion-text-end">
+                <p>{{'DEBT_TOTAL_DUE' | translate }}: <b>{{(totalDue | commadumper)}} {{currentTontine.tontine.monnaie }}</b></p>
+                <p>{{'DEBT_TOTAL_PAID' | translate }}: {{(totalBill | commadumper)}} {{currentTontine.tontine.monnaie }}</p>
+                <p>
+                  <ion-text color="danger">{{ 'DEBT_BALANCE' | translate}}: <b>{{(totalBalance | commadumper)}}
+                      {{currentTontine.tontine.monnaie }}</b></ion-text>
+                </p>
+              </div>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="proofsList && proofsList.length > 0">
+      <ion-col>
+        <ion-text color="primary">
+          <h4 class="ion-no-margin">{{'DEBT_PAYMENT_ALREADY_DONE' | translate}}</h4>
+        </ion-text>
+        <ng-container *ngFor="let proof of proofsList">
+          <ion-card>
+            <ion-item>
+
+              <ion-label>Ref.: {{ proof.reference_transaction ? proof.reference_transaction : ''  }}</ion-label>
+              <ion-button *ngIf="proof && proof.tontinte_payment_type_name ==='Traditional Banking' &&proof.receipt" fill="outline"
+                slot="end" (click)="showProof(proof)">{{'DEBT_VIEW_PROOF' | translate}}</ion-button>
+            </ion-item>
+
+            <ion-card-content>
+              <ion-grid>
+                <ion-row class="ion-justify-content-center ion-align-items-stretch ion-text-center">
+                  <ion-col size="4">
+                    <small><b>{{'DATE_TEXT' | translate}}</b></small><br />
+                    <ion-text>{{ proof.date ? proof.date.split(' ')[0] : '' }}</ion-text>
+                  </ion-col>
+                  <ion-col size="4">
+                    <small><b>{{ 'DEBT_PAYMENT_MODE' | translate }}</b></small><br />
+                    <ion-text *ngIf="proof.with_cash === 0">
+                      {{ proof.tontinte_payment_type_name ? (proof.tontinte_payment_type_name | translate  | lowercase) : ''  }}
+                    </ion-text>
+                    <ion-text *ngIf="proof.with_cash === 1">{{ 'CASH_PAYMENT' | translate  | lowercase }}</ion-text>
+                    <ion-text  *ngIf="proof && proof.tontinte_payment_type_name ==='Online Wallet'"> 
+                      {{proof.typepaiement_name ? (proof.typepaiement_name | translate  | lowercase) :'' }}
+                    </ion-text>
+                  </ion-col>
+                  <ion-col size="4">
+                    <small><b>{{'AMOUNT_TEXT' | translate}}</b></small><br />
+                    <ion-text color="primary"><b>{{ proof.montant ? (proof.montant | commadumper) : 0  }}
+                        {{proof.device_name ? proof.device_name :'' }} </b>
+                    </ion-text>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-card-content>
+          </ion-card>
+        </ng-container>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="infinteScrollData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="{{ 'M_LOADING_MORE_DATA' | translate }}">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>
+<ion-footer class="ion-padding ion-text-center" *ngIf="canMakeAction()">
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-button expand="full" color="danger" class="ion-text-uppercase" shape="round"
+          (click)="openValidation(currentUser ? currentUser.firstname + ' ' + currentUser.lastname : '', currentFacture ? currentFacture.montant : '', 'reject')">
+          {{ 'REJETER_TEXT' | translate }}
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button expand="full" color="success" class="ion-text-uppercase" shape="round"
+          (click)="openValidation(currentUser ? currentUser.firstname + ' ' + currentUser.lastname : '', currentFacture ? currentFacture.montant : '', 'validate')">
+          {{ 'VALIDATE_TEXT' | translate }}
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

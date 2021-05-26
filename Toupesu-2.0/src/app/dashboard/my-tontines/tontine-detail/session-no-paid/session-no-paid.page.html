@@ -1,0 +1,61 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button color="primary" [defaultHref]="'/dashboard/my-tontines/' + currentTontine.tontine.tontine_id" slot="text-only"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="no-padding ion-text-center">
+    {{'BENEFICIAL_STATUS' | translate}}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="session-not-paid">
+  <ion-refresher slot="fixed" (ionRefresh)="refreSher($event)">
+    <ion-refresher-content
+      pullingIcon="reload-outline"
+      refreshingSpinner="circles"
+      refreshingText="{{ 'M_REFRESHING_TEXT' | translate }}">
+    </ion-refresher-content>
+  </ion-refresher>
+  <p class="ion-text-center"  *ngIf="loading">
+    <ion-spinner  name="circles"></ion-spinner>
+  </p>
+  <ion-grid *ngIf="beneficiaryList && beneficiaryList.length > 0">
+    <ion-row>
+      <ion-col size="12">
+          <ion-img class="inner-image" [src]="'assets/beneficial.svg'"></ion-img>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <p class="ion-padding ion-no-margin">{{ 'LIST_PENDIG_BENEFICIARY' | translate }} :</p>
+        <ion-list>
+          <ion-item *ngFor="let beneficiary of beneficiaryList" (click)="viewProof(beneficiary)" detail>
+            <ion-label>
+              <p>                
+                <span class="ion-float-left"><b><small>{{ 'DATE_TEXT' | translate }} : </small>{{beneficiary.infos_bouffe.updated_at ? beneficiary.infos_bouffe.updated_at.split(' ')[0] : ''}}</b></span>
+                <span class="ion-float-right"><b><small>{{ 'CYCLE_TEXT' | translate }}/{{'SESSION_TEXT' | translate}} : </small>{{beneficiary && beneficiary.infos_cycle? beneficiary.infos_cycle.numerocycle : ''}}/{{beneficiary && beneficiary.infos_seance? beneficiary.infos_seance.numero_seance : ''}}</b></span> 
+              </p>
+              <h3><ion-text [color]="beneficiary.infos_bouffe.status === 'approved' && checkConfirmation(beneficiary) ? 'success': 'warning'"><fa-icon [icon]="faFrown" size="2x"></fa-icon></ion-text><span>{{beneficiary.infos_user.firstname ? beneficiary.infos_user.firstname : ''}} {{beneficiary.infos_user.lastname ? beneficiary.infos_user.lastname : ''}}</span></h3>
+              <div>
+                <span class="ion-float-left"><small>{{ 'STATUS_TEXT' | translate }}: </small><ion-text color="warning">{{beneficiary.infos_bouffe.status ? getStatus(beneficiary) : ''}}</ion-text></span>
+                 <h2 class="ion-float-right"><small>{{ 'AMOUNT_DUE_TEXT' | translate }} : </small><ion-text color="warning">{{beneficiary.infos_bouffe.somme ? (beneficiary.infos_bouffe.somme  | commadumper) : 0}} {{currentTontine && currentTontine.tontine && currentTontine.tontine.monnaie ? currentTontine.tontine.monnaie : ''}}</ion-text></h2>
+              </div>
+            </ion-label>            
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <div  *ngIf="beneficiaryList && beneficiaryList.length === 0  && !loading">
+    <p class="ion-padding ion-text-center" >{{ 'BENEFICIARY_EMPTY_MSG' | translate}}</p>
+  </div>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="infinteScrollData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="{{ 'M_LOADING_MORE_DATA' | translate }}">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

@@ -1,0 +1,21 @@
+<ion-grid>    
+  <ion-row>
+    <ion-col>
+      <h4>{{ 'M_MANAGE_MEMBER' | translate }}</h4> 
+      <p>{{ 'M_CONFIRM_TEXT_ENABLE_1' | translate }} {{ selectedMber.member.active  === 1 ?  ('M_DISABLE_TEXT' | translate | lowercase) : ('M_ENABLE_TEXT' | translate | lowercase)  }} 
+         {{ 'M_AS_MEMBER' | translate }}  <b>{{ selectedMber.member.name }}</b> ?
+      </p>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col class="ion-text-center">
+      <ion-button color="warning" fill="outline" (click)="close()">{{ 'NO_TEXT' | translate }}</ion-button>
+    </ion-col>
+    <ion-col class="ion-text-center">
+      <ion-button color="warning" [disabled]="loading" (click)="enableRole(selectedMber.member)" >{{ 'YES_TEXT' | translate }}</ion-button>
+    </ion-col>
+  </ion-row>
+  <p class="ion-text-center"  *ngIf="loading">
+    <ion-spinner  name="circles"></ion-spinner>
+  </p> 
+</ion-grid>

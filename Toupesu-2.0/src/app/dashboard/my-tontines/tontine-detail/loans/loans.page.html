@@ -1,0 +1,118 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button color="primary" [defaultHref]="['/','dashboard','my-tontines',currentTontine.tontine_id]" slot="text-only"></ion-back-button>
+    </ion-buttons>
+    <ion-avatar slot="start">
+        <ion-img [src]="'assets/join-icon.svg'" class="thumb-img"></ion-img>
+    </ion-avatar>
+    <ion-title class="no-padding">
+      {{'LOAN_MANAGER' | translate }}
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="openContextMenu($event)">
+        <ion-icon name="ellipsis-vertical" color="primary"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="tontine-loans">
+
+  <ion-refresher slot="fixed" (ionRefresh)="refreSher($event)">
+    <ion-refresher-content
+      pullingIcon="reload-outline"
+      refreshingSpinner="circles"
+      refreshingText="{{ 'M_REFRESHING_TEXT' | translate }}">
+    </ion-refresher-content>
+  </ion-refresher>
+  
+  <p class="ion-text-center"  *ngIf="loading">
+    <ion-spinner  name="circles"></ion-spinner>
+  </p>
+
+  <ion-grid *ngIf="!loading">
+    <ion-row>
+      <ion-col size="12" class="ion-no-padding">
+        <ion-card class="block-1">
+          <ion-card-content class="ion-text-center">
+            <ion-row>
+              <ion-col size="4" class="col-button">
+                <div class="desc">{{'INTEREST_INFO_TEXT' | translate }}</div>
+                <h3>{{ 'INTEREST_TEXT' | translate }} <br/>(%)</h3>                
+                <div class="menu-amount">{{currentTontine &&  currentTontine.interest ? currentTontine.interest : 0}}</div>
+                <h3>{{ 'INTEREST_OF_TEXT' | translate }} <br/>{{ 'INTEREST_TEXT' | translate }} (%)</h3>
+                <div class="menu-amount">{{currentTontine && currentTontine.interest_of_interest ? (currentTontine.interest_of_interest | commadumper ) : 0}}</div>
+              </ion-col>              
+              <ion-col size="4" class="col-button border-lr">
+                <div class="desc">{{ 'MY_LOAN_TEXT' | translate }}</div>
+                <h3>{{ 'CURRENT_LOAN' | translate }} ({{currentTontine ? currentTontine.monnaie : ''}})</h3>
+                <div class="menu-amount">{{currentLoan && currentLoan.length > 0  ? (currentLoan[0].current_loan | commadumper) : 0 }}</div>
+                <h3>{{ 'OUTSTANDING_TEXT' | translate }} <br/>({{currentTontine ? currentTontine.monnaie : ''}})</h3>
+                <div class="menu-amount">{{currentLoan && currentLoan.length > 0  ? (currentLoan[0].oustanding | commadumper) : 0 }}</div>
+              </ion-col>
+              <ion-col size="4" class="col-button">
+                <div class="desc">{{ 'MY_INTERESTS_TEXT' | translate }}</div>
+                <h3>{{ 'GENERATE_TEXT' | translate }} <br/>({{currentTontine ? currentTontine.monnaie : ''}})</h3>
+                <div class="menu-amount">{{currentInterest && currentInterest.length > 0  ? (currentInterest[0].generate | commadumper) : 0 }}</div>
+                <h3>{{ 'GROUPE_TEXT' | translate }} <br/>{{ 'EARNED_TEXT' | translate}} ({{currentTontine ? currentTontine.monnaie : ''}})</h3>
+                <div class="menu-amount">{{currentInterest && currentInterest.length > 0  ? (currentInterest[0].groupe_earned | commadumper) : 0 }}</div>
+              </ion-col>
+              <ion-col size="12">
+                <div class="t-balance">
+                  <ion-text [color]="currentTontine&&currentTontine.type_of_target_loan ? 'danger' : currentTontine&&(!currentTontine.type_of_target_loan &&! currentTontine.type_of_target_interest)  ? 'danger' :  'danger ion-hide'"><span class="desc">{{ 'LOAN_TARGET_PER_CYCLE' | translate }}:  {{currentLoan && currentLoan.length > 0 && currentLoan[0].target_by_cycle_my_loan > 0  ? (currentLoan[0].target_by_cycle_my_loan | commadumper) + '' + (currentTontine ? currentTontine.monnaie : '') : ('NOT_SET' | translate) }} </span></ion-text><br/>
+                  <ion-text [color]="currentTontine&&currentTontine.type_of_target_interest ? 'danger' :  currentTontine&&(!currentTontine.type_of_target_loan &&! currentTontine.type_of_target_interest)  ? 'danger' : 'danger ion-hide'"><span class="desc"> {{ 'INTEREST_TARGET_PER_CYCLE' | translate }} :  {{currentInterest && currentInterest.length > 0  && currentInterest[0].target_by_cycle_my_interest > 0 ? (currentInterest[0].target_by_cycle_my_interest | commadumper) + '' + (currentTontine ? currentTontine.monnaie : '') : ('NOT_SET' | translate) }} </span></ion-text>
+                </div>
+              </ion-col> 
+            </ion-row>            
+          </ion-card-content>
+        </ion-card>
+      </ion-col> 
+    </ion-row>
+    <ion-row>
+      <ion-col size="12" size-md>
+        <ion-label>
+          <h3 class="ion-padding-start">{{ 'CURRENT_LOAN_SESSION_STATUS_TEXT' | translate }}</h3>
+        </ion-label>        
+        <div class="donut-wrap">
+          <div [class]="(getPercentage(currentSessionLoanRequest && currentSessionLoanRequest.length > 0 ? currentSessionLoanRequest[0].pourcentage_loan_approved : 0))">
+            <div class="donut-text">
+              <small>{{ 'CONTRIBUTED_MONEY_TEXT' | translate }}({{currentTontine ? currentTontine.monnaie : ''}})</small>
+              <p>{{ currentSessionLoanRequest && currentSessionLoanRequest.length > 0 ? (currentSessionLoanRequest[0].cash_available | commadumper) : 0 }}</p>
+            </div>
+          </div>
+          <span class="tooltip" tooltip="(currentSessionLoanRequest && currentSessionLoanRequest.length > 0 ?  currentSessionLoanRequest[0].pourcentage_loan_approved : 0 )%">{{ 'REQUESTED_TEXT' | translate }}</span>
+        </div>
+      </ion-col>
+      <ion-col size="12" size-md>
+        <div class="donut-legend ion-padding-horizontal">
+          <p class="legend-color1"><small>{{ 'LOAN_APPROVE' | translate }} ({{  currentSessionLoanRequest && currentSessionLoanRequest.length > 0 ?  (currentSessionLoanRequest[0].pourcentage_loan_approved | commadumper) : 0 }}%)</small> <br/> <span>{{ currentSessionLoanRequest && currentSessionLoanRequest.length > 0 ? (currentSessionLoanRequest[0].cash_loan_approved | commadumper) : 0 }} {{currentTontine ? currentTontine.monnaie : ''}}</span> </p>
+          <p class="legend-color2"><small>{{'STILL_TO_BORROW' | translate }} ({{  currentSessionLoanRequest && currentSessionLoanRequest.length > 0 ?  (currentSessionLoanRequest[0].pourcentage_cash_still_to_borrow | commadumper) : 0 }}%)</small><br/> <span>{{ currentSessionLoanRequest && currentSessionLoanRequest.length > 0 ? (currentSessionLoanRequest[0].cash_still_to_borrow | commadumper) : 0 }} {{currentTontine ? currentTontine.monnaie : ''}}</span> </p>
+          <p><small>{{ 'NUMBER_LOAN_REQUEST' | translate }}: </small> <span class="font-weight-bolder">{{  currentSessionLoanRequest && currentSessionLoanRequest.length > 0 ?  currentSessionLoanRequest[0].total_members_who_requested : 0 }}/{{  currentSessionLoanRequest && currentSessionLoanRequest.length > 0 ?  currentSessionLoanRequest[0].total_members_tontine : 0 }}</span> </p>
+          <p><small>{{ 'NUMBER_REQUEST_VALIDATED' | translate }}: </small> <span class="font-weight-bolder">{{  currentSessionLoanRequest && currentSessionLoanRequest.length > 0 ?  currentSessionLoanRequest[0].total_request_validated  : 0 }}/{{  currentSessionLoanRequest && currentSessionLoanRequest.length > 0 ?  currentSessionLoanRequest[0].total_request : 0 }}</span> </p>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="currentTontine&&currentTontine.lend_full_cash_available_at_each_session !== 0">
+      <ion-col>
+        <p class="ion-padding-horizontal"><b>{{ 'NOTE_TEXT' | translate }}:</b> {{ 'NOTE_DESCRIPTION_TEXT' | translate }}</p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
+
+<ion-footer class="ion-padding ion-text-center" *ngIf="!loading && canMakeRequest()">
+  <ion-grid>
+    <ion-row> 
+      <ion-col>
+        <ion-button expand="full" 
+              color="warning" 
+              class="ion-text-uppercase"
+              shape="round"  (click)="openLoansRequest()" >
+              {{ 'LOANS_REQUEST_TEXT' | translate }}
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

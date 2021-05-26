@@ -1,0 +1,180 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button color="primary" [defaultHref]="'/dashboard/my-tontines/' + currentTontine.tontine.tontine_id" slot="text-only"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="no-padding ion-text-center">
+    {{ 'WALLET_TEXT' | translate }} <small *ngIf="walletTontines && walletTontines[0] && walletTontines[0].currency_name">({{walletTontines[0].currency_name}})</small> 
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="openContextMenu($event)">
+        <ion-icon name="ellipsis-vertical" color="primary"></ion-icon>
+      </ion-button>
+    </ion-buttons> 
+  </ion-toolbar>
+  <ion-toolbar class="ion-text-center subtitle">
+    <ion-title><ion-text color="primary" class="ion-text-capitalize">{{'OVERVIEW_TEXT' | translate}}</ion-text></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="tontine-wallet">
+
+  <ion-refresher slot="fixed" (ionRefresh)="refreSher($event)">
+    <ion-refresher-content
+      pullingIcon="reload-outline"
+      refreshingSpinner="circles"
+      refreshingText="{{ 'M_REFRESHING_TEXT' | translate }}">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <ion-grid>
+    <ion-row class="ion-text-center" *ngIf="!loading">
+      <ion-col size="12" class="t-balance">
+        <div>
+          <ion-text color="danger" class="desc">{{ 'TONTINE_DETAIL_TEXT30' | translate }}: {{walletTontines && walletTontines[0] ? walletTontines[0].total_balance : 0}}</ion-text>  
+        </div>        
+      </ion-col>
+      <ion-col size="6" class="sub-balance" *ngIf="isTraditionnalBanking()">
+        <ion-text class="desc" color="primary">{{ 'ONLINE_BALANCE_TEXT' | translate }}</ion-text><br/>
+        <ion-text class="menu-amount" color="danger">{{onlineBalance  | commadumper}}</ion-text> 
+      </ion-col>
+      <ion-col size="6" class="sub-balance" *ngIf="isTraditionnalBanking()">
+        <ion-text class="desc" color="primary">{{ 'OFFLINE_BALANCE_TEXT' | translate }}</ion-text><br/> 
+        <ion-text class="menu-amount" color="danger">{{offlineBalance  | commadumper}}</ion-text>
+      </ion-col>
+      <ion-col class="line-height095" *ngFor="let caisse of detailCaisses">
+        <ion-text class="desc">{{caisse.caisse_name ? (caisse.caisse_name.split(' ')[0] | translate) : ''}} <br/> {{caisse.caisse_name ? (caisse.caisse_name.replace(caisse.caisse_name.split(' ')[0],"") | translate) : ''}}</ion-text> <br/>
+        <ion-text class="menu-amount" color="warning">{{caisse.solde ? (caisse.solde  | commadumper) : 0}}</ion-text>
+        <div class="online-offline" *ngIf="isTraditionnalBanking()">
+          <ion-text class="desc" color="primary">{{'ONLINE_TEXT' | translate}}</ion-text> <br/>
+          <ion-text class="menu-amount" color="dark">{{caisse.online_balance ? (caisse.online_balance  | commadumper) : 0 }}</ion-text> <br/>
+          <ion-text class="desc" color="primary">{{'OFFLINE_TEXT' | translate}}</ion-text> <br/>
+          <ion-text class="menu-amount" color="dark">{{caisse.bank_balance ? (caisse.bank_balance  | commadumper) : 0 }}</ion-text>
+        </div>
+      </ion-col>
+    </ion-row>
+    <p class="ion-text-center"  *ngIf="loading || loadingList">
+      <ion-spinner  name="circles"></ion-spinner>
+    </p>
+<!--  <ion-row>
+      <ion-col>
+        <ion-button fill="outline" 
+              color="dark"
+              size="small"
+              class="ion-text-capitalize">
+          New checkout
+        </ion-button>
+      </ion-col>
+    </ion-row> -->
+    <ion-row>
+      <ion-col class="padding-trans">
+        <ion-row class="ion-justify-content-between" *ngIf="allData && allData.length > 0">
+          <ion-col size="auto">
+            <h6>{{ 'PENDING_TRANSACTIONS' | translate }} <span>({{listData.length}}/{{allData.length}})</span></h6>
+          </ion-col>
+    <!--   <ion-col size="auto">
+            <ion-button fill="outline" 
+                  color="dark"
+                  size="small"
+                  class="ion-text-capitalize"  (click)="newPayment()">
+              {{'NEW_PAYMENT' | translate}}
+            </ion-button>
+          </ion-col> -->
+        </ion-row> 
+
+      <ion-row *ngFor="let trans of listData">
+
+          <ion-col class="trans-item" *ngIf="trans.type === 'beneficiary'" > 
+            <ion-card class="ion-no-margin">     
+              <ion-card-content>
+                <div>
+                  <ion-text color="dark">{{trans.data && trans.data.firstname ? trans.data.firstname : ''}} {{trans.data && trans.data.lastname ? trans.data.lastname : ''}}</ion-text><br />
+                  <small>{{'DATE_TEXT' | translate }}: {{trans.data && trans.data.updated_at ? trans.data.updated_at.split(' ')[0] : ''}}</small><br />
+                  <small>{{'CYCLE_TEXT' | translate }}: {{trans.data && trans.data.infos_seance && trans.data.infos_seance.numerocycle ? trans.data.infos_seance.numerocycle: ''}}/{{trans.data && trans.data.infos_seance && trans.data.infos_seance.numero_seance ? trans.data.infos_seance.numero_seance: ''}} | 
+                    {{'AMOUNT_TEXT' | translate }} : {{trans.data && trans.data.somme ? (trans.data.somme  | commadumper) : 0}} {{trans.data && trans.data.device_name ? trans.data.device_name : ''}} | {{'REMAIN_TEXT' | translate}}: 
+                    {{trans.data && trans.data.reste_a_payer ? (trans.data.reste_a_payer  | commadumper) : 0}} {{trans.data && trans.data.device_name ? trans.data.device_name : ''}}</small><br />
+                  <ion-text color="danger">{{'STATUS_TEXT' | translate}}: {{trans.data && trans.data.status ? (trans.data.status | translate) : ''}} ({{trans.data && trans.data.liste_admin_approval ? trans.data.liste_admin_approval.length : 0 }}/{{nbValidator}})</ion-text>
+                </div>
+              </ion-card-content>
+              <ion-item lines="none">
+                <ion-button fill="outline" slot="end" *ngIf="canInitiateJackpot(trans.data)" (click)="openInitiatePay(trans.data)">{{'INITIATE_PAIEMENT' | translate}}</ion-button>            
+              </ion-item>
+            </ion-card>
+          </ion-col> 
+
+          <ion-col class="trans-item" *ngIf="trans.type === 'beneficiaryInitiate'" > 
+            <ion-card class="ion-no-margin">     
+              <ion-card-content>
+                <div>
+                  <ion-text color="dark">{{trans.data && trans.data.firstname ? trans.data.firstname : ''}} {{trans.data && trans.data.lastname ? trans.data.lastname : ''}}</ion-text><br />
+                  <small>{{'DATE_TEXT' | translate }}: {{trans.data && trans.data.updated_at ? trans.data.updated_at.split(' ')[0] : ''}}</small><br />
+                  <small>{{'CYCLE_TEXT' | translate }}: {{trans.data && trans.data.infos_seance && trans.data.infos_seance.numerocycle ? trans.data.infos_seance.numerocycle: ''}}/{{trans.data && trans.data.infos_seance && trans.data.infos_seance.numero_seance ? trans.data.infos_seance.numero_seance: ''}} | 
+                    {{'AMOUNT_TEXT' | translate }} : {{trans.data && trans.data.somme ? (trans.data.somme  | commadumper) : 0}} {{trans.data && trans.data.device_name ? trans.data.device_name : ''}} | {{'REMAIN_TEXT' | translate}}: 
+                    {{trans.data && trans.data.reste_a_payer ? (trans.data.reste_a_payer  | commadumper) : 0}} {{trans.data && trans.data.device_name ? trans.data.device_name : ''}}</small><br />
+                  <ion-text color="danger">{{'STATUS_TEXT' | translate}}: {{trans.data && trans.data.status ? (trans.data.status | translate) : ''}} ({{trans.data && trans.data.liste_admin_approval ? trans.data.liste_admin_approval.length : 1 }}/{{nbValidator}})</ion-text>
+                </div>
+              </ion-card-content>
+              <ion-item lines="none">
+               <ion-button fill="outline" slot="start" (click)="viewBeneficialProof(trans.data)">{{ 'VIEW_DETAIL_TEXT' | translate }}</ion-button> 
+                <ion-button fill="outline" slot="end" *ngIf="canValidateJackpot(trans.data)" (click)="openFundRepartition(trans.data)">{{'FUND_REPARTITION' | translate}}</ion-button> 
+                <ion-button fill="outline" slot="end" *ngIf="canPayJackpot(trans.data)" (click)="makePayment(trans.data)">{{'MAKE_PAYMENT_TEXT' | translate}}</ion-button>              
+              </ion-item>
+            </ion-card>
+          </ion-col>
+
+          <ion-col class="trans-item" *ngIf="trans.type === 'deposit'">
+            <ion-card class="ion-no-margin">     
+              <ion-card-content>
+                <div>
+                  <ion-text color="dark">{{ 'TOPUP_WALLET_TEXT' | translate }}</ion-text><br />
+                  <small>{{'DATE_TEXT' | translate }}: {{trans.data && trans.data.updated_at ? trans.data.updated_at.split(' ')[0] : ''}}</small><br />
+                  <small>{{'AMOUNT_TEXT' | translate }}:{{trans.data && trans.data.amount ? (trans.data.amount  | commadumper) : 0 }} {{trans.data && trans.data.currency_name ? trans.data.currency_name : '' }}  
+                    <span>|</span> {{'METHOD_TEXT' | translate}}: 
+                    <span *ngIf="trans.data && trans.data.with_cash===0">{{trans.data && trans.data.method_payment_name ? trans.data.method_payment_name : '' }}</span>
+                    <span *ngIf="trans.data && trans.data.with_cash===1">{{'CASH_PAYMENT' | translate }}</span>
+                  </small><br />
+                  <ion-text color="danger">{{'STATUS_TEXT' | translate}}: {{trans.data && trans.data.status_transaction ? (trans.data.status_transaction | translate) : '' }} 
+                     <span> ({{trans.data && trans.data.liste_admin_approval ? trans.data.liste_admin_approval.length : 1 }}/{{nbValidator}})</span>
+                    </ion-text>
+                </div>
+              </ion-card-content>
+              <ion-item lines="none">
+                <ion-button fill="outline" slot="start" (click)="viewDepositProof(trans.data)" >{{ 'VIEW_DETAIL_TEXT' | translate }}</ion-button>
+                <ion-button fill="outline" slot="end" *ngIf="canValidateDeposit(trans.data)"   (click)="validateDeposit(trans.data)">{{ 'VALIDATE_TEXT' | translate }}</ion-button>       
+              </ion-item>
+            </ion-card>
+          </ion-col>
+
+          <ion-col class="trans-item"  *ngIf="trans.type === 'withdrawal'">
+            <ion-card class="ion-no-margin">     
+              <ion-card-content>
+                <div>
+                  <ion-text color="dark">{{ 'WITHDRAWAL_TEXT0' | translate }}</ion-text><br />
+                  <small>{{'DATE_TEXT' | translate }}: {{trans.data && trans.data.updated_at ? trans.data.updated_at.split(' ')[0] : ''}}</small><br />
+                  <small>{{'AMOUNT_TEXT' | translate }}: {{trans.data && trans.data.amount ? (trans.data.amount | commadumper) : 0 }} {{currentTontine && currentTontine.tontine ? currentTontine.tontine.monnaie : '' }}| {{'METHOD_TEXT' | translate}}: {{getPaymentName(trans.data.method_payment_id)}}</small><br />
+                  <ion-text color="danger">{{'STATUS_TEXT' | translate}}: {{trans.data && trans.data.status ? (trans.data.status | translate) : '' }} ({{trans && trans.data && approvals[trans.data.id] ? approvals[trans.data.id].length : 1 }}/{{nbValidator}})</ion-text>
+                </div>
+              </ion-card-content>
+              <ion-item lines="none">
+             <!--<ion-button fill="outline" slot="start" [disabled]="!canRefuseWithdrawal(trans.data,refusals[trans.data.id])" (click)="rejectPayment(trans.data)" >{{ 'REJECT_TEXT' | translate }}</ion-button>-->
+                <ion-button fill="outline" slot="end" [disabled]="!canValidateWithdrawal(trans.data,approvals[trans.data.id])" (click)="validatePayment(trans.data)">{{ 'VALIDATE_TEXT' | translate}}</ion-button>                
+              </ion-item>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <div  *ngIf="listData && listData.length === 0 && (!loadingList && !loading)">
+    <p  class="ion-text-center"> {{ 'HISTORY_TEXT3' | translate }}</p>
+  </div>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="infinteScrollData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="{{ 'M_LOADING_MORE_DATA' | translate }}">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+  
+</ion-content>

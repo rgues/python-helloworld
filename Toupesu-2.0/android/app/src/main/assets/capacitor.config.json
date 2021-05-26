@@ -1,0 +1,37 @@
+{
+  "appId": "com.toupesu.toupesu",
+  "appName": "Toupesu",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "loggingBehavior": "debug",
+  "android": {
+
+  },
+  "ios": {
+
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 3000,
+      "launchAutoHide": true,
+      "backgroundColor": "#ffffffff",
+      "androidSplashResourceName": "splash",
+      "androidScaleType": "CENTER_CROP",
+      "androidSpinnerStyle": "large",
+      "iosSpinnerStyle": "small",
+      "spinnerColor": "#999999",
+      "showSpinner": false,
+      "splashFullScreen": true,
+      "splashImmersive": true
+    }
+  },
+  "cordova": {
+    "preferences": {
+      "DisableDeploy": "true",
+      "CameraUsesGeolocation": "true",
+      "android-minSdkVersion":"19",
+      "android-targetSdkVersion":"29"
+    }
+  }
+}

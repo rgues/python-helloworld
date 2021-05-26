@@ -1,0 +1,93 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" >
+      <ion-back-button *ngIf="!fisrtLogin" color="primary" defaultHref="/dashboard/user" slot="text-only"></ion-back-button>
+    </ion-buttons>
+    <ion-avatar slot="start">
+      <img src="{{userPicture ? userPicture : 'assets/post-img.svg'}}" class="thumb-img">
+    </ion-avatar>
+    <ion-title class="no-padding ion-margin-start">
+        {{'USER_PROFILE_TEXT3' | translate }}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="userSecurityForm">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <p> {{ 'USER_SECURITY_TEXT5' | translate }}</p>
+        </ion-col>
+      </ion-row>
+      <ion-row >
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">{{ 'M_OLD_PIN' | translate }}</ion-label>
+            <ion-input type="tel" formControlName="old_pin" required></ion-input>
+          </ion-item>
+            <div class="validation-errors">
+              <ng-container *ngFor="let validation of validationMessages.pin">
+                <div class="error-message" *ngIf="(oldPin.dirty || oldPin.touched) && oldPin.hasError(validation.type)">
+                  <ion-icon name="information-circle-outline" ></ion-icon>
+                  <span> {{ validation.message }}</span>
+                </div>
+              </ng-container>  
+            </div>  
+        </ion-col>
+      </ion-row>
+
+      <ion-row >
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">{{ 'M_NEW_PIN' | translate }}</ion-label>
+            <ion-input type="tel" formControlName="new_pin" required></ion-input>
+          </ion-item>
+            <div class="validation-errors">
+              <ng-container *ngFor="let validation of validationMessages.pin">
+                <div class="error-message" *ngIf="(newPin.dirty || newPin.touched) && newPin.hasError(validation.type)">
+                  <ion-icon name="information-circle-outline" ></ion-icon>
+                  <span> {{ validation.message }}</span>
+                </div>
+              </ng-container>  
+            </div>  
+        </ion-col>
+      </ion-row>
+
+      <ion-row >
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">{{ 'M_CONFIRM_NEW_PIN' | translate }}</ion-label>
+            <ion-input type="tel" formControlName="new_pin_confirm" required></ion-input>
+          </ion-item>
+            <div class="validation-errors">
+              <ng-container *ngIf="(userSecurityForm.value.new_pin !== userSecurityForm.value.new_pin_confirm) && (newPinConfirm.dirty || newPinConfirm.touched) && (newPin.dirty || newPin.touched) ">
+                <div class="error-message">
+                  <ion-icon name="information-circle-outline" ></ion-icon>
+                  <span> {{ 'PIN_NOT_MATCH' | translate }}</span>
+                </div>
+              </ng-container>  
+            </div>  
+        </ion-col>
+      </ion-row>
+ 
+    </ion-grid>
+  </form>
+
+</ion-content>
+
+<ion-footer class="ion-padding ion-text-center">
+  <ion-button expand="full" (click)="changePin()" [disabled]="loading" *ngIf="userSecurityForm.valid && (userSecurityForm.value.new_pin === userSecurityForm.value.new_pin_confirm)"
+        color="warning" 
+        class="ion-text-uppercase"
+        shape="round">
+    {{'SAVE_TEXT' | translate}}
+  </ion-button>
+  <ion-button expand="full" (click)="skipStep()" *ngIf="userSecurityForm.invalid && fisrtLogin"
+    color="warning" 
+    class="ion-text-uppercase"
+    shape="round">
+    {{'M_SKIP' | translate}}
+</ion-button>
+  <ion-spinner *ngIf="loading" name="circles"></ion-spinner>
+</ion-footer>

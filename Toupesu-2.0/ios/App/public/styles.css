@@ -1,0 +1,3051 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700);
+/** Ionic CSS Variables **/
+:root {
+  /** primary **/
+  --ion-color-primary: #006699;
+  /* #3880ff */
+  --ion-color-primary-rgb: 0, 102, 153;
+  /* 56, 128, 255 */
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #3171e0;
+  --ion-color-primary-tint: #4c8dff;
+  /** secondary **/
+  --ion-color-secondary: #0cd1e8;
+  --ion-color-secondary-rgb: 12, 209, 232;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: #0bb8cc;
+  --ion-color-secondary-tint: #24d6ea;
+  /** tertiary **/
+  --ion-color-tertiary: #7044ff;
+  --ion-color-tertiary-rgb: 112, 68, 255;
+  --ion-color-tertiary-contrast: #ffffff;
+  --ion-color-tertiary-contrast-rgb: 255, 255, 255;
+  --ion-color-tertiary-shade: #633ce0;
+  --ion-color-tertiary-tint: #7e57ff;
+  /** success **/
+  --ion-color-success: #10dc60;
+  --ion-color-success-rgb: 16, 220, 96;
+  --ion-color-success-contrast: #ffffff;
+  --ion-color-success-contrast-rgb: 255, 255, 255;
+  --ion-color-success-shade: #0ec254;
+  --ion-color-success-tint: #28e070;
+  /** warning **/
+  --ion-color-warning: #ff9933;
+  /* ffce00; */
+  --ion-color-warning-rgb: 255, 153, 51;
+  /* 255, 206, 0; */
+  --ion-color-warning-contrast: #ffffff;
+  --ion-color-warning-contrast-rgb: 255, 255, 255;
+  --ion-color-warning-shade: #e0b500;
+  --ion-color-warning-tint: #ffd31a;
+  /** danger **/
+  --ion-color-danger: #f04141;
+  --ion-color-danger-rgb: 245, 61, 61;
+  --ion-color-danger-contrast: #ffffff;
+  --ion-color-danger-contrast-rgb: 255, 255, 255;
+  --ion-color-danger-shade: #d33939;
+  --ion-color-danger-tint: #f25454;
+  /** dark **/
+  --ion-color-dark: #222428;
+  --ion-color-dark-rgb: 34, 34, 34;
+  --ion-color-dark-contrast: #ffffff;
+  --ion-color-dark-contrast-rgb: 255, 255, 255;
+  --ion-color-dark-shade: #1e2023;
+  --ion-color-dark-tint: #383a3e;
+  /** medium **/
+  --ion-color-medium: #989aa2;
+  --ion-color-medium-rgb: 152, 154, 162;
+  --ion-color-medium-contrast: #ffffff;
+  --ion-color-medium-contrast-rgb: 255, 255, 255;
+  --ion-color-medium-shade: #86888f;
+  --ion-color-medium-tint: #a2a4ab;
+  /** light **/
+  --ion-color-light: #f4f5f8;
+  --ion-color-light-rgb: 244, 244, 244;
+  --ion-color-light-contrast: #000000;
+  --ion-color-light-contrast-rgb: 0, 0, 0;
+  --ion-color-light-shade: #d7d8da;
+  --ion-color-light-tint: #f5f6f9;
+  --ion-background-color: #fcfcfc;
+  --ion-toolbar-background: #fcfcfc;
+  --ion-default-font: "mark-extralight", sans-serif;
+}
+
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+/* Core CSS required for Ionic components to work properly */
+html.ios {
+  --ion-default-font: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif;
+}
+html.md {
+  --ion-default-font: "Roboto", "Helvetica Neue", sans-serif;
+}
+html {
+  --ion-font-family: var(--ion-default-font);
+}
+body {
+  background: var(--ion-background-color);
+}
+body.backdrop-no-scroll {
+  overflow: hidden;
+}
+html.ios ion-modal.modal-card .ion-page > ion-header > ion-toolbar:first-of-type {
+  padding-top: 0px;
+}
+html.ios ion-modal .ion-page {
+  border-radius: inherit;
+}
+.ion-color-primary {
+  --ion-color-base: var(--ion-color-primary, #3880ff) !important;
+  --ion-color-base-rgb: var(--ion-color-primary-rgb, 56, 128, 255) !important;
+  --ion-color-contrast: var(--ion-color-primary-contrast, #fff) !important;
+  --ion-color-contrast-rgb: var(--ion-color-primary-contrast-rgb, 255, 255, 255) !important;
+  --ion-color-shade: var(--ion-color-primary-shade, #3171e0) !important;
+  --ion-color-tint: var(--ion-color-primary-tint, #4c8dff) !important;
+}
+.ion-color-secondary {
+  --ion-color-base: var(--ion-color-secondary, #3dc2ff) !important;
+  --ion-color-base-rgb: var(--ion-color-secondary-rgb, 61, 194, 255) !important;
+  --ion-color-contrast: var(--ion-color-secondary-contrast, #fff) !important;
+  --ion-color-contrast-rgb: var(--ion-color-secondary-contrast-rgb, 255, 255, 255) !important;
+  --ion-color-shade: var(--ion-color-secondary-shade, #36abe0) !important;
+  --ion-color-tint: var(--ion-color-secondary-tint, #50c8ff) !important;
+}
+.ion-color-tertiary {
+  --ion-color-base: var(--ion-color-tertiary, #5260ff) !important;
+  --ion-color-base-rgb: var(--ion-color-tertiary-rgb, 82, 96, 255) !important;
+  --ion-color-contrast: var(--ion-color-tertiary-contrast, #fff) !important;
+  --ion-color-contrast-rgb: var(--ion-color-tertiary-contrast-rgb, 255, 255, 255) !important;
+  --ion-color-shade: var(--ion-color-tertiary-shade, #4854e0) !important;
+  --ion-color-tint: var(--ion-color-tertiary-tint, #6370ff) !important;
+}
+.ion-color-success {
+  --ion-color-base: var(--ion-color-success, #2dd36f) !important;
+  --ion-color-base-rgb: var(--ion-color-success-rgb, 45, 211, 111) !important;
+  --ion-color-contrast: var(--ion-color-success-contrast, #fff) !important;
+  --ion-color-contrast-rgb: var(--ion-color-success-contrast-rgb, 255, 255, 255) !important;
+  --ion-color-shade: var(--ion-color-success-shade, #28ba62) !important;
+  --ion-color-tint: var(--ion-color-success-tint, #42d77d) !important;
+}
+.ion-color-warning {
+  --ion-color-base: var(--ion-color-warning, #ffc409) !important;
+  --ion-color-base-rgb: var(--ion-color-warning-rgb, 255, 196, 9) !important;
+  --ion-color-contrast: var(--ion-color-warning-contrast, #000) !important;
+  --ion-color-contrast-rgb: var(--ion-color-warning-contrast-rgb, 0, 0, 0) !important;
+  --ion-color-shade: var(--ion-color-warning-shade, #e0ac08) !important;
+  --ion-color-tint: var(--ion-color-warning-tint, #ffca22) !important;
+}
+.ion-color-danger {
+  --ion-color-base: var(--ion-color-danger, #eb445a) !important;
+  --ion-color-base-rgb: var(--ion-color-danger-rgb, 235, 68, 90) !important;
+  --ion-color-contrast: var(--ion-color-danger-contrast, #fff) !important;
+  --ion-color-contrast-rgb: var(--ion-color-danger-contrast-rgb, 255, 255, 255) !important;
+  --ion-color-shade: var(--ion-color-danger-shade, #cf3c4f) !important;
+  --ion-color-tint: var(--ion-color-danger-tint, #ed576b) !important;
+}
+.ion-color-light {
+  --ion-color-base: var(--ion-color-light, #f4f5f8) !important;
+  --ion-color-base-rgb: var(--ion-color-light-rgb, 244, 245, 248) !important;
+  --ion-color-contrast: var(--ion-color-light-contrast, #000) !important;
+  --ion-color-contrast-rgb: var(--ion-color-light-contrast-rgb, 0, 0, 0) !important;
+  --ion-color-shade: var(--ion-color-light-shade, #d7d8da) !important;
+  --ion-color-tint: var(--ion-color-light-tint, #f5f6f9) !important;
+}
+.ion-color-medium {
+  --ion-color-base: var(--ion-color-medium, #92949c) !important;
+  --ion-color-base-rgb: var(--ion-color-medium-rgb, 146, 148, 156) !important;
+  --ion-color-contrast: var(--ion-color-medium-contrast, #fff) !important;
+  --ion-color-contrast-rgb: var(--ion-color-medium-contrast-rgb, 255, 255, 255) !important;
+  --ion-color-shade: var(--ion-color-medium-shade, #808289) !important;
+  --ion-color-tint: var(--ion-color-medium-tint, #9d9fa6) !important;
+}
+.ion-color-dark {
+  --ion-color-base: var(--ion-color-dark, #222428) !important;
+  --ion-color-base-rgb: var(--ion-color-dark-rgb, 34, 36, 40) !important;
+  --ion-color-contrast: var(--ion-color-dark-contrast, #fff) !important;
+  --ion-color-contrast-rgb: var(--ion-color-dark-contrast-rgb, 255, 255, 255) !important;
+  --ion-color-shade: var(--ion-color-dark-shade, #1e2023) !important;
+  --ion-color-tint: var(--ion-color-dark-tint, #383a3e) !important;
+}
+.ion-page {
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  justify-content: space-between;
+  contain: layout size style;
+  overflow: hidden;
+  z-index: 0;
+}
+.split-pane-visible > .ion-page.split-pane-main {
+  position: relative;
+}
+ion-route,
+ion-route-redirect,
+ion-router,
+ion-select-option,
+ion-nav-controller,
+ion-menu-controller,
+ion-action-sheet-controller,
+ion-alert-controller,
+ion-loading-controller,
+ion-modal-controller,
+ion-picker-controller,
+ion-popover-controller,
+ion-toast-controller,
+.ion-page-hidden,
+[hidden] {
+  /* stylelint-disable-next-line declaration-no-important */
+  display: none !important;
+}
+.ion-page-invisible {
+  opacity: 0;
+}
+.can-go-back > ion-header ion-back-button {
+  display: block;
+}
+html.plt-ios.plt-hybrid, html.plt-ios.plt-pwa {
+  --ion-statusbar-padding: 20px;
+}
+@supports (padding-top: 20px) {
+  html {
+    --ion-safe-area-top: var(--ion-statusbar-padding);
+  }
+}
+@supports (padding-top: constant(safe-area-inset-top)) {
+  html {
+    --ion-safe-area-top: constant(safe-area-inset-top);
+    --ion-safe-area-bottom: constant(safe-area-inset-bottom);
+    --ion-safe-area-left: constant(safe-area-inset-left);
+    --ion-safe-area-right: constant(safe-area-inset-right);
+  }
+}
+@supports (padding-top: env(safe-area-inset-top)) {
+  html {
+    --ion-safe-area-top: env(safe-area-inset-top);
+    --ion-safe-area-bottom: env(safe-area-inset-bottom);
+    --ion-safe-area-left: env(safe-area-inset-left);
+    --ion-safe-area-right: env(safe-area-inset-right);
+  }
+}
+ion-card.ion-color .ion-inherit-color,
+ion-card-header.ion-color .ion-inherit-color {
+  color: inherit;
+}
+.menu-content {
+  transform: translate3d(0,  0,  0);
+}
+.menu-content-open {
+  cursor: pointer;
+  touch-action: manipulation;
+  pointer-events: none;
+}
+.ios .menu-content-reveal {
+  box-shadow: -8px 0 42px rgba(0, 0, 0, 0.08);
+}
+[dir=rtl].ios .menu-content-reveal {
+  box-shadow: 8px 0 42px rgba(0, 0, 0, 0.08);
+}
+.md .menu-content-reveal {
+  box-shadow: 4px 0px 16px rgba(0, 0, 0, 0.18);
+}
+.md .menu-content-push {
+  box-shadow: 4px 0px 16px rgba(0, 0, 0, 0.18);
+}
+/* Basic CSS for apps built with Ionic */
+audio,
+canvas,
+progress,
+video {
+  vertical-align: baseline;
+}
+audio:not([controls]) {
+  display: none;
+  height: 0;
+}
+b,
+strong {
+  font-weight: bold;
+}
+img {
+  max-width: 100%;
+  border: 0;
+}
+svg:not(:root) {
+  overflow: hidden;
+}
+figure {
+  margin: 1em 40px;
+}
+hr {
+  height: 1px;
+  border-width: 0;
+  box-sizing: content-box;
+}
+pre {
+  overflow: auto;
+}
+code,
+kbd,
+pre,
+samp {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+label,
+input,
+select,
+textarea {
+  font-family: inherit;
+  line-height: normal;
+}
+textarea {
+  overflow: auto;
+  height: auto;
+  font: inherit;
+  color: inherit;
+}
+textarea::placeholder {
+  padding-left: 2px;
+}
+form,
+input,
+optgroup,
+select {
+  margin: 0;
+  font: inherit;
+  color: inherit;
+}
+html input[type=button],
+input[type=reset],
+input[type=submit] {
+  cursor: pointer;
+  -webkit-appearance: button;
+}
+a,
+a div,
+a span,
+a ion-icon,
+a ion-label,
+button,
+button div,
+button span,
+button ion-icon,
+button ion-label,
+.ion-tappable,
+[tappable],
+[tappable] div,
+[tappable] span,
+[tappable] ion-icon,
+[tappable] ion-label,
+input,
+textarea {
+  touch-action: manipulation;
+}
+a ion-label,
+button ion-label {
+  pointer-events: none;
+}
+button {
+  border: 0;
+  border-radius: 0;
+  font-family: inherit;
+  font-style: inherit;
+  font-variant: inherit;
+  line-height: 1;
+  text-transform: none;
+  cursor: pointer;
+  -webkit-appearance: button;
+}
+[tappable] {
+  cursor: pointer;
+}
+a[disabled],
+button[disabled],
+html input[disabled] {
+  cursor: default;
+}
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
+input[type=checkbox],
+input[type=radio] {
+  padding: 0;
+  box-sizing: border-box;
+}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  height: auto;
+}
+input[type=search]::-webkit-search-cancel-button,
+input[type=search]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+td,
+th {
+  padding: 0;
+}
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+html {
+  width: 100%;
+  height: 100%;
+  -webkit-text-size-adjust: 100%;
+          text-size-adjust: 100%;
+}
+html:not(.hydrated) body {
+  display: none;
+}
+html.plt-pwa {
+  height: 100vh;
+}
+body {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  margin-left: 0;
+  margin-right: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  position: fixed;
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  max-height: 100%;
+  text-rendering: optimizeLegibility;
+  overflow: hidden;
+  touch-action: manipulation;
+  -webkit-user-drag: none;
+  -ms-content-zooming: none;
+  word-wrap: break-word;
+  overscroll-behavior-y: none;
+  -webkit-text-size-adjust: none;
+          text-size-adjust: none;
+}
+html {
+  font-family: var(--ion-font-family);
+}
+a {
+  background-color: transparent;
+  color: var(--ion-color-primary, #3880ff);
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 16px;
+  margin-bottom: 10px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+h1 {
+  margin-top: 20px;
+  font-size: 26px;
+}
+h2 {
+  margin-top: 18px;
+  font-size: 24px;
+}
+h3 {
+  font-size: 22px;
+}
+h4 {
+  font-size: 20px;
+}
+h5 {
+  font-size: 18px;
+}
+h6 {
+  font-size: 16px;
+}
+small {
+  font-size: 75%;
+}
+sub,
+sup {
+  position: relative;
+  font-size: 75%;
+  line-height: 0;
+  vertical-align: baseline;
+}
+sup {
+  top: -0.5em;
+}
+sub {
+  bottom: -0.25em;
+}
+.ion-hide {
+  display: none !important;
+}
+.ion-hide-up {
+  display: none !important;
+}
+.ion-hide-down {
+  display: none !important;
+}
+@media (min-width: 576px) {
+  .ion-hide-sm-up {
+    display: none !important;
+  }
+}
+@media (max-width: 575.98px) {
+  .ion-hide-sm-down {
+    display: none !important;
+  }
+}
+@media (min-width: 768px) {
+  .ion-hide-md-up {
+    display: none !important;
+  }
+}
+@media (max-width: 767.98px) {
+  .ion-hide-md-down {
+    display: none !important;
+  }
+}
+@media (min-width: 992px) {
+  .ion-hide-lg-up {
+    display: none !important;
+  }
+}
+@media (max-width: 991.98px) {
+  .ion-hide-lg-down {
+    display: none !important;
+  }
+}
+@media (min-width: 1200px) {
+  .ion-hide-xl-up {
+    display: none !important;
+  }
+}
+@media (max-width: 1199.98px) {
+  .ion-hide-xl-down {
+    display: none !important;
+  }
+}
+/* Optional CSS utils that can be commented out */
+.ion-no-padding {
+  --padding-start: 0;
+  --padding-end: 0;
+  --padding-top: 0;
+  --padding-bottom: 0;
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.ion-padding {
+  --padding-start: var(--ion-padding, 16px);
+  --padding-end: var(--ion-padding, 16px);
+  --padding-top: var(--ion-padding, 16px);
+  --padding-bottom: var(--ion-padding, 16px);
+  padding-left: var(--ion-padding, 16px);
+  padding-right: var(--ion-padding, 16px);
+  padding-top: var(--ion-padding, 16px);
+  padding-bottom: var(--ion-padding, 16px);
+}
+@supports (margin-inline-start: 0) or (-webkit-margin-start: 0) {
+  .ion-padding {
+    padding-left: unset;
+    padding-right: unset;
+    padding-inline-start: var(--ion-padding, 16px);
+    padding-inline-end: var(--ion-padding, 16px);
+  }
+}
+.ion-padding-top {
+  --padding-top: var(--ion-padding, 16px);
+  padding-top: var(--ion-padding, 16px);
+}
+.ion-padding-start {
+  --padding-start: var(--ion-padding, 16px);
+  padding-left: var(--ion-padding, 16px);
+}
+@supports (margin-inline-start: 0) or (-webkit-margin-start: 0) {
+  .ion-padding-start {
+    padding-left: unset;
+    padding-inline-start: var(--ion-padding, 16px);
+  }
+}
+.ion-padding-end {
+  --padding-end: var(--ion-padding, 16px);
+  padding-right: var(--ion-padding, 16px);
+}
+@supports (margin-inline-start: 0) or (-webkit-margin-start: 0) {
+  .ion-padding-end {
+    padding-right: unset;
+    padding-inline-end: var(--ion-padding, 16px);
+  }
+}
+.ion-padding-bottom {
+  --padding-bottom: var(--ion-padding, 16px);
+  padding-bottom: var(--ion-padding, 16px);
+}
+.ion-padding-vertical {
+  --padding-top: var(--ion-padding, 16px);
+  --padding-bottom: var(--ion-padding, 16px);
+  padding-top: var(--ion-padding, 16px);
+  padding-bottom: var(--ion-padding, 16px);
+}
+.ion-padding-horizontal {
+  --padding-start: var(--ion-padding, 16px);
+  --padding-end: var(--ion-padding, 16px);
+  padding-left: var(--ion-padding, 16px);
+  padding-right: var(--ion-padding, 16px);
+}
+@supports (margin-inline-start: 0) or (-webkit-margin-start: 0) {
+  .ion-padding-horizontal {
+    padding-left: unset;
+    padding-right: unset;
+    padding-inline-start: var(--ion-padding, 16px);
+    padding-inline-end: var(--ion-padding, 16px);
+  }
+}
+.ion-no-margin {
+  --margin-start: 0;
+  --margin-end: 0;
+  --margin-top: 0;
+  --margin-bottom: 0;
+  margin-left: 0;
+  margin-right: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.ion-margin {
+  --margin-start: var(--ion-margin, 16px);
+  --margin-end: var(--ion-margin, 16px);
+  --margin-top: var(--ion-margin, 16px);
+  --margin-bottom: var(--ion-margin, 16px);
+  margin-left: var(--ion-margin, 16px);
+  margin-right: var(--ion-margin, 16px);
+  margin-top: var(--ion-margin, 16px);
+  margin-bottom: var(--ion-margin, 16px);
+}
+@supports (margin-inline-start: 0) or (-webkit-margin-start: 0) {
+  .ion-margin {
+    margin-left: unset;
+    margin-right: unset;
+    margin-inline-start: var(--ion-margin, 16px);
+    margin-inline-end: var(--ion-margin, 16px);
+  }
+}
+.ion-margin-top {
+  --margin-top: var(--ion-margin, 16px);
+  margin-top: var(--ion-margin, 16px);
+}
+.ion-margin-start {
+  --margin-start: var(--ion-margin, 16px);
+  margin-left: var(--ion-margin, 16px);
+}
+@supports (margin-inline-start: 0) or (-webkit-margin-start: 0) {
+  .ion-margin-start {
+    margin-left: unset;
+    margin-inline-start: var(--ion-margin, 16px);
+  }
+}
+.ion-margin-end {
+  --margin-end: var(--ion-margin, 16px);
+  margin-right: var(--ion-margin, 16px);
+}
+@supports (margin-inline-start: 0) or (-webkit-margin-start: 0) {
+  .ion-margin-end {
+    margin-right: unset;
+    margin-inline-end: var(--ion-margin, 16px);
+  }
+}
+.ion-margin-bottom {
+  --margin-bottom: var(--ion-margin, 16px);
+  margin-bottom: var(--ion-margin, 16px);
+}
+.ion-margin-vertical {
+  --margin-top: var(--ion-margin, 16px);
+  --margin-bottom: var(--ion-margin, 16px);
+  margin-top: var(--ion-margin, 16px);
+  margin-bottom: var(--ion-margin, 16px);
+}
+.ion-margin-horizontal {
+  --margin-start: var(--ion-margin, 16px);
+  --margin-end: var(--ion-margin, 16px);
+  margin-left: var(--ion-margin, 16px);
+  margin-right: var(--ion-margin, 16px);
+}
+@supports (margin-inline-start: 0) or (-webkit-margin-start: 0) {
+  .ion-margin-horizontal {
+    margin-left: unset;
+    margin-right: unset;
+    margin-inline-start: var(--ion-margin, 16px);
+    margin-inline-end: var(--ion-margin, 16px);
+  }
+}
+.ion-float-left {
+  float: left !important;
+}
+.ion-float-right {
+  float: right !important;
+}
+.ion-float-start {
+  float: left !important;
+}
+[dir=rtl] .ion-float-start, :host-context([dir=rtl]) .ion-float-start {
+  float: right !important;
+}
+.ion-float-end {
+  float: right !important;
+}
+[dir=rtl] .ion-float-end, :host-context([dir=rtl]) .ion-float-end {
+  float: left !important;
+}
+@media (min-width: 576px) {
+  .ion-float-sm-left {
+    float: left !important;
+  }
+
+  .ion-float-sm-right {
+    float: right !important;
+  }
+
+  .ion-float-sm-start {
+    float: left !important;
+  }
+  [dir=rtl] .ion-float-sm-start, :host-context([dir=rtl]) .ion-float-sm-start {
+    float: right !important;
+  }
+
+  .ion-float-sm-end {
+    float: right !important;
+  }
+  [dir=rtl] .ion-float-sm-end, :host-context([dir=rtl]) .ion-float-sm-end {
+    float: left !important;
+  }
+}
+@media (min-width: 768px) {
+  .ion-float-md-left {
+    float: left !important;
+  }
+
+  .ion-float-md-right {
+    float: right !important;
+  }
+
+  .ion-float-md-start {
+    float: left !important;
+  }
+  [dir=rtl] .ion-float-md-start, :host-context([dir=rtl]) .ion-float-md-start {
+    float: right !important;
+  }
+
+  .ion-float-md-end {
+    float: right !important;
+  }
+  [dir=rtl] .ion-float-md-end, :host-context([dir=rtl]) .ion-float-md-end {
+    float: left !important;
+  }
+}
+@media (min-width: 992px) {
+  .ion-float-lg-left {
+    float: left !important;
+  }
+
+  .ion-float-lg-right {
+    float: right !important;
+  }
+
+  .ion-float-lg-start {
+    float: left !important;
+  }
+  [dir=rtl] .ion-float-lg-start, :host-context([dir=rtl]) .ion-float-lg-start {
+    float: right !important;
+  }
+
+  .ion-float-lg-end {
+    float: right !important;
+  }
+  [dir=rtl] .ion-float-lg-end, :host-context([dir=rtl]) .ion-float-lg-end {
+    float: left !important;
+  }
+}
+@media (min-width: 1200px) {
+  .ion-float-xl-left {
+    float: left !important;
+  }
+
+  .ion-float-xl-right {
+    float: right !important;
+  }
+
+  .ion-float-xl-start {
+    float: left !important;
+  }
+  [dir=rtl] .ion-float-xl-start, :host-context([dir=rtl]) .ion-float-xl-start {
+    float: right !important;
+  }
+
+  .ion-float-xl-end {
+    float: right !important;
+  }
+  [dir=rtl] .ion-float-xl-end, :host-context([dir=rtl]) .ion-float-xl-end {
+    float: left !important;
+  }
+}
+.ion-text-center {
+  text-align: center !important;
+}
+.ion-text-justify {
+  text-align: justify !important;
+}
+.ion-text-start {
+  text-align: start !important;
+}
+.ion-text-end {
+  text-align: end !important;
+}
+.ion-text-left {
+  text-align: left !important;
+}
+.ion-text-right {
+  text-align: right !important;
+}
+.ion-text-nowrap {
+  white-space: nowrap !important;
+}
+.ion-text-wrap {
+  white-space: normal !important;
+}
+@media (min-width: 576px) {
+  .ion-text-sm-center {
+    text-align: center !important;
+  }
+
+  .ion-text-sm-justify {
+    text-align: justify !important;
+  }
+
+  .ion-text-sm-start {
+    text-align: start !important;
+  }
+
+  .ion-text-sm-end {
+    text-align: end !important;
+  }
+
+  .ion-text-sm-left {
+    text-align: left !important;
+  }
+
+  .ion-text-sm-right {
+    text-align: right !important;
+  }
+
+  .ion-text-sm-nowrap {
+    white-space: nowrap !important;
+  }
+
+  .ion-text-sm-wrap {
+    white-space: normal !important;
+  }
+}
+@media (min-width: 768px) {
+  .ion-text-md-center {
+    text-align: center !important;
+  }
+
+  .ion-text-md-justify {
+    text-align: justify !important;
+  }
+
+  .ion-text-md-start {
+    text-align: start !important;
+  }
+
+  .ion-text-md-end {
+    text-align: end !important;
+  }
+
+  .ion-text-md-left {
+    text-align: left !important;
+  }
+
+  .ion-text-md-right {
+    text-align: right !important;
+  }
+
+  .ion-text-md-nowrap {
+    white-space: nowrap !important;
+  }
+
+  .ion-text-md-wrap {
+    white-space: normal !important;
+  }
+}
+@media (min-width: 992px) {
+  .ion-text-lg-center {
+    text-align: center !important;
+  }
+
+  .ion-text-lg-justify {
+    text-align: justify !important;
+  }
+
+  .ion-text-lg-start {
+    text-align: start !important;
+  }
+
+  .ion-text-lg-end {
+    text-align: end !important;
+  }
+
+  .ion-text-lg-left {
+    text-align: left !important;
+  }
+
+  .ion-text-lg-right {
+    text-align: right !important;
+  }
+
+  .ion-text-lg-nowrap {
+    white-space: nowrap !important;
+  }
+
+  .ion-text-lg-wrap {
+    white-space: normal !important;
+  }
+}
+@media (min-width: 1200px) {
+  .ion-text-xl-center {
+    text-align: center !important;
+  }
+
+  .ion-text-xl-justify {
+    text-align: justify !important;
+  }
+
+  .ion-text-xl-start {
+    text-align: start !important;
+  }
+
+  .ion-text-xl-end {
+    text-align: end !important;
+  }
+
+  .ion-text-xl-left {
+    text-align: left !important;
+  }
+
+  .ion-text-xl-right {
+    text-align: right !important;
+  }
+
+  .ion-text-xl-nowrap {
+    white-space: nowrap !important;
+  }
+
+  .ion-text-xl-wrap {
+    white-space: normal !important;
+  }
+}
+.ion-text-uppercase {
+  /* stylelint-disable-next-line declaration-no-important */
+  text-transform: uppercase !important;
+}
+.ion-text-lowercase {
+  /* stylelint-disable-next-line declaration-no-important */
+  text-transform: lowercase !important;
+}
+.ion-text-capitalize {
+  /* stylelint-disable-next-line declaration-no-important */
+  text-transform: capitalize !important;
+}
+@media (min-width: 576px) {
+  .ion-text-sm-uppercase {
+    /* stylelint-disable-next-line declaration-no-important */
+    text-transform: uppercase !important;
+  }
+
+  .ion-text-sm-lowercase {
+    /* stylelint-disable-next-line declaration-no-important */
+    text-transform: lowercase !important;
+  }
+
+  .ion-text-sm-capitalize {
+    /* stylelint-disable-next-line declaration-no-important */
+    text-transform: capitalize !important;
+  }
+}
+@media (min-width: 768px) {
+  .ion-text-md-uppercase {
+    /* stylelint-disable-next-line declaration-no-important */
+    text-transform: uppercase !important;
+  }
+
+  .ion-text-md-lowercase {
+    /* stylelint-disable-next-line declaration-no-important */
+    text-transform: lowercase !important;
+  }
+
+  .ion-text-md-capitalize {
+    /* stylelint-disable-next-line declaration-no-important */
+    text-transform: capitalize !important;
+  }
+}
+@media (min-width: 992px) {
+  .ion-text-lg-uppercase {
+    /* stylelint-disable-next-line declaration-no-important */
+    text-transform: uppercase !important;
+  }
+
+  .ion-text-lg-lowercase {
+    /* stylelint-disable-next-line declaration-no-important */
+    text-transform: lowercase !important;
+  }
+
+  .ion-text-lg-capitalize {
+    /* stylelint-disable-next-line declaration-no-important */
+    text-transform: capitalize !important;
+  }
+}
+@media (min-width: 1200px) {
+  .ion-text-xl-uppercase {
+    /* stylelint-disable-next-line declaration-no-important */
+    text-transform: uppercase !important;
+  }
+
+  .ion-text-xl-lowercase {
+    /* stylelint-disable-next-line declaration-no-important */
+    text-transform: lowercase !important;
+  }
+
+  .ion-text-xl-capitalize {
+    /* stylelint-disable-next-line declaration-no-important */
+    text-transform: capitalize !important;
+  }
+}
+.ion-align-self-start {
+  align-self: flex-start !important;
+}
+.ion-align-self-end {
+  align-self: flex-end !important;
+}
+.ion-align-self-center {
+  align-self: center !important;
+}
+.ion-align-self-stretch {
+  align-self: stretch !important;
+}
+.ion-align-self-baseline {
+  align-self: baseline !important;
+}
+.ion-align-self-auto {
+  align-self: auto !important;
+}
+.ion-wrap {
+  flex-wrap: wrap !important;
+}
+.ion-nowrap {
+  flex-wrap: nowrap !important;
+}
+.ion-wrap-reverse {
+  flex-wrap: wrap-reverse !important;
+}
+.ion-justify-content-start {
+  justify-content: flex-start !important;
+}
+.ion-justify-content-center {
+  justify-content: center !important;
+}
+.ion-justify-content-end {
+  justify-content: flex-end !important;
+}
+.ion-justify-content-around {
+  justify-content: space-around !important;
+}
+.ion-justify-content-between {
+  justify-content: space-between !important;
+}
+.ion-justify-content-evenly {
+  justify-content: space-evenly !important;
+}
+.ion-align-items-start {
+  align-items: flex-start !important;
+}
+.ion-align-items-center {
+  align-items: center !important;
+}
+.ion-align-items-end {
+  align-items: flex-end !important;
+}
+.ion-align-items-stretch {
+  align-items: stretch !important;
+}
+.ion-align-items-baseline {
+  align-items: baseline !important;
+}
+/* ----------- General custom style ---------- */
+a, a:focus, a:visited, a:link {
+  outline: none;
+  text-decoration: none;
+}
+.header-md:after, .footer-md::before {
+  background-image: none;
+}
+html.ios, html.md {
+  --ion-default-font: "Open Sans", "Roboto", sans-serif;
+  font-weight: 300;
+}
+#color-ndop1, #color-ndop2 {
+  position: absolute;
+  width: 100%;
+  right: 50%;
+  left: 50%;
+  bottom: -8rem;
+  transform: translateX(-50%) rotate(-32.5deg);
+}
+#color-ndop1 polygon, #color-ndop2 polygon {
+  fill: #7db141;
+}
+#color-ndop2 polygon {
+  fill: #1077ac;
+}
+.header-ios ion-toolbar:last-child {
+  --border-width: 0;
+}
+ion-button {
+  font-weight: 400;
+}
+b, strong {
+  font-weight: 400;
+}
+.text-share {
+  color: rgba(255, 153, 51, 0.7);
+}
+.border-lr {
+  border-left: 1px solid rgba(102, 102, 102, 0.2);
+  border-right: 1px solid rgba(102, 102, 102, 0.2);
+}
+.donut-wrap {
+  width: 100%;
+  margin: 10px 0;
+  text-align: center;
+  min-width: 320px;
+  position: relative;
+}
+.donut-wrap .donut {
+  width: 300px;
+  height: 150px;
+  position: relative;
+  margin: auto;
+  text-align: center;
+  border-radius: 150px 150px 0 0;
+  overflow: hidden;
+}
+.donut-wrap .donut .donut-text {
+  position: absolute;
+  top: 68%;
+  left: 0;
+  right: 0;
+}
+.donut-wrap .donut .donut-text small {
+  font-weight: unset;
+}
+.donut-wrap .donut .donut-text p {
+  margin: 0;
+  font-weight: 500;
+  font-size: 1.3rem;
+}
+.donut-wrap .donut:before, .donut-wrap .donut:after {
+  content: "";
+  width: 230px;
+  height: 115px;
+  border: 30px solid #007bff;
+  border-top: none;
+  position: absolute;
+  transition: 0.3s;
+  transform-origin: 50% 0%;
+  border-radius: 0 0 300px 300px;
+  animation: donut 2s;
+  left: 0;
+  top: 100%;
+  z-index: 5;
+}
+.donut-wrap .donut:before {
+  border-color: #1077ab;
+}
+.donut-wrap .donut0:before {
+  transform: rotate(0deg);
+}
+.donut-wrap .donut10:before {
+  transform: rotate(18deg);
+}
+.donut-wrap .donut20:before {
+  transform: rotate(36deg);
+}
+.donut-wrap .donut30:before {
+  transform: rotate(54deg);
+}
+.donut-wrap .donut40:before {
+  transform: rotate(72deg);
+}
+.donut-wrap .donut50:before {
+  transform: rotate(90deg);
+}
+.donut-wrap .donut60:before {
+  transform: rotate(108deg);
+}
+.donut-wrap .donut70:before {
+  transform: rotate(126deg);
+}
+.donut-wrap .donut80:before {
+  transform: rotate(144deg);
+}
+.donut-wrap .donut90:before {
+  transform: rotate(162deg);
+}
+.donut-wrap .donut100:before {
+  transform: rotate(180deg);
+}
+.donut-wrap .donut:after {
+  z-index: 3;
+  border-color: rgba(0, 0, 0, 0.15);
+  transform: rotate(180deg);
+}
+.donut-wrap .donut:hover:before {
+  opacity: 0.8;
+  cursor: pointer;
+}
+.donut-wrap .donut:hover + .tooltip {
+  bottom: 98%;
+  opacity: 1;
+}
+.donut-wrap .tooltip {
+  position: absolute;
+  background: #eee;
+  padding: 3px;
+  font-weight: 100;
+  font-size: 12px;
+  border-radius: 2px;
+  border: 1px solid #ddd;
+  bottom: 100%;
+  left: 50%;
+  opacity: 0;
+  transition: 0.3s;
+  transform: translateX(-50%);
+}
+.donut-wrap .tooltip:after {
+  content: "" attr(tooltip) "";
+  margin-left: 3px;
+  color: #1077ab;
+}
+.donut-wrap .tooltip:before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  background: #1077ab;
+  display: inline-block;
+  margin-right: 5px;
+}
+.donut-legend p {
+  margin: 0;
+}
+.donut-legend .legend-color1 span {
+  margin-left: 15px;
+  color: #1077ab;
+  font-weight: 600;
+}
+.donut-legend .legend-color2 span {
+  margin-left: 15px;
+  color: #919191;
+  font-weight: 600;
+}
+.donut-legend .legend-color1:before, .donut-legend .legend-color2:before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  display: inline-block;
+  margin-right: 5px;
+}
+.donut-legend .legend-color1:before {
+  background: #1077ab;
+}
+.donut-legend .legend-color2:before {
+  background: #d9d9d9;
+}
+ion-toolbar.with-logo .title-md {
+  padding-inline-start: 0;
+  padding-inline-end: 40px;
+}
+ion-toolbar.with-logo2 .title-md {
+  padding-inline-start: 0;
+  padding-inline-end: 0;
+}
+ion-toolbar.with-logo2 .title-md-right {
+  padding-right: 40px;
+}
+ion-toolbar.subtitle .title-ios.title-default,
+ion-toolbar.subtitle .title-md.title-default {
+  padding-inline-start: 5px;
+  padding-inline-end: 5px;
+  font-weight: 400;
+  font-size: 1.1rem;
+}
+ion-toolbar {
+  --min-height: 60px;
+}
+ion-toolbar .logo {
+  height: 3rem;
+  margin: 10px auto 0 auto;
+}
+ion-toolbar .logo-no-right-slot {
+  height: 3rem;
+  margin: 10px auto 0 auto;
+}
+ion-toolbar .logo-arrow-no-right-slot.md {
+  height: 3rem;
+  margin: 10px auto 0 -48px;
+}
+ion-toolbar .logo-no-right-slot.md {
+  margin: 10px auto 0 40px;
+}
+ion-toolbar .logo-all-slot.md {
+  margin: 0;
+}
+ion-toolbar ion-title {
+  font-weight: 400;
+  font-size: 1.4rem;
+}
+ion-button.button-round {
+  --border-radius: 4px;
+  margin-left: 2px;
+  margin-right: 2px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  height: 2.8em;
+  font-size: 0.99rem;
+  font-weight: 400;
+}
+ion-img.inner-image,
+svg.inner-image {
+  height: 8rem;
+}
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+ion-header ion-avatar ion-img,
+ion-header ion-avatar img.thumb-img {
+  margin-left: 5px;
+}
+ion-header.header-md ion-avatar ion-img,
+ion-header.header-md ion-avatar img.thumb-img {
+  margin-left: 0;
+}
+ion-avatar {
+  height: 40px;
+  width: 40px;
+}
+ion-avatar ion-img {
+  height: 40px;
+  width: 40px;
+  padding: 2px;
+}
+ion-title.no-padding.md {
+  padding: 0;
+}
+ion-title.no-padding.ios {
+  padding-left: 110px;
+  text-align: left;
+}
+ion-backdrop {
+  background-color: transparent;
+}
+.sc-ion-popover-md-h, .sc-ion-popover-ios-h {
+  --width: auto;
+  --box-shadow: -1px -1px 5px 0px rgba(0,0,0,0.2);
+}
+.label-floating.sc-ion-label-md-h, .label-stacked.sc-ion-label-md-h,
+.label-floating.sc-ion-label-ios-h, .label-stacked.sc-ion-label-ios-h,
+.item-has-focus.label-floating.sc-ion-label-md-h,
+.item-has-focus .label-floating.sc-ion-label-md-h,
+.item-has-placeholder.label-floating.sc-ion-label-md-h,
+.item-has-placeholder .label-floating.sc-ion-label-md-h,
+.item-has-value.label-floating.sc-ion-label-md-h,
+.item-has-value .label-floating.sc-ion-label-md-h,
+.item.item-datetime .sc-ion-label-md-h,
+.item.item-datetime .sc-ion-label-ios-h,
+.item.item-select .sc-ion-label-ios-h,
+.item-select .sc-ion-label-md-h, .item-select .sc-ion-label-ios-h,
+.item .sc-ion-label-ios-h.text-share {
+  --color: rgba(255, 153, 51, .7);
+}
+.searchbar-input.sc-ion-searchbar-md {
+  box-shadow: none;
+  border: 1px solid #dcdcdc;
+  background: gainsboro;
+  border-radius: 15px;
+}
+.slot-prefix {
+  margin-top: 30px;
+}
+.header-search-bg {
+  background: #1077ab;
+}
+.header-search-bg ion-item {
+  border: 1px solid #1077ab;
+  border-radius: 5px;
+  --min-height: 28px;
+  --inner-border-width: 0;
+}
+.header-search-bg ion-item ion-label {
+  margin: 0;
+}
+.sc-ion-segment-ios-hion-toolbar.sc-ion-segment-ios-s > ion-segment-button,
+ion-toolbar .sc-ion-segment-ios-h.sc-ion-segment-ios-s > ion-segment-button {
+  max-width: 150px;
+  font-size: 13px;
+  line-height: 24px;
+}
+.alert-wrapper.sc-ion-alert-ios {
+  box-shadow: 0 11px 15px -7px rgba(0, 0, 0, 0.2), 0 24px 38px 3px rgba(0, 0, 0, 0.14), 0 9px 46px 8px rgba(0, 0, 0, 0.12);
+}
+.error-message > span {
+  margin-left: 5px;
+  font-size: 1rem;
+}
+/* ----------- Pot status custom style ---------- */
+.pot-status .pot-rate {
+  fill: none;
+  stroke: #f4c17f;
+  stroke-miterlimit: 10;
+  stroke-width: 0.25px;
+  object-fit: cover;
+  -webkit-clip-path: url(#pot-cursor);
+          clip-path: url(#pot-cursor);
+}
+.pot-status .pot-rate-session {
+  fill: none;
+  stroke: #f4c17f;
+  stroke-miterlimit: 10;
+  stroke-width: 0.25px;
+  object-fit: cover;
+  -webkit-clip-path: url(#pot-cursor-session);
+          clip-path: url(#pot-cursor-session);
+}
+.pot-status .pot-rate-event {
+  fill: none;
+  stroke: #f4c17f;
+  stroke-miterlimit: 10;
+  stroke-width: 0.25px;
+  object-fit: cover;
+  -webkit-clip-path: url(#pot-cursor-event);
+          clip-path: url(#pot-cursor-event);
+}
+.pot-status .pot-rate-color-1 {
+  fill: #1077ac;
+}
+.pot-status .pot-rate-color-2 {
+  fill: #eea83c;
+}
+.pot-status .pot-rate-color-3 {
+  fill: #1077ac;
+}
+.pot-status .pot-rate-color-4 {
+  fill: none;
+  stroke: #f4c17f;
+  stroke-miterlimit: 10;
+  stroke-width: 0.25px;
+}
+.pot-status .pot-rate-color-5 {
+  fill: #fff;
+}
+.pot-status .pot-rate-text {
+  font-size: 7px;
+  fill: #000;
+  font-family: SFProText-Bold, "SF Pro Text";
+  font-weight: 700;
+}
+.pot-status .pot-rate-0 {
+  transform: translateY(28px);
+}
+.pot-status .pot-rate-15 {
+  transform: translateY(24px);
+}
+.pot-status .pot-rate-30 {
+  transform: translateY(20px);
+}
+.pot-status .pot-rate-45 {
+  transform: translateY(18px);
+}
+.pot-status .pot-rate-60 {
+  transform: translateY(14px);
+}
+.pot-status .pot-rate-75 {
+  transform: translateY(10px);
+}
+.pot-status .pot-rate-90 {
+  transform: translateY(8px);
+}
+.pot-status .pot-rate-100 {
+  transform: translateY(0);
+}
+#pay-btn-shape, #pay-btn-shape1, #pay-btn-shape2 {
+  transform: translate(-0.84px, -0.89px);
+}
+.wrap-pay-btn #pay-btn, .wrap-pay-btn #pay-btn1, .wrap-pay-btn #pay-btn2 {
+  width: 25%;
+  height: auto;
+}
+.wrap-pay-btn #pay-btn .arc-part, .wrap-pay-btn #pay-btn1 .arc-part, .wrap-pay-btn #pay-btn2 .arc-part {
+  transform: translate(-0.84px, -0.89px);
+}
+.wrap-pay-btn #pay-btn .inner-pot, .wrap-pay-btn #pay-btn1 .inner-pot, .wrap-pay-btn #pay-btn2 .inner-pot {
+  fill: #f93;
+}
+.wrap-pay-btn #pay-btn .arc-part, .wrap-pay-btn #pay-btn1 .arc-part, .wrap-pay-btn #pay-btn2 .arc-part {
+  fill: #f93;
+}
+.wrap-pay-btn #pay-btn .pot-entry, .wrap-pay-btn #pay-btn1 .pot-entry, .wrap-pay-btn #pay-btn2 .pot-entry {
+  fill: #fff;
+  transform: translate(-0.84px, -0.89px);
+}
+.wrap-pay-btn #pay-btn .pay-text, .wrap-pay-btn #pay-btn1 .pay-text, .wrap-pay-btn #pay-btn2 .pay-text {
+  transform: translate(6.2px, 19.55px);
+  font-size: 12px;
+  fill: #fff;
+  font-family: Nyala-Regular, Nyala;
+}
+.wrap-pay-btn #pay-btn .pay-btn-border {
+  -webkit-clip-path: url(#pay-btn-shape);
+          clip-path: url(#pay-btn-shape);
+}
+.wrap-pay-btn #pay-btn1 .pay-btn-border {
+  -webkit-clip-path: url(#pay-btn-shape1);
+          clip-path: url(#pay-btn-shape1);
+}
+.wrap-pay-btn #pay-btn2 .pay-btn-border {
+  -webkit-clip-path: url(#pay-btn-shape2);
+          clip-path: url(#pay-btn-shape2);
+}
+/* ----------- Terms and condition page custom style ---------- */
+.welcome .welcome-title {
+  font-weight: 500;
+  overflow: visible !important;
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 1.5rem;
+}
+.home-policy ion-grid,
+.home-policy ion-row,
+.home-policy ion-col,
+.home-policy ion-img {
+  height: 100%;
+}
+/* ----------- Register phone page custom style ---------- */
+.register-phone {
+  --padding-top: 40%;
+}
+/* ----------- Verify phone page custom style ---------- */
+.verify-phone {
+  --padding-top: 40%;
+}
+.verify-phone .usertel {
+  font-weight: 600;
+  font-size: 1.3rem;
+}
+.verify-phone .item-interactive {
+  --border-width: 1px;
+  --background: #ffffff;
+  --background-activated: #ffffff;
+  --background-focused: #ffffff;
+  --background-hover: #ffffff;
+  text-align: center;
+  text-transform: uppercase;
+  --inner-border-width: 0px 0px 0px 0px;
+}
+.verify-phone .resend {
+  color: var(--ion-color-warning);
+  font-weight: 400;
+}
+/* ----------- dashboard page custom style ---------- */
+.dashboard {
+  --padding-top: 15%;
+  --ion-grid-column-padding: 10px;
+  /* --background: #fcfcfc url(./assets/pattern.png) bottom center repeat-x; */
+}
+.dashboard .thumb-img {
+  height: 3rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+.dashboard > ion-grid > ion-row > ion-col {
+  border: 1px solid #ccc;
+  background: #fff;
+  margin: 0.5rem;
+  border-radius: 0.5rem;
+}
+.dashboard-menu-popover {
+  margin-bottom: 0;
+  font-size: 0.99rem;
+}
+.dashboard-menu-popover .item-label {
+  font-weight: 300;
+}
+/* ----------- My tontine page custom style ---------- */
+.my-tontine .sc-ion-card-ios-h, .my-tontine .sc-ion-card-md-h {
+  margin-top: 0;
+}
+.my-tontine ion-col.col-button:last-child {
+  border-left: 1px solid #fff;
+}
+.my-tontine ion-card {
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
+  border: 1px solid #ccc;
+  background-color: #b0bec5;
+}
+.my-tontine ion-card ion-grid, .my-tontine ion-card ion-col {
+  padding: 0;
+}
+.my-tontine ion-card .col-img {
+  padding: 0 0.2rem;
+}
+.my-tontine ion-card .col-content {
+  background-color: #f9f9ff;
+}
+.my-tontine ion-card .col-content > ion-card-content > ion-row > ion-col:first-child {
+  border-right: 0 solid #f9f9ff;
+}
+.my-tontine ion-card ion-card-header {
+  padding: 5px;
+  border-bottom: 1px solid #ccc;
+}
+.my-tontine ion-card ion-card-header ion-card-title {
+  font-size: 0.99rem;
+  font-weight: 400;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.my-tontine ion-card ion-card-header + .card-content-md,
+.my-tontine ion-card ion-card-header + .card-content-ios {
+  padding: 0;
+}
+.my-tontine ion-card ion-card-content .col-button {
+  background-color: var(--ion-color-warning);
+  color: #000;
+  padding-top: 0.2rem;
+}
+.my-tontine ion-card ion-card-content .col-button.contributed {
+  background-color: var(--ion-color-success);
+}
+.my-tontine ion-card ion-card-content .col-button.contributed .menu-amount {
+  font-size: 0.8rem;
+  font-weight: 400;
+  line-height: 1.1rem;
+}
+.my-tontine ion-card ion-card-content .col-button.inactive {
+  background-color: #e9ecef;
+}
+.my-tontine ion-card ion-card-content .col-button.inactive .menu-amount {
+  font-size: 0.8rem;
+  font-weight: 400;
+  line-height: 1.1rem;
+}
+.my-tontine ion-card ion-card-subtitle {
+  margin-top: 1.5rem;
+  text-transform: none;
+}
+.my-tontine ion-card .desc {
+  font-size: 11px;
+  font-weight: 400;
+}
+.my-tontine ion-card .menu-amount {
+  font-weight: 600;
+  font-size: 15px;
+}
+.my-tontine > ion-card > ion-grid > ion-row,
+.my-tontine > ion-card > a > ion-grid > ion-row {
+  background: #ccc;
+}
+.mytontines-menu-popover {
+  margin-bottom: 0;
+  font-size: 0.99rem;
+}
+.mytontines-menu-popover .item-label {
+  font-weight: 300;
+}
+/*------------ new tontine page custom style --------- */
+.tontine-new .periodicity {
+  background-color: antiquewhite;
+}
+/* ----------- invitation page custom style ---------- */
+#invitation-list ion-avatar {
+  margin-inline-end: 0;
+}
+#invitation-list .button-area {
+  text-align: right;
+  margin-top: 0.9rem;
+}
+/* ----------- My invitation page custom style ---------- */
+my-invitation h2 {
+  font-weight: 600 !important;
+}
+/* ----------- History page custom style ---------- */
+#history h2 {
+  font-weight: 600 !important;
+}
+/* ----------- Tontine detail page custom style ---------- */
+.tontine-detail .sc-ion-card-ios-h, .tontine-detail .sc-ion-card-md-h {
+  margin-top: 0;
+}
+.tontine-detail ion-icon[color=danger] {
+  margin-right: 5px;
+  font-size: 1.3rem;
+}
+.tontine-detail ion-card {
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
+  border: 1px solid #ccc;
+}
+.tontine-detail ion-card ion-grid, .tontine-detail ion-card ion-col {
+  padding: 0;
+}
+.tontine-detail .block-1 {
+  background-color: #f9f9ff;
+  margin-bottom: 0;
+}
+.tontine-detail .block-1 .desc {
+  font-size: 0.8rem;
+  line-height: 1rem;
+  font-weight: 600;
+}
+.tontine-detail .block-1 .menu-amount {
+  font-weight: 600;
+  line-height: 1.1rem;
+  font-size: 1rem;
+  color: var(--ion-color-warning);
+}
+.tontine-detail .block-1 .t-balance {
+  background-color: antiquewhite;
+}
+.tontine-detail .block-1 > ion-card-content {
+  padding: 5px;
+}
+.tontine-detail .block-2 {
+  position: relative;
+}
+.tontine-detail .block-2 .row-1, .tontine-detail .block-2 .row-2 {
+  border-bottom: 1px solid #ccc;
+}
+.tontine-detail .block-2 b {
+  font-size: 12px;
+  color: var(--ion-color-primary);
+}
+.tontine-detail .block-2 .edit-btn {
+  position: absolute;
+  top: 1rem;
+  right: 0;
+}
+.tontine-detail .block-2 ion-label p {
+  font-size: 16px;
+}
+.tontine-detail .block-3 ion-button {
+  --padding-start: 1.5rem;
+  --padding-end: 1.5rem;
+  --padding-top: 0.5rem;
+  --padding-bottom: 0.5rem;
+  height: 1.8rem;
+}
+.tontine-detail .block-3 .list-ios {
+  margin-bottom: 10px;
+}
+.tontine-detail .block-3 ion-item {
+  --background: #f9f9ff;
+  font-size: 14px;
+}
+.tontine-detail .block-3 ion-item ion-list {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.tontine-detail .block-3 ion-item ion-list ion-text {
+  padding: 2px 0;
+}
+.tontine-detail .block-4 ion-item {
+  --background: var(--ion-color-primary);
+  color: var(--ion-color-primary-contrast);
+  margin-bottom: 2px;
+}
+.tontine-contribute ion-card {
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
+  border: 1px solid #ccc;
+  margin: 5px;
+}
+.tontine-wallet .t-balance {
+  background-color: antiquewhite;
+}
+.tontine-wallet .sub-balance {
+  background-color: #f9f9ff;
+  margin-bottom: 0.5rem;
+}
+.tontine-wallet .line-height095 {
+  line-height: 0.95rem;
+  border-right: 1px solid #ccc;
+}
+.tontine-wallet .line-height095:last-child {
+  border-right: 0 solid #ccc;
+}
+.tontine-wallet .desc {
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.tontine-wallet .menu-amount {
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+.tontine-wallet .online-offline {
+  border-top: 1px dashed #ccc;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+}
+.tontine-wallet .online-offline .menu-amount {
+  color: darkgray;
+}
+.tontine-wallet .padding-trans {
+  border-top: 1px solid #ccc;
+}
+.tontine-wallet .trans-item ion-card {
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
+  border: 1px solid #ccc;
+  background-color: #f9f9ff;
+}
+.tontine-wallet .trans-item ion-card ion-item {
+  --background: #f9f9ff;
+}
+.tontine-wallet .trans-item ion-card ion-card-header {
+  padding: 0.2rem;
+}
+.tontine-wallet .trans-item ion-card ion-card-content {
+  padding: 0.4rem 1rem;
+  border-bottom: 0.5px solid gainsboro;
+}
+.tontine-wallet .trans-item .btn-icon-only {
+  --background-activated: gainsboro;
+  --background: transparent;
+  --background-focused: gainsboro;
+  --background-hover: gainsboro;
+}
+.tontine-topup ion-card {
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
+  border: 1px solid #ccc;
+  background-color: #fff;
+}
+.tontine-topup ion-card ion-item {
+  --background: #fff;
+}
+.tontine-topup .block-1 {
+  background-color: #f9f9ff;
+  margin-bottom: 0;
+}
+.tontine-topup .block-1 .desc {
+  font-size: 11px;
+  font-weight: 600;
+}
+.tontine-topup .block-1 .menu-amount {
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--ion-color-warning);
+}
+.tontine-topup .block-1 > ion-card-content {
+  padding: 5px;
+}
+.initiate-pay .checkout-list {
+  background-color: antiquewhite;
+  margin: 0.5rem 0.25rem 0.5rem 1rem;
+  padding: 0;
+  border-radius: 0.75rem;
+  border: 1px solid darkorange;
+}
+.initiate-pay .checkout-list ion-item {
+  border: 1px solid #1077ab;
+  border-radius: 5px;
+  --min-height: 28px;
+  --inner-border-width: 0;
+}
+.paidmode {
+  background-color: #fff;
+}
+.paidmode .logooperator {
+  width: 80%;
+  padding: 0 0 5px 0;
+}
+.paidmode ion-item {
+  --background: none;
+}
+.paidmode ion-item ion-label {
+  color: #ccc;
+}
+.add-member ion-card {
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
+  border: 1px solid #ccc;
+}
+.add-member .mber-invited {
+  background-color: #fff;
+}
+.add-member .mber-invited ion-item {
+  --background: none;
+}
+.add-member .mber-invited ion-item ion-label {
+  color: #ccc;
+}
+.tontine-detail-menu-popover {
+  margin-bottom: 0;
+  font-size: 0.99rem;
+}
+.tontine-detail-menu-popover .item-label {
+  font-weight: 300;
+}
+.my-penalities .pay-btn {
+  --box-shadow: 0 0 0 0 rgba(0,0,0,0.2);
+}
+.my-penalities ion-text {
+  padding: 0 0.5rem;
+}
+/* ----------- Session not paid page custom style ---------- */
+.session-not-paid .benef-item h3 {
+  position: relative;
+}
+.session-not-paid .benef-item h3 fa-icon {
+  position: absolute;
+  top: -0.25rem;
+}
+.session-not-paid .benef-item h3 span {
+  display: block;
+  margin: 0.75rem 0 1rem 2rem;
+}
+/* ----------- Tontine (detail) debts page custom style ---------- */
+.debts-menu-popover {
+  margin-bottom: 0;
+  font-size: 0.99rem;
+}
+.debts-menu-popover .item-label {
+  font-weight: 300;
+}
+.debts-due .sc-ion-card-ios-h, .debts-due .sc-ion-card-md-h {
+  margin-top: 0;
+}
+.debts-due ion-icon[color=danger] {
+  margin-right: 5px;
+  font-size: 1.3rem;
+}
+.debts-due ion-card {
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
+  border: 1px solid #ccc;
+}
+.debts-due ion-card ion-grid, .debts-due ion-card ion-col {
+  padding: 0;
+}
+.debts-due .block-1 {
+  background-color: #f9f9ff;
+  margin-bottom: 0;
+}
+.debts-due .block-1 .desc {
+  font-size: 0.8rem;
+  line-height: 1rem;
+  font-weight: 600;
+}
+.debts-due .block-1 .menu-amount {
+  font-weight: 600;
+  line-height: 1.1rem;
+  font-size: 1rem;
+  color: var(--ion-color-primary);
+}
+.debts-due .block-1 > ion-card-content {
+  padding: 5px;
+}
+.debts-due .block-1 > ion-card-content > ion-row:first-child {
+  margin-bottom: 5px;
+}
+.in-progress ion-card {
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
+  border: 1px solid #ccc;
+}
+.in-progress ion-card ion-grid, .in-progress ion-card ion-col {
+  padding: 0;
+}
+.in-progress ion-card ion-card-content {
+  padding: 5px;
+}
+.in-approval-detail ion-card {
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
+  border: 1px solid #ccc;
+}
+.in-approval-detail ion-card ion-grid, .in-approval-detail ion-card ion-col {
+  padding: 0;
+}
+.in-approval-detail ion-card ion-card-content {
+  padding: 5px;
+}
+/* ----------- Tontine bid page custom style ---------- */
+.bid .bid-info {
+  position: relative;
+}
+.bid .bid-info .row-1 {
+  margin-bottom: 1rem;
+}
+.bid .bid-info .row-1 ion-col:first-child, .bid .bid-info .row-2 ion-col:first-child {
+  border-right: 1px solid #ccc;
+}
+.bid .bid-info .row-1 b, .bid .bid-info .row-2 b {
+  font-size: 12px;
+  color: var(--ion-color-primary);
+}
+.bid .bid-info .edit-btn {
+  position: absolute;
+  top: 1rem;
+  right: 0;
+}
+.bid ion-card {
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
+  border: 1px solid #ccc;
+  background-color: #fff;
+}
+.bid ion-card ion-card-header {
+  padding-bottom: 5px;
+}
+.bid ion-card .countdown {
+  margin-top: 11px;
+}
+/* ----------- Tontine (detail) session page custom style ---------- */
+/* ----------- Tontine (detail) member page custom style ---------- */
+.detail-members .mytontine-icon {
+  position: relative;
+  display: block;
+  margin: 0 auto;
+  height: 2.37rem;
+}
+.detail-members .mytontine-icon #pot-status-path path {
+  fill: none;
+}
+.detail-members .mytontine-icon .cls-3 {
+  fill: #f04141;
+  transition: color 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.detail-members .mytontine-icon .cls-4 {
+  -webkit-clip-path: url(#pot-status-path);
+          clip-path: url(#pot-status-path);
+}
+.detail-members .mytontine-icon .cls-5 {
+  fill: #fff;
+}
+.detail-members .active-icon .cls-3 {
+  fill: #7DB841;
+}
+.detail-members .popover-menu {
+  position: absolute;
+  right: 0;
+  bottom: 5px;
+}
+.detail-members .popover-menu ion-button {
+  --background-focused: transparent;
+}
+.detail-members .popover-menu ion-button ion-icon {
+  --ion-color-base: var(--ion-color-warning) !important;
+}
+.share-popover ion-backdrop, .role-popover ion-backdrop, .delete-popover ion-backdrop {
+  background-color: #000;
+}
+.share-popover div.popover-content, .role-popover div.popover-content, .delete-popover div.popover-content {
+  margin: auto;
+  width: 80%;
+  left: 11% !important;
+  top: 30% !important;
+}
+.share-popover h4, .role-popover h4, .delete-popover h4 {
+  font-weight: 400;
+  color: var(--ion-color-primary);
+  padding-bottom: 5px;
+  border-bottom: 1px solid var(--ion-color-primary);
+}
+/* ----------- Statistique Pool detail page custom style ---------- */
+#pool-detail .sc-ion-card-ios-h, #pool-detail .sc-ion-card-md-h {
+  margin-top: 0;
+}
+#pool-detail .list-ios {
+  width: 100%;
+}
+#pool-detail ion-card {
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
+  border: 1px solid #ccc;
+}
+#pool-detail ion-card ion-grid, #pool-detail ion-card ion-col {
+  padding: 0;
+}
+#pool-detail .block-1 {
+  background-color: #f9f9ff;
+  margin-bottom: 0;
+}
+#pool-detail .block-1 .desc {
+  font-size: 13px;
+  font-weight: 600;
+}
+#pool-detail .block-1 .menu-amount {
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--ion-color-warning);
+}
+#pool-detail .block-1 > ion-card-content {
+  padding: 5px;
+}
+#pool-detail .mytontine-icon {
+  position: relative;
+  display: block;
+  margin: 0 auto;
+  height: 2.37rem;
+}
+#pool-detail .mytontine-icon #pot-status-path path {
+  fill: none;
+}
+#pool-detail .mytontine-icon .cls-3 {
+  fill: #f04141;
+  transition: color 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+#pool-detail .mytontine-icon .cls-4 {
+  -webkit-clip-path: url(#pot-status-path-spd);
+          clip-path: url(#pot-status-path-spd);
+}
+#pool-detail .mytontine-icon .cls-5 {
+  fill: #fff;
+}
+#pool-detail .active-icon .cls-3 {
+  fill: #7DB841;
+}
+#pool-detail .benecifial {
+  border-left: 0.25rem solid #ff9933;
+  margin-bottom: 0.5rem;
+}
+#pool-detail .benecifial .ion-item {
+  margin: 0;
+  padding: 0;
+}
+#pool-detail .benecifial .item .sc-ion-label-md-h,
+#pool-detail .benecifial .item .sc-ion-label-ios-h {
+  margin: 0;
+  padding: 0;
+}
+/* ----------- Withdrawal page custom style ---------- */
+#withdrawal .block-1 {
+  background-color: #f9f9ff;
+  margin-bottom: 0;
+}
+#withdrawal .block-1 .desc {
+  font-size: 11px;
+  font-weight: 600;
+}
+#withdrawal .block-1 .menu-amount {
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--ion-color-warning);
+}
+#withdrawal .block-1 > ion-card-content {
+  padding: 5px;
+}
+#withdrawal ion-card {
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
+  border: 1px solid #ccc;
+  background-color: #fff;
+}
+#withdrawal ion-card .logooperator {
+  width: 80%;
+  padding: 0 0 5px 0;
+}
+#withdrawal ion-card ion-item {
+  --background: none;
+}
+#withdrawal ion-card ion-item ion-label {
+  color: #ccc;
+}
+/* ----------- Tontine loans page custom style ---------- */
+.loans-menu-popover,
+.loans-request-menu-popover {
+  margin-bottom: 0;
+  font-size: 0.99rem;
+}
+.loans-menu-popover .item-label,
+.loans-request-menu-popover .item-label {
+  font-weight: 300;
+}
+.tontine-loans .sc-ion-card-ios-h, .tontine-loans .sc-ion-card-md-h {
+  margin-top: 0;
+}
+.tontine-loans ion-icon[color=danger] {
+  margin-right: 5px;
+  font-size: 1.3rem;
+}
+.tontine-loans ion-card {
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
+  border: 1px solid #ccc;
+}
+.tontine-loans ion-card ion-grid, .tontine-loans ion-card ion-col {
+  padding: 0;
+}
+.tontine-loans .block-1 {
+  background-color: #f9f9ff;
+  margin-bottom: 0;
+}
+.tontine-loans .block-1 .desc {
+  font-size: 0.8rem;
+  line-height: 1rem;
+  font-weight: 600;
+}
+.tontine-loans .block-1 .menu-amount {
+  font-weight: 600;
+  line-height: 1.1rem;
+  font-size: 1rem;
+  color: var(--ion-color-warning);
+}
+.tontine-loans .block-1 .t-balance {
+  background-color: antiquewhite;
+}
+.tontine-loans .block-1 > ion-card-content {
+  padding: 5px;
+}
+/* ----------- Tontine loans edit page custom style ---------- */
+/* ----------- Tontine loans request page custom style ---------- */
+.loans-request .cash {
+  background-color: #f0f8ff;
+  padding: 0.5rem;
+  text-align: center;
+}
+.loans-request .subtitle {
+  color: #1077ab;
+  padding-right: 5px;
+}
+.loans-request .subamount {
+  font-size: 1.5rem;
+}
+/* ----------- Tontine loans list page custom style ---------- */
+.loans-list .sc-ion-card-ios-h, .loans-list .sc-ion-card-md-h {
+  margin-top: 0;
+}
+.loans-list ion-icon[color=danger] {
+  margin-right: 5px;
+  font-size: 1.3rem;
+}
+.loans-list ion-card {
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
+  border: 1px solid #ccc;
+}
+.loans-list ion-card ion-grid, .loans-list ion-card ion-col {
+  padding: 0;
+}
+.loans-list .block-1 b {
+  font-size: 12px;
+  color: var(--ion-color-primary);
+}
+.loans-list .block-1 ion-label p {
+  font-size: 16px;
+}
+.loans-list .block-2 ion-card {
+  background-color: #f9f9ff;
+  padding: 10px;
+}
+.loans-list .block-2 ion-card .desc {
+  font-size: 0.8rem;
+  line-height: 1rem;
+  font-weight: 600;
+}
+.loans-list .block-2 ion-card .menu-amount {
+  font-weight: 600;
+  line-height: 1.1rem;
+  font-size: 1rem;
+  color: var(--ion-color-warning);
+}
+.loans-list .block-2 ion-card .t-balance {
+  background-color: antiquewhite;
+}
+.loans-list .block-1 > ion-card-content {
+  padding: 5px;
+}
+/* ----------- Tontine my loans page custom style ---------- */
+.all-my-loans .block-1 {
+  position: relative;
+}
+.all-my-loans .block-1 .row-1, .all-my-loans .block-1 .row-2 {
+  border-bottom: 1px solid #ccc;
+  border-top: 1px solid #ccc;
+}
+.all-my-loans .block-1 b {
+  font-size: 12px;
+  color: var(--ion-color-primary);
+}
+.all-my-loans .block-1 .edit-btn {
+  position: absolute;
+  top: 1rem;
+  right: 0;
+}
+.all-my-loans .block-1 ion-label p {
+  font-size: 16px;
+}
+.all-my-loans .block-2 {
+  margin-top: 1rem;
+}
+.all-my-loans .block-3 {
+  margin-top: 1rem;
+}
+/* ----------- Tontine my loans page custom style ---------- */
+.my-loans .block-1 {
+  position: relative;
+}
+.my-loans .block-1 .row-1, .my-loans .block-1 .row-2 {
+  padding-bottom: 12px;
+  border-bottom: 1px solid #ccc;
+  border-top: 1px solid #ccc;
+}
+.my-loans .block-1 b {
+  font-size: 12px;
+  color: var(--ion-color-primary);
+}
+.my-loans .block-1 .edit-btn {
+  position: absolute;
+  top: 1rem;
+  right: 0;
+}
+.my-loans .block-1 ion-label p {
+  font-size: 16px;
+}
+.my-loans .block-1 .pay-remain {
+  position: absolute;
+  right: 2rem;
+}
+.my-loans .block-2 {
+  margin-top: 1rem;
+}
+.my-loans .block-3 {
+  margin-top: 1rem;
+}
+/* ----------- Pesuswap page custom style ---------- */
+.bar-balance {
+  border: 1px solid #ccc;
+  background: #f9f9ff;
+}
+.bar-balance p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.bar-balance .bar-balance-title {
+  font-weight: 500;
+  color: rgba(var(--ion-text-color-rgb, 0, 0, 0), 0.4);
+}
+.pesuswap .swapwrap {
+  padding-top: 0;
+}
+.pesuswap .i-have, .pesuswap .i-want {
+  font-size: 0.8rem;
+  margin: 5px auto;
+}
+.pesuswap .i-have b, .pesuswap .i-want b {
+  font-weight: 600;
+  color: #000;
+}
+.pesuswap .swapform {
+  --padding-start: 0;
+  border: none;
+  background: border-box;
+}
+.pesuswap form > div:first-child {
+  background: ghostwhite;
+  box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+  margin-bottom: 5px;
+}
+.pesuswap form ion-select {
+  border: 1px solid #ccc;
+  background: green;
+  color: white;
+  border-radius: 10px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+}
+.pesuswap form .no-background ion-select {
+  background: #fff;
+  border-radius: 0px;
+  color: #222;
+  border: none;
+  box-shadow: none;
+}
+.pesuswap form ion-toggle {
+  padding-right: 0;
+  padding-left: 0;
+}
+.pesuswap form .swapamount {
+  --border-width: 1px;
+  border-radius: 10px;
+  --inner-border-width: 0;
+  --min-height: 40px;
+}
+.pesuswap form .item-inner {
+  border: 0;
+}
+.pesuswap form .swapfilter {
+  background: var(--ion-background-color);
+}
+.pesuswap form .swapfilter .item .sc-ion-label-md-h {
+  margin-top: 6px;
+  margin-bottom: 13px;
+}
+.pesuswap form .swapfilter ion-checkbox.md {
+  margin-top: 14px;
+  margin-bottom: 18px;
+}
+.pesuswap .swapitem h2 {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.pesuswap .swapitem ion-icon {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.pesuswap .swapitem .swaprate ion-icon {
+  padding-left: 0;
+  padding-right: 0;
+}
+.pesuswap .swapitem .popover-menu {
+  position: absolute;
+  right: 0;
+  bottom: 5px;
+}
+.pesuswap .swapitem .popover-menu ion-button {
+  --background-focused: transparent;
+}
+.pesuswap .swapitem .popover-menu ion-button ion-icon {
+  --ion-color-base: var(--ion-color-warning) !important;
+}
+.swap-btn-sommary {
+  font-size: 0.9rem;
+  text-align: left;
+}
+.swap-btn-sommary strong {
+  font-size: 0.95rem;
+}
+.send-swap-request ion-icon, .swap-validation ion-icon {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+/* ----------- Tontines events page custom style ---------- */
+.my-tontines-events ion-card {
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
+  border: 1px solid #ccc;
+  background-color: #f9f9ff;
+}
+.my-tontines-events ion-card .col-status {
+  padding: 0.3rem;
+}
+.my-tontines-events ion-card .col-status .pot-rate-text {
+  fill: #383a3e;
+}
+.my-tontines-events ion-card ion-card-header, .my-tontines-events ion-card ion-card-content {
+  padding: 0.2rem;
+}
+.my-tontines-events ion-card ion-card-header ion-badge {
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+.my-tontines-events ion-card ion-card-title {
+  font-size: 1.4rem;
+}
+.my-tontines-events ion-card .event-img, .my-tontines-events ion-card .event-img-block {
+  margin: 0;
+  padding: 0;
+}
+.my-tontines-events ion-card .event-img-block {
+  width: 100% !important;
+  height: 180px;
+  min-height: 180px;
+  max-height: 180px;
+  overflow: hidden;
+}
+.my-tontines-events .pot-status .pot-rate-text {
+  fill: #383a3e;
+}
+.event-menu-popover {
+  margin-bottom: 0;
+  font-size: 0.99rem;
+}
+.event-menu-popover .item-label {
+  font-weight: 300;
+}
+/* ----------- Tontine event detail page custom style ---------- */
+.toolbar-img {
+  --background: none;
+  --min-height: 300px;
+  --background: linear-gradient(45deg, rgba(76,185,196,.4) 0%, rgba(61,211,174,.3) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#4cb9c4", endColorstr="#3dd3ae", GradientType=.4 );
+  /*     --background: linear-gradient(20deg, rgba(28, 28, 28, .8) 20%, rgba(255, 255, 255, .8) 100%);
+   */
+  /*  --background: rgba(76,185,196,1);
+     --background: -moz-linear-gradient(45deg, rgba(76,185,196,1) 0%, rgba(61,211,174,1) 100%);
+     --background: -webkit-gradient(left bottom, right top, color-stop(0%, rgba(76,185,196,1)), color-stop(100%, rgba(61,211,174,1)));
+     --background: -webkit-linear-gradient(45deg, rgba(76,185,196,1) 0%, rgba(61,211,174,1) 100%);
+     --background: -o-linear-gradient(45deg, rgba(76,185,196,1) 0%, rgba(61,211,174,1) 100%);
+     --background: -ms-linear-gradient(45deg, rgba(76,185,196,1) 0%, rgba(61,211,174,1) 100%);
+     --background: linear-gradient(45deg, rgba(76,185,196,1) 0%, rgba(61,211,174,1) 100%);
+     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4cb9c4', endColorstr='#3dd3ae', GradientType=1 );
+  */
+}
+.toolbar-img ion-buttons {
+  position: absolute;
+  top: 0;
+}
+.toolbar-img ion-buttons[slot=end] {
+  right: 0;
+}
+.toolbar-img-title {
+  position: absolute;
+  bottom: 0;
+  left: 1rem;
+  --background: transparent;
+}
+.toolbar-img-title ion-buttons {
+  display: none;
+}
+.toolbar-img-title ion-title {
+  font-weight: bolder;
+  font-family: sans-serif;
+  font-size: 1.5rem;
+  margin-left: 1rem;
+  color: var(--ion-color-primary-contrast);
+}
+.toolbar-img-title ion-title.ios {
+  margin-left: 0;
+  padding: 0 10px;
+}
+.toolbar-img-title {
+  left: 0;
+}
+ion-toolbar[style*="opacity: 0"] ~ .toolbar-img-title ion-title {
+  color: #c1c4cd;
+  font-family: var(--ion-font-family, inherit);
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 0.0125em;
+  margin-left: 0;
+}
+ion-toolbar[style*="opacity: 0"] ~ .toolbar-img-title .title-ios {
+  padding-left: 4.2rem;
+}
+ion-toolbar[style*="opacity: 0"] ~ .toolbar-img-title ion-buttons {
+  display: block;
+}
+.event-detail .notification ion-card {
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
+  border: 1px solid #ccc;
+  background-color: #f9f9ff;
+}
+.event-detail .notification ion-card ion-item {
+  --background: #f9f9ff;
+}
+.event-detail .notification ion-card ion-card-header {
+  padding: 0.2rem;
+}
+.event-detail .notification ion-card ion-card-content {
+  border-top: 1px solid #ccc;
+  padding: 0.4rem;
+}
+.event-detail .block-1 .row-1, .event-detail .block-1 .row-2 {
+  border-bottom: 1px solid #ccc;
+}
+.event-detail .block-1 b {
+  font-size: 12px;
+  color: var(--ion-color-primary);
+}
+.event-detail .block-2 {
+  background: aliceblue;
+}
+.event-detail .block-2 ion-button {
+  --padding-start: 1.5rem;
+  --padding-end: 1.5rem;
+  --padding-top: 0.5rem;
+  --padding-bottom: 0.5rem;
+  height: 1.8rem;
+}
+.event-detail .block-2 .col-status .pot-rate-text {
+  fill: #383a3e;
+}
+.event-detail .block-2 .pot-status .pot-rate-text {
+  fill: #383a3e;
+}
+.event-detail .block-3 .mytontine-icon {
+  position: relative;
+  display: block;
+  margin: 0 auto;
+  height: 2.37rem;
+}
+.event-detail .block-3 .mytontine-icon #pot-status-path path {
+  fill: none;
+}
+.event-detail .block-3 .mytontine-icon .cls-3 {
+  fill: #f04141;
+  transition: color 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.event-detail .block-3 .mytontine-icon .cls-4 {
+  -webkit-clip-path: url(#pot-status-path);
+          clip-path: url(#pot-status-path);
+}
+.event-detail .block-3 .mytontine-icon .cls-5 {
+  fill: #fff;
+}
+.event-detail .block-3 .active-icon .cls-3 {
+  fill: #7DB841;
+}
+.event-detail-menu-popover {
+  margin-bottom: 0;
+  font-size: 0.99rem;
+}
+.event-detail-menu-popover .item-label {
+  font-weight: 300;
+}
+/* ----------- Tontine event ticket page custom style ---------- */
+.ticket-form {
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
+  border: 1px solid #ccc;
+  background: #f9f9ff;
+  border-left-width: 0;
+  border-right-width: 0;
+  border-radius: 0;
+}
+.ticket-form ion-grid, .ticket-form ion-col {
+  padding: 0;
+}
+.ticket-form ion-item {
+  --background: #f9f9ff;
+  color: #222;
+  --border-color: rgba(0, 0, 0, .3);
+}
+.ticket .notification ion-card {
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
+  border: 1px solid #ccc;
+  background-color: #f9f9ff;
+}
+.ticket .notification ion-card ion-item {
+  --background: #f9f9ff;
+}
+.ticket .notification ion-card ion-card-header {
+  padding: 0.2rem;
+}
+.ticket .notification ion-card ion-card-content {
+  border-top: 1px solid #ccc;
+  padding: 0.4rem;
+}
+/* ----------- Tontine event join page custom style ---------- */
+.join-tontine ion-card {
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
+  border: 1px solid #ccc;
+  background-color: #fff;
+}
+.join-tontine ion-card ion-item {
+  --background: #fff;
+}
+/* ----------- Tontine event invite to join page custom style ---------- */
+.invited ion-card {
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
+  border: 1px solid #ccc;
+  background-color: #fff;
+}
+.invited ion-card ion-item {
+  --background: #fff;
+}
+/* ----------- Tontine event invite to join page custom style ---------- */
+.wallet ion-card {
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
+  border: 1px solid #ccc;
+  background-color: #fff;
+}
+.wallet ion-card ion-item {
+  --background: #fff;
+}
+.wallet .block-1 {
+  background-color: #f9f9ff;
+  margin-bottom: 0;
+}
+.wallet .block-1 .desc {
+  font-size: 11px;
+  font-weight: 600;
+}
+.wallet .block-1 .menu-amount {
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--ion-color-warning);
+}
+.wallet .block-1 > ion-card-content {
+  padding: 5px;
+}
+/* ----------- Notifications page custom style ---------- */
+.notifications .notification ion-card {
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
+  border: 1px solid #ccc;
+  background-color: #f9f9ff;
+}
+.notifications .notification ion-card ion-item {
+  --background: #f9f9ff;
+}
+.notifications .notification ion-card ion-card-header {
+  padding: 0.2rem;
+}
+.notifications .notification ion-card ion-card-content {
+  border-top: 1px solid #ccc;
+  padding: 0.4rem;
+}
+/* ----------- user home page css ---------- */
+.user-home .avatar-block .list-lines-none {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.user-home .action-block .item {
+  margin-bottom: 1.5rem;
+}
+.user-home .action-block .item ion-text > p:first-child {
+  color: #ff9933;
+}
+.user-home .action-block .item p {
+  margin: 0.3rem 0;
+}
+.user-home .action-block .item ion-icon {
+  color: #ff9933;
+}
+/* ----------- media query CSS ------------------- */
+@media (min-width: 768px) {
+  .welcome .welcome-title {
+    font-size: 1.5rem;
+  }
+
+  ion-img.inner-image,
+svg.inner-image {
+    height: 10rem;
+  }
+
+  .my-tontines-events ion-card ion-card-title {
+    font-size: 1.1rem;
+  }
+}
+@media (min-width: 992px) {
+  html.ios, html.md {
+    font-size: 1.3rem;
+  }
+
+  b, strong {
+    font-weight: 400;
+  }
+
+  .item.sc-ion-label-md-h, .item .sc-ion-label-md-h,
+.item.sc-ion-label-ios-h, .item .sc-ion-label-ios-h {
+    font-size: 1.1rem;
+  }
+
+  .sc-ion-buttons-ios-s ion-button,
+.sc-ion-buttons-md-s ion-button {
+    font-size: 24px;
+  }
+
+  .button-native.sc-ion-back-button-ios,
+.button-native.sc-ion-back-button-md {
+    font-size: 1.1rem;
+  }
+
+  .sc-ion-label-ios-s p,
+.sc-ion-label-md-s p {
+    font-size: 0.9rem;
+  }
+
+  ion-toolbar {
+    --min-height: 100px;
+  }
+
+  ion-toolbar .logo {
+    height: 4.5rem;
+  }
+
+  ion-toolbar .logo-arrow-no-right-slot {
+    height: 1rem;
+  }
+
+  ion-title.no-padding.md {
+    padding: 0 0 0 10px;
+  }
+
+  ion-toolbar .logo-no-right-slot {
+    height: 3.8rem;
+  }
+
+  .toolbar-img {
+    --min-height: 450px;
+  }
+
+  .toolbar-img-title ion-title {
+    font-size: 2rem;
+  }
+
+  ion-toolbar.subtitle .title-ios.title-default,
+ion-toolbar.subtitle .title-md.title-default {
+    font-size: 1.4rem;
+  }
+
+  ion-title.no-padding.ios {
+    padding-left: 7rem;
+  }
+
+  .modal-wrapper.sc-ion-modal-ios,
+.modal-wrapper.sc-ion-modal-md {
+    --box-shadow: -1px -1px 10px 0px rgba(0,0,0,0.2);
+  }
+
+  ion-segment-button .ion-text-capitalize, ion-segment-button [text-capitalize] {
+    text-transform: capitalize !important;
+    font-size: 1rem;
+    margin: 0.5rem 1.5rem;
+  }
+
+  ion-button,
+ion-button.button-round, .alert-button.sc-ion-alert-ios {
+    font-size: 1.1rem;
+  }
+
+  .native-input.sc-ion-input-ios,
+.native-input.sc-ion-input-md,
+ion-select {
+    font-size: 1rem;
+  }
+
+  ion-label, alert-radio-label,
+.alert-radio-label.sc-ion-alert-ios,
+.alert-radio-label.sc-ion-alert-md {
+    font-size: 0.8rem;
+  }
+
+  ion-col ion-text, p {
+    font-size: 1.1rem;
+  }
+
+  .alert-wrapper.sc-ion-alert-ios,
+.alert-wrapper.sc-ion-alert-md {
+    min-width: 50%;
+  }
+  .alert-wrapper.sc-ion-alert-ios .alert-tappable.sc-ion-alert-ios,
+.alert-wrapper.sc-ion-alert-md .alert-tappable.sc-ion-alert-ios {
+    height: 60px;
+  }
+
+  ion-item .sc-ion-label-ios-s h2,
+ion-item .sc-ion-label-md-s h2 {
+    font-size: 1rem;
+  }
+  ion-item .sc-ion-label-ios-s h3,
+ion-item .sc-ion-label-md-s h3 {
+    font-size: 0.95rem;
+  }
+  ion-item .sc-ion-label-ios-s p {
+    font-size: 0.85rem;
+  }
+
+  .logooperator {
+    width: 60%;
+  }
+
+  .dashboard .thumb-img {
+    height: 4rem;
+  }
+
+  .event-detail .block-1 b {
+    font-size: 16px;
+  }
+
+  .welcome .welcome-title {
+    font-size: 2rem;
+  }
+
+  .my-tontine .pot-status {
+    width: 65%;
+    margin: 10px 10px 0;
+  }
+  .my-tontine ion-card ion-card-header ion-card-title {
+    font-size: 1.3rem;
+  }
+  .my-tontine ion-card ion-card-content .col-button.contributed {
+    background-color: var(--ion-color-success);
+  }
+  .my-tontine ion-card ion-card-content .col-button.contributed .menu-amount {
+    font-size: 1rem;
+    margin: 1.1rem 0;
+    font-weight: 400;
+  }
+  .my-tontine ion-card ion-card-content .col-button.inactive {
+    background-color: #e9ecef;
+  }
+  .my-tontine ion-card ion-card-content .col-button.inactive .menu-amount {
+    font-size: 1rem;
+    margin: 1.1rem 0;
+    font-weight: 400;
+  }
+  .my-tontine ion-card ion-card-subtitle {
+    font-size: 1.1rem;
+  }
+  .my-tontine ion-card .desc {
+    font-size: 1rem;
+    margin-top: 0.5rem;
+  }
+  .my-tontine ion-card .menu-amount {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .tontine-detail .block-1 .desc {
+    font-size: 1rem;
+    line-height: 1.15rem;
+    font-weight: 600;
+  }
+  .tontine-detail .block-1 .menu-amount {
+    font-weight: 600;
+    line-height: 1.5rem;
+    font-size: 1.1rem;
+  }
+  .tontine-detail .block-2 ion-label p {
+    font-size: 1.1rem;
+  }
+  .tontine-detail .block-2 b {
+    font-size: 1rem;
+    font-weight: 400;
+  }
+  .tontine-detail .block-3 ion-item {
+    font-size: 1.1rem;
+  }
+  .tontine-detail .block-4 ion-text {
+    font-size: 1.1rem;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .detail-session b, .detail-session strong {
+    font-weight: 500;
+  }
+  .detail-session ion-item {
+    font-size: 1.1rem;
+  }
+
+  .bid .bid-info .row-1 {
+    margin-bottom: 1.5rem;
+  }
+  .bid .bid-info .row-1 b, .bid .bid-info .row-2 b {
+    font-size: 1.1rem;
+  }
+  .bid .bid-info .edit-btn {
+    position: absolute;
+    top: 1rem;
+    right: 0;
+  }
+
+  #pool-detail .block-1 .desc {
+    font-size: 1rem;
+    line-height: 1.15rem;
+    font-weight: 600;
+  }
+  #pool-detail .block-1 .menu-amount {
+    font-weight: 600;
+    line-height: 1.5rem;
+    font-size: 1.1rem;
+  }
+
+  .wallet .paidmode .logooperator {
+    width: 60%;
+    padding: 0 0 5px 0;
+  }
+
+  #withdrawal .block-1 .desc {
+    font-size: 1.1rem;
+    font-weight: 400;
+  }
+  #withdrawal .block-1 .menu-amount {
+    font-weight: 400;
+    font-size: 1.1rem;
+    text-align: right;
+  }
+  #withdrawal .card-content-ios,
+#withdrawal .card-content-md {
+    font-size: 1.05rem;
+  }
+
+  .user-home .sc-ion-label-ios-s h2,
+.user-home .sc-ion-label-md-s h2 {
+    font-size: 1.1rem;
+  }
+  .user-home .action-block .item ion-text > p:first-child {
+    font-size: 1.1rem;
+  }
+  .user-home .action-block .item p {
+    margin: 0.3rem 0;
+    font-size: 1rem;
+  }
+
+  .my-tontines-events ion-card .event-img-block {
+    height: 250px;
+    min-height: 250px;
+    max-height: 250px;
+  }
+
+  .detail-share ion-item {
+    font-size: 1.1rem;
+  }
+
+  .detail-penalities ion-item {
+    font-size: 1.1rem;
+  }
+
+  .event-detail .block-2 svg {
+    width: 55%;
+  }
+  .event-detail .block-2 ion-button {
+    --padding-top: 1.5rem;
+    --padding-bottom: 1.5rem;
+  }
+}
+@media (max-width: 767.98px) {
+  .register-phone, .verfy-phone {
+    --padding-top: 30%;
+  }
+
+  .my-tontines-events ion-card ion-card-title {
+    font-size: 1.1rem;
+  }
+}
+/* --------------- CSS Animation ----------------*/
+@keyframes donut {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+}
+
+/*# sourceMappingURL=styles.css.map*/

@@ -1,0 +1,32 @@
+<ion-grid> 
+   
+  <ion-row>
+    <ion-col>
+      <h4>{{ 'M_UPDATE_SHARE' | translate }}</h4> 
+      <p>{{ 'ADD_SHARE_SUBTEXT1' | translate }} <b>{{ selectedMber && selectedMber.member? selectedMber.member.name : '' }}</b></p>
+      <p>{{ 'ADD_SHARE_SUBTEXT2' | translate }}: <b>{{ selectedMber.nbPart }}</b></p>
+      <p>{{ 'MIN_SHARES_TEXT' | translate }}: <b>{{ nbPartList.length }}</b></p>
+    </ion-col>
+  </ion-row>
+ <ion-row>
+    <ion-col>
+      <ion-item color="light">
+        <ion-label position="fixed"> <b>{{ 'NB_SHARES' | translate }} :</b>  </ion-label>
+        <ion-input type="number" [(ngModel)]="memberPart" (keyup.enter)="reducePartMembreTontineGo()"></ion-input>   
+      </ion-item> 
+    </ion-col>
+  </ion-row> 
+
+  <ion-row>
+    <ion-col class="ion-text-center">
+      <ion-button color="warning" fill="outline" (click)="close()">{{ 'CANCEL_TEXT' | translate }}</ion-button>
+    </ion-col>
+    <ion-col class="ion-text-center">
+      <!---->
+      <ion-button color="warning" (click)="reducePartMembreTontine()" [disabled]="canDisableReducePart()">{{ 'REDUCE_TEXT' | translate }}</ion-button>
+    </ion-col>
+  </ion-row>
+  <p class="ion-text-center"  *ngIf="loading">
+    <ion-spinner  name="circles"></ion-spinner>
+  </p> 
+</ion-grid>

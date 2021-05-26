@@ -1,0 +1,18 @@
+<ion-grid>     
+  <ion-row>
+    <ion-col>
+      <h4>Delete Member</h4> 
+      <p>Are you sure you want to delete <b>{{ selectedMber.name }}</b>
+         from this tontine?
+      </p>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col class="ion-text-center">
+      <ion-button color="warning">Yes</ion-button>
+    </ion-col>
+    <ion-col class="ion-text-center">
+      <ion-button color="warning" fill="outline" (click)="close()">No</ion-button>
+    </ion-col>
+  </ion-row>
+</ion-grid>

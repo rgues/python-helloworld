@@ -1,0 +1,166 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center">{{ 'TONTINE_EVENT_TEXT10' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="new-event">
+  <form [formGroup]="infoEditForm">
+    <ion-grid>
+      <ion-row>
+        <ion-col class="ion-padding"> 
+          <ion-thumbnail>
+            <img src="{{eventPicture}}">
+          </ion-thumbnail>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6"> 
+          <ion-item lines="none">                
+            <ion-toggle formControlName="privacy"></ion-toggle>
+            <ion-label>{{ 'PRIVATE_TEXT' | translate }}</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col size="6" class="ion-text-end">
+          <ion-button color="primary" (click)="uploadImage()" size="medium" class="ion-text-capitalize"> {{ 'M_UPLOAD_IMAGE' | translate }}
+            <ion-icon name="camera"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">{{ 'EVENT_NAME_TITLE' | translate }}</ion-label>
+            <ion-input type="text" formControlName="event_name" required></ion-input>
+          </ion-item>
+          <div class="validation-errors">
+              <ng-container *ngFor="let validation of validationMessages.name">
+                <div class="error-message" *ngIf="eventName.hasError(validation.type) && (eventName.dirty || eventName.touched)">
+                  <ion-icon name="information-circle-outline" ></ion-icon>
+                  {{ validation.message }}
+                </div>
+              </ng-container>
+            </div> 
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">{{ 'DESCRIPTION_TEXT' | translate }}</ion-label>
+            <ion-textarea type="text" formControlName="description" required="true"></ion-textarea>
+          </ion-item>
+          <div class="validation-errors">
+              <ng-container *ngFor="let validation of validationMessages.description">
+                <div class="error-message" *ngIf="eventDesc.hasError(validation.type) && (eventDesc.dirty || eventDesc.touched)">
+                  <ion-icon name="information-circle-outline" ></ion-icon>
+                  {{ validation.message }}
+                </div>
+              </ng-container>
+            </div> 
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label>{{ 'COUNTRY_TEXT' | translate }}</ion-label>
+            <ion-select (ionChange)="updateCurrency()" formControlName="country">
+              <ion-select-option *ngFor="let state of states" [value]="state.country">{{ state.country_name }}</ion-select-option>          
+            </ion-select>
+          </ion-item>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validationMessages.country">
+              <div class="error-message" *ngIf="eventCountry.hasError(validation.type) && (eventCountry.dirty || eventCountry.touched)">
+                <ion-icon name="information-circle-outline" ></ion-icon>
+                {{ validation.message }}
+              </div>
+            </ng-container>
+          </div> 
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <ion-item>
+            <ion-label position="floating">{{ 'M_EXPECTED_AMOUNT' | translate }}</ion-label>
+            <ion-input type="text" (ionChange)="updateAmount()" formControlName="expected_amount" required></ion-input>
+            <span slot="end" class="slot-prefix ion-no-margin"> {{ infoEditForm.value.currency }} </span>
+          </ion-item>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validationMessages.expected_amount">
+              <div class="error-message" *ngIf="eventAmount.hasError(validation.type) && (eventAmount.dirty || eventAmount.touched)">
+                <ion-icon name="information-circle-outline" ></ion-icon>
+                {{ validation.message }}
+              </div>
+            </ng-container>
+          </div> 
+        </ion-col>          
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label>{{ 'M_START_DATE' | translate }}</ion-label>
+            <ion-datetime (ionChange)="checkDate(infoEditForm.value.date_start)" formControlName="date_start" displayFormat="DDDD D MMM, YYYY" [min]="minDate" pickerFormat="DD MMMM YYYY"></ion-datetime>
+          </ion-item>
+          <div class="validation-errors">
+            <ng-container *ngIf="infoEditForm.value.date_start && !isDateValid">
+              <div class="error-message" >
+                <ion-icon name="information-circle-outline" ></ion-icon>
+                <span [innerHTML]="'MIN_DATE_EVENT_ERROR_TEXT' | translate"></span>
+              </div>
+            </ng-container>
+          </div>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validationMessages.date_start">
+              <div class="error-message" *ngIf="eventStartDate.hasError(validation.type) && (eventStartDate.dirty || eventStartDate.touched)">
+                <ion-icon name="information-circle-outline" ></ion-icon>
+                {{ validation.message }}
+              </div>
+            </ng-container>
+          </div> 
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label>{{ 'M_END_DATE' | translate }}</ion-label>
+            <ion-datetime formControlName="date_end" displayFormat="DDDD D MMM, YYYY" [min]="infoEditForm.value.date_start ? infoEditForm.value.date_start : minDate"  pickerFormat="DD MMMM YYYY"></ion-datetime>
+          </ion-item>
+          <div class="validation-errors">
+              <ng-container *ngFor="let validation of validationMessages.date_end">
+                <div class="error-message" *ngIf="eventEndDate.hasError(validation.type) && (eventEndDate.dirty || eventEndDate.touched)">
+                  <ion-icon name="information-circle-outline" ></ion-icon>
+                  {{ validation.message }}
+                </div>
+              </ng-container>
+            </div> 
+        </ion-col>
+      </ion-row>      
+    </ion-grid>    
+  </form>
+</ion-content>
+
+<ion-footer class="ion-padding ion-text-center">
+    <ion-grid>
+      <ion-row>   
+        <ion-col size="6">
+            <ion-button expand="full" [disabled]="infoEditForm.invalid || !isDateValid || loading"
+                  color="warning" 
+                  class="ion-text-uppercase"
+                  shape="round" (click)="editTontineEvent()" >
+              {{ 'SAVE_TEXT' | translate }}
+            </ion-button>
+        </ion-col>   
+        <ion-col size="6">
+            <ion-button expand="full" 
+                  fill="outline"
+                  color="warning" 
+                  class="ion-text-uppercase"
+                  shape="round" (click)="closeInfoEdit('cancel')">
+              {{ 'CANCEL_TEXT' | translate }}
+            </ion-button>
+        </ion-col>
+      </ion-row>
+      <p class="ion-text-center"  *ngIf="loading">
+        <ion-spinner  name="circles"></ion-spinner>
+      </p>
+    </ion-grid>
+  </ion-footer>

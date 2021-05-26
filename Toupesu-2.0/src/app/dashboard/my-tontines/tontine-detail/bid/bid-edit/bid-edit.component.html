@@ -1,0 +1,116 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center">{{ 'TONTINE_EDIT_TEXT13' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="shareEditForm">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <ion-item>
+            <ion-label position="floating">{{ 'TONTINE_DETAIL_TEXT18' | translate }}</ion-label>
+            <ion-input type="number" formControlName="nombre_part_max_membre" required="true"></ion-input>
+          </ion-item> 
+        </ion-col>
+
+        <div class="validation-errors" *ngIf="shareEditForm.value.nombre_part_max_membre < minMemberShare">
+          <div class="error-message">
+            <ion-icon name="information-circle-outline"></ion-icon>
+            <span [innerHTML]="'ERROR_MIN_MEMBER_SHARE' | translate : { share : minMemberShare }"></span>
+          </div>
+        </div>
+
+        <ion-col size="12">
+          <ion-item>
+            <ion-label position="floating">{{ 'TONTINE_DETAIL_TEXT17' | translate }}</ion-label>
+            <ion-input type="number" formControlName="nombre_part_max_tontine" required="true"></ion-input>
+          </ion-item> 
+        </ion-col>
+
+        <div class="validation-errors" *ngIf="shareEditForm.value.nombre_part_max_tontine < shareEditForm.value.nombre_part_max_membre">
+          <div class="error-message">
+            <ion-icon name="information-circle-outline"></ion-icon>
+            <span [innerHTML]="'ERROR_MAX_TONTINE_SHARE' | translate "></span>
+          </div>
+        </div>
+
+        <div class="validation-errors" *ngIf="shareEditForm.value.nombre_part_max_tontine <  minStokvelShare">
+          <div class="error-message">
+            <ion-icon name="information-circle-outline"></ion-icon>
+            <span [innerHTML]="'ERROR_MIN_TONTINE_SHARE' | translate :  { share : minStokvelShare }"></span>
+          </div>
+        </div>
+
+
+        <ion-col size="12">
+          <ion-item>
+            <ion-label position="floating">{{ 'TONTINE_DETAIL_TEXT19' | translate }}</ion-label>
+            <ion-input type="number" formControlName="numberlot" required="true"></ion-input>
+          </ion-item> 
+        </ion-col>
+
+
+        <div class="validation-errors" *ngIf="shareEditForm.value.numberlot < 1">
+          <div class="error-message">
+            <ion-icon name="information-circle-outline"></ion-icon>
+            <span [innerHTML]="'ERROR_LOT_TONTINE_SHARE' | translate : { share: 1 }"></span>
+          </div>
+        </div>
+
+
+      <!--   <ion-col size="12">
+          <ion-item>
+            <ion-label position="floating">{{ 'TONTINE_EDIT_SHARE_TEXT9' | translate }}</ion-label>
+            <ion-input type="number" formControlName="amount" required="true"></ion-input>
+          </ion-item> 
+        </ion-col> 
+
+        // Not use by the system now 
+        <ion-col size="12" >
+          <ion-item>
+            <ion-label>{{ 'TONTINE_EDIT_SHARE_TEXT15' | translate }}</ion-label>
+            <ion-toggle formControlName="contributeCas1"></ion-toggle>
+          </ion-item>
+        </ion-col>
+
+        // Not use by the system now 
+        <ion-col size="12" >
+          <ion-item>
+            <ion-label>{{ 'TONTINE_EDIT_SHARE_TEXT16' | translate }}</ion-label>
+            <ion-toggle formControlName="contributeCas2"></ion-toggle>
+          </ion-item>
+        </ion-col> -->
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>
+
+<ion-footer class="ion-padding ion-text-center">
+  <ion-grid>
+    <ion-row> 
+      <ion-col>
+          <ion-button expand="full" 
+                color="warning" 
+                class="ion-text-uppercase" [disabled]="canEdit()" (click)="updateShare()"
+                shape="round">
+            {{ 'SAVE_TEXT' | translate }}
+          </ion-button>
+      </ion-col>     
+      <ion-col>
+          <ion-button expand="full" 
+                fill="outline"
+                color="warning" 
+                class="ion-text-uppercase"
+                shape="round" (click)="closeShareEdit('cancel')">
+            {{ 'CANCEL_TEXT' | translate }}
+          </ion-button>
+      </ion-col>
+    </ion-row>
+    <p class="ion-text-center">
+      <ion-spinner *ngIf="loading"  name="circles"></ion-spinner>
+    </p>
+  </ion-grid>
+</ion-footer>
+

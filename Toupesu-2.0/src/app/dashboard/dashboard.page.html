@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar class="with-logo2">
+    <ion-chip color="danger" slot="start"
+    *ngIf="haveInvitation === true"
+    [routerLink]="['/', 'dashboard', 'my-invitations']">
+    <ion-icon name="mail-unread" color="danger"></ion-icon>
+    <ion-label><strong>{{nbInvitations}}</strong></ion-label>
+  </ion-chip>    
+    <ion-title class="ion-text-center">
+        <ion-img class="logo-no-right-slot" [src]="'assets/logo-toupesu.svg'"></ion-img>
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="openContextMenu($event)">
+        <ion-icon name="ellipsis-vertical" color="primary"></ion-icon>
+      </ion-button>
+    </ion-buttons> 
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-text-center no-padding dashboard">
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="5" routerLink="my-tontines">
+        <ion-img [src]="'assets/my-tontines-icon.svg'" class="thumb-img"></ion-img>
+        <ion-label>{{ 'TONTINE_LIST_TEXT1' | translate }}</ion-label>       
+      </ion-col>
+      <ion-col size="5"  routerLink="tontines-events">
+        <ion-img [src]="'assets/tontine-event-icon.svg'" class="thumb-img"></ion-img>
+        <ion-label>{{ 'TONTINE_EVENT' | translate }}</ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="5" routerLink="join-tontine">
+        <ion-img [src]="'assets/join-icon.svg'" class="thumb-img"></ion-img>
+        <ion-label>{{ 'MENU_JOIN_TONTINE' | translate }}</ion-label>           
+      </ion-col>
+      <ion-col size="5"  routerLink="invitations">
+        <ion-img [src]="'assets/invit-icon.svg'" class="thumb-img"></ion-img>
+        <ion-label>{{ 'TONTINE_INVITED_TEXT1' | translate }}</ion-label>        
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="5"  routerLink="my-wallet">
+        <ion-img [src]="'assets/wallet-icon.svg'" class="thumb-img"></ion-img>
+        <ion-label>{{ 'MENU_MY_WALLET' | translate }}</ion-label> 
+      </ion-col>
+      <ion-col size="5"  routerLink="pesuswap">
+        <ion-img [src]="'assets/swap-icon.svg'" class="thumb-img"></ion-img>
+        <ion-label>{{ 'PESU_SWAP_TEXT' | translate }}</ion-label>           
+      </ion-col>
+      
+    </ion-row>
+  </ion-grid>
+</ion-content>

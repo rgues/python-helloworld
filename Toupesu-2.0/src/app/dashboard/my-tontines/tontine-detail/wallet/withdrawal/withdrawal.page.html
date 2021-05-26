@@ -1,0 +1,354 @@
+<ion-header>
+  <ion-toolbar class="with-logo2">
+      <ion-buttons slot="start">
+        <ion-back-button color="primary" [defaultHref]="'/dashboard/my-tontines/' + currentTontine.tontine.tontine_id + '/wallet'" slot="text-only"></ion-back-button>
+      </ion-buttons>
+    <ion-title class="ion-text-center title-md-right">
+      <ion-img class="logo" [src]="'assets/logo-toupesu.svg'"></ion-img>
+    </ion-title>
+  </ion-toolbar>
+  <ion-toolbar class="ion-text-center subtitle">
+    <ion-title>{{ 'WALLET_TEXT' | translate }}: <ion-text color="primary" class="ion-text-capitalize">{{ 'WITHDRAWAL_TEXT0' | translate }}</ion-text></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content id="withdrawal">
+  <ion-refresher slot="fixed" (ionRefresh)="refreSher($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      refreshingSpinner="circles"
+      refreshingText="{{ 'M_REFRESHING_TEXT' | translate }}">
+    </ion-refresher-content>
+  </ion-refresher>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-col class="ion-no-padding">
+          <ion-card class="block-1">
+            <ion-card-content class="ion-text-center">
+              <ion-row>
+                <ion-col size="auto" class="align-self-center">
+                  <span class="desc">{{ 'WALLET_TEXT2' | translate }} </span>
+                </ion-col>
+                <ion-col class="col-button">
+                  <div class="menu-amount">
+                    <span *ngFor="let balance of currentBalance; let i = index">  {{balance.total_balance ? balance.total_balance : 0}}
+                      {{balance.currency_name ? balance.currency_name : ''}} <span *ngIf="currentBalance[i+1]"> | </span></span>
+                  </div>
+                </ion-col>
+              </ion-row>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <form [formGroup]="withdrawal">
+          <ion-card>
+            <ion-card-header>
+              <ion-card-subtitle>
+                {{ 'M_WALLET_SELECT_TEXT' | translate }}
+                <ion-item>
+                  <ion-label>{{ 'M_PAY_BY' | translate }}</ion-label>
+                  <ion-select (ionChange)="updatePayment(withdrawal.value.method_payment_id)"
+                    formControlName="method_payment_id">
+                    <ion-select-option *ngFor="let operator of paymentMethods; let m=index" [selected]="m===0" [value]="operator.id">{{ operator.label }}
+                    </ion-select-option>
+                  </ion-select>
+                </ion-item>
+              </ion-card-subtitle>
+              <ion-card-content>
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-item>
+                      <ion-label>{{ 'SOURCE_FOUND_TEXT' | translate }}</ion-label>
+                      <ion-select formControlName="type_caisse_tontine">
+                        <ion-select-option *ngFor="let checkout of typesCaisses" [value]="checkout.id">{{ checkout.name }}</ion-select-option>          
+                      </ion-select>
+                    </ion-item>     
+                  </ion-col>
+                </ion-row>
+                <div *ngIf="withdrawal.value.method_payment_id === 0; then bankTransfer else mobilTransfer"></div>
+                <ng-template #bankTransfer>
+                  <ion-row>
+                    <ion-col>
+                      <ion-text color="warning">
+                        {{ 'WITHDRAWAL_TEXT10' | translate }}
+                      </ion-text>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col>
+                      <ion-item *ngIf="bankList && bankList.length > 0">
+                        <ion-label>{{ 'TONTINE_DETAIL_TEXT2' | translate }}</ion-label>
+                        <ion-select (ionChange)="checkAmount(withdrawal.value.amount)" formControlName="device_name">
+                          <ion-select-option *ngFor="let currency of currentBalance" [value]="currency.device_name">
+                            {{ currency.device_name }}</ion-select-option>
+                        </ion-select>
+                      </ion-item>
+                      <div class="validation-errors">
+                        <div class="error-message" *ngIf="devise.invalid && (devise.dirty || devise.touched)">
+                          <ion-icon name="information-circle-outline"></ion-icon>
+                          {{ 'CURRENCY_REQUIRED' | translate }}
+                        </div>
+                      </div>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col *ngIf="bankList && bankList.length > 0">
+                      <ion-item>
+                        <ion-label position="floating">{{'WALLET_AMOUNT_WITHDRAWAL' | translate}} 
+                          <span *ngIf="withdrawal.value.device_name">({{withdrawal.value.device_name}})</span></ion-label>
+                        <ion-input (ionChange)="checkAmount(withdrawal.value.amount)" type="number"
+                          formControlName="amount"></ion-input>
+                      </ion-item>
+                      <div class="validation-errors">
+                        <div class="error-message" *ngIf="amount.invalid && (amount.dirty || amount.touched)">
+                          <ion-icon name="information-circle-outline"></ion-icon>
+                          {{'AMOUNT_REQUIRED' | translate }}
+                        </div>
+                      </div>
+                      <div class="error-message" *ngIf="!amounValid">
+                        <ion-icon name="information-circle-outline"></ion-icon>
+                        {{amountErrorMessage}}
+                      </div>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col>
+                      <ion-item *ngIf="bankList && bankList.length > 0">
+                        <ion-label>{{ 'WITHDRAWAL_TEXT7' | translate }}</ion-label>
+                        <ion-select (ionChange)="getBankdetail(withdrawal.value.tontine_bank_profile_id)"
+                          formControlName="tontine_bank_profile_id">
+                          <ion-select-option *ngFor="let bank of bankList" [value]="bank.id">{{ bank.bank_name }}
+                          </ion-select-option>
+                        </ion-select>
+                      </ion-item>
+                      <div class="validation-errors"  *ngIf="bankList && bankList.length > 0">
+                        <div class="error-message" *ngIf="bank.invalid && (bank.dirty || bank.touched)">
+                          <ion-icon name="information-circle-outline"></ion-icon>
+                          {{ 'BANK_NAME_REQUIRED' | translate }}
+                        </div>
+                      </div>
+                      <ion-text class="ion-float-right"><a
+                          (click)="openAddBank($event)">{{ 'WITHDRAWAL_TEXT9' | translate }}</a></ion-text>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col>
+                      <ion-item *ngIf="bankList && bankList.length > 0 && withdrawal.value.nom_proprietaire">
+                        <ion-label position="floating">{{ 'WALLET_ACCOUNT_HOLDER_NAME' | translate }}</ion-label>
+                        <ion-input type="text" formControlName="nom_proprietaire"></ion-input>
+                      </ion-item>
+                      <div class="validation-errors">
+                        <div class="error-message"
+                          *ngIf="proprietaryName.invalid && (proprietaryName.dirty || proprietaryName.touched)">
+                          <ion-icon name="information-circle-outline"></ion-icon>
+                          {{'ACCOUNT_HOLDER_REQUIRED' | translate }}
+                        </div>
+                      </div>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col>
+                      <ion-item *ngIf="bankList && bankList.length > 0 && withdrawal.value.branch_name">
+                        <ion-label position="floating">{{ 'BRANCH_NAME' | translate }}</ion-label>
+                        <ion-input type="text" formControlName="branch_name"></ion-input>
+                      </ion-item>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col>
+                      <ion-item *ngIf="bankList && bankList.length > 0 && withdrawal.value.branch_code">
+                        <ion-label position="floating">{{ 'BRANCH_CODE' | translate }}</ion-label>
+                        <ion-input type="text" formControlName="branch_code"></ion-input>
+                      </ion-item>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col>
+                      <ion-item *ngIf="bankList && bankList.length > 0 && withdrawal.value.account_name">
+                        <ion-label position="floating">{{'WALLET_ACCOUNT_NAME' | translate}}</ion-label>
+                        <ion-input type="text" formControlName="account_name" required></ion-input>
+                      </ion-item>
+                      <div class="validation-errors">
+                        <div class="error-message" *ngIf="accountName.invalid && (accountName.dirty || accountName.touched)">
+                          <ion-icon name="information-circle-outline"></ion-icon>
+                          {{ 'ACCOUNT_NAME_REQUIRED' | translate }}
+                        </div>
+                      </div>        
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col>
+                      <ion-item *ngIf="bankList && bankList.length > 0 && withdrawal.value.account_number">
+                        <ion-label position="floating">{{ 'WALLET_ACCOUNT_NUMBER' | translate }}</ion-label>
+                        <ion-input type="text" formControlName="account_number"></ion-input>
+                      </ion-item>
+                      <div class="validation-errors">
+                        <div class="error-message"
+                          *ngIf="accountNber.invalid && (accountNber.dirty || accountNber.touched)">
+                          <ion-icon name="information-circle-outline"></ion-icon>
+                          {{'ACCOUNT_NUMBER_REQUIRED' | translate }}
+                        </div>
+                      </div>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col>
+                      <ion-item *ngIf="bankList && bankList.length > 0 && withdrawal.value.address">
+                        <ion-label position="floating">{{ 'ADDRESS_TEXT' | translate }}</ion-label>
+                        <ion-input type="text" formControlName="address"></ion-input>
+                      </ion-item>
+                      <div class="validation-errors">
+                        <div class="error-message" *ngIf="address.invalid && (address.dirty || address.touched)">
+                          <ion-icon name="information-circle-outline"></ion-icon>
+                          {{'ACCOUNT_NUMBER_REQUIRED' | translate }}
+                        </div>
+                      </div>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row *ngIf="bankList && bankList.length > 0">   
+                    <ion-col size="6">
+                        <ion-button 
+                              color="warning"  size="small" [disabled]="!withdrawal.value"
+                              class="ion-text-lowercase"
+                              shape="round" (click)="openUpdateBank(withdrawal.value)">
+                              {{'M_UPDATE' | translate }}
+                        </ion-button>
+                    </ion-col>   
+                    <ion-col size="6">
+                        <ion-button   [disabled]="!withdrawal.value.tontine_bank_profile_id"
+                              class="ion-text-lowercase"
+                              fill="outline"  size="small"
+                              color="warning" 
+                              shape="round" (click)="confirmDeleteAccount(withdrawal.value.tontine_bank_profile_id)">
+                          {{'TEXT_DELETE' | translate }}
+                        </ion-button>
+                    </ion-col>
+                  </ion-row>
+                </ng-template>
+                <ng-template #mobilTransfer>
+                  <ion-row>
+                    <ion-col>
+                      <ion-item>
+                        <ion-label>{{ 'TONTINE_DETAIL_TEXT1' | translate }}</ion-label>
+                        <ion-select (ionChange)="updateCountryPrefix(withdrawal.value.country_id)"
+                          formControlName="country_id">
+                          <ion-select-option *ngFor="let state of states" [value]="state.country_id">
+                            {{ state.country_label }}</ion-select-option>
+                        </ion-select>
+                      </ion-item>
+                      <div class="validation-errors">
+                        <div class="error-message" *ngIf="countryId.invalid && (countryId.dirty || countryId.touched)">
+                          <ion-icon name="information-circle-outline"></ion-icon>
+                          <span [innerHTML]="'REQUIRED_FIELD_TEXT' | translate"></span>
+                        </div>
+                      </div>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col>
+                      <ion-row class="ion-justify-content-end">
+                        <ion-col size="4">
+                          <ion-img
+                            [src]="paymentMethods&&paymentMethods[currentIndex] ? paymentMethods[currentIndex].logo : ' '"
+                            class="logooperator"></ion-img>
+                        </ion-col>
+                      </ion-row>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row   *ngIf="!isPayPal()">
+                    <ion-col size="4">
+                      <ion-item>
+                        <ion-label position="floating">+</ion-label>
+                        <ion-input type="text" placeholder="{{withdrawal.value.phoneid}}"></ion-input>
+                      </ion-item>
+                    </ion-col>
+                    <ion-col size="8">
+                      <ion-item>
+                        <ion-label position="floating">{{ 'PHONE_TEXT' | translate }}</ion-label>
+                        <ion-input type="tel" (ionChange)="removeSpace1();checkPhone(withdrawal.value.phoneNumber)" formControlName="phoneNumber"></ion-input>
+                      </ion-item>
+                    </ion-col>
+                    <ion-col size="12"  *ngIf="phone.invalid && (phone.dirty || phone.touched) || errorPhone">
+                      <div class="validation-errors" >
+                          <div class="error-message">
+                            <ion-icon name="information-circle-outline" ></ion-icon>
+                           <span  [innerHTML]="'REGISTER_PHONE_INVALID' | translate"></span>
+                          </div>
+                      </div>    
+                    </ion-col>
+                  </ion-row>
+                  <ion-row *ngIf="isOperator()">
+                    <ion-col size="12">
+                      <ion-item>
+                        <ion-label position="floating">{{ 'BENEFICIARY_ACCOUNT_NAME_TEXT' | translate }}</ion-label>
+                        <ion-input type="text"  formControlName="nom_beneficiaire"></ion-input>
+                      </ion-item>
+                      <div class="validation-errors">
+                        <div class="error-message" *ngIf="beneficiary.invalid && (beneficiary.dirty || beneficiary.touched)">
+                          <ion-icon name="information-circle-outline"></ion-icon>
+                          <span [innerHTML]="'BENEFICARY_NAME_ERROR_TEXT' | translate: {maxLength: 100}"></span>
+                        </div>
+                      </div>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row *ngIf="isPayPal()">
+                    <ion-col size="12">
+                      <ion-item>
+                        <ion-label position="floating">{{ 'EMAIL_TEXT' | translate }}</ion-label>
+                        <ion-input type="email" (ionChange)="checkEmail(withdrawal.value.email)" formControlName="email"></ion-input>
+                      </ion-item>
+                      <div class="validation-errors" *ngIf="email.invalid && (email.dirty || email.touched) || errorEmail">
+                        <div class="error-message" >
+                          <ion-icon name="information-circle-outline"></ion-icon>
+                          <span [innerHTML]="'TONTINE_NEW_TEXT23' | translate"></span>
+                        </div>
+                      </div>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col>
+                      <ion-item>
+                        <ion-label position="floating">{{ 'AMOUNT_TEXT' | translate }}({{withdrawal.value.device_name}})</ion-label>
+                        <ion-input (ionChange)="checkAmount(withdrawal.value.amount)" type="number"
+                          formControlName="amount"></ion-input>
+                      </ion-item>
+                      <div class="validation-errors">
+                        <div class="error-message" *ngIf="amount.invalid && (amount.dirty || amount.touched)">
+                          <ion-icon name="information-circle-outline"></ion-icon>
+                          <span [innerHTML]="'AMOUNT_REQUIRED' | translate"></span>
+                        </div>
+                      </div>
+                      <div class="error-message" style="color: red;" *ngIf="!amounValid">
+                        <ion-icon name="information-circle-outline"></ion-icon>
+                        {{amountErrorMessage}}
+                      </div>
+                    </ion-col>
+                  </ion-row>
+                </ng-template>
+
+              </ion-card-content>
+            </ion-card-header>
+          </ion-card>
+        </form>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-footer class="ion-padding ion-text-center">
+  <ion-button expand="full"
+    [disabled]="canPay()"
+    color="warning" class="ion-text-uppercase" (click)="checkNumberAndPin()" shape="round">
+    {{ 'WITHDRAWAL_TEXT8' | translate }}
+  </ion-button>
+  <ion-spinner *ngIf="loading" name="circles"></ion-spinner>
+</ion-footer>

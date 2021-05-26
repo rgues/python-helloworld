@@ -1,0 +1,77 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button color="primary" defaultHref="/dashboard/user" slot="text-only"></ion-back-button>
+    </ion-buttons>
+    <ion-avatar slot="start">
+      <img src="{{userPicture ? userPicture : 'assets/post-img.svg'}}" class="thumb-img">
+    </ion-avatar>
+    <ion-title class="no-padding ion-margin-start">
+      {{ 'USER_PROFILE_TEXT4' | translate }}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-refresher slot="fixed" (ionRefresh)="refreSher($event)">
+    <ion-refresher-content
+      pullingIcon="reload-outline"
+      refreshingSpinner="circles"
+      refreshingText="{{ 'M_REFRESHING_TEXT' | translate }}">
+    </ion-refresher-content>
+  </ion-refresher>
+  
+  <p class="ion-text-center"  *ngIf="loadingPayment">
+    <ion-spinner  name="circles"></ion-spinner>
+  </p>
+  <form [formGroup]="userPayMethodForm" *ngIf="paymentMethods && paymentMethods.length > 0">
+    <ion-grid>
+      <ion-row class="ion-justify-content-end">
+        <ion-col size="4">
+          <ion-img [src]="paymentMethods ? paymentMethods[userPayMethodForm.value.typePaymentIndex].logo : ''" class="logooperator"></ion-img>
+        </ion-col>
+      </ion-row>  
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label>{{'USER_PROFILE_TEXT4' | translate}}</ion-label>
+            <ion-select  (ionChange)="updatePaymentMethod(userPayMethodForm.value.typePaymentIndex)" formControlName="typePaymentIndex">
+              <ion-select-option *ngFor="let operator of paymentMethods; let operatorId = index" [value]="operatorId">{{ operator.name }}</ion-select-option>          
+            </ion-select>
+          </ion-item>    
+        </ion-col>
+      </ion-row> 
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">{{paymentMethods[userPayMethodForm.value.typePaymentIndex].placeholder}}</ion-label>
+            <ion-input (change)="checckEmailOrPhone(userPayMethodForm.value.numberAccount,userPayMethodForm.value.typePaymentIndex)" type="text" formControlName="numberAccount"></ion-input>
+          </ion-item> 
+          <div class="validation-errors">
+              <div class="error-message" *ngIf="(numberAccount.dirty ||  numberAccount.touched) && numberAccount.invalid">
+                <ion-icon name="information-circle-outline" ></ion-icon>
+                <span [innerHTML]="'REQUIRED_FIELD_TEXT' | translate"></span>
+              </div>
+          </div>          
+        </ion-col>
+      </ion-row> 
+    </ion-grid>
+  </form>
+
+  <div  *ngIf="paymentMethods && paymentMethods.length === 0 && !loadingPayment">
+    <p  class="ion-padding ion-text-center"> {{ 'PAYMENT_MSG' | translate }}</p>
+  </div>
+
+</ion-content>
+
+<ion-footer class="ion-padding ion-text-center">
+  <ion-button expand="full" 
+        color="warning" [disabled]="loading ||userPayMethodForm.invalid || errorEmail || errorPhone"
+        (click)="savePaymentMethod()"
+        class="ion-text-uppercase"
+        shape="round">
+    {{ 'SAVE_TEXT' | translate }}
+  </ion-button>
+  <ion-spinner *ngIf="loading" name="circles"></ion-spinner>
+</ion-footer>

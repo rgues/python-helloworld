@@ -1,0 +1,178 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center">{{ 'TONTINE_EDIT_TEXT13' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="shareEditForm">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <ion-item>
+            <ion-label position="floating">{{ 'TONTINE_DETAIL_TEXT18' | translate }}</ion-label>
+            <ion-input type="number" formControlName="nombre_part_max_membre" required="true"></ion-input>
+          </ion-item>
+        </ion-col>
+
+        <div class="validation-errors" *ngIf="shareEditForm.value.nombre_part_max_membre < minMemberShare">
+          <div class="error-message">
+            <ion-icon name="information-circle-outline"></ion-icon>
+            <span [innerHTML]="'ERROR_MIN_MEMBER_SHARE' | translate : { share : minMemberShare }"></span>
+          </div>
+        </div>
+
+        <ion-col size="12">
+          <ion-item>
+            <ion-label position="floating">{{ 'TONTINE_DETAIL_TEXT17' | translate }}</ion-label>
+            <ion-input type="number" formControlName="nombre_part_max_tontine" required="true"></ion-input>
+          </ion-item>
+        </ion-col>
+
+        <div class="validation-errors" *ngIf="shareEditForm.value.nombre_part_max_tontine < shareEditForm.value.nombre_part_max_membre">
+          <div class="error-message">
+            <ion-icon name="information-circle-outline"></ion-icon>
+            <span [innerHTML]="'ERROR_MAX_TONTINE_SHARE' | translate "></span>
+          </div>
+        </div>
+
+        <div class="validation-errors" *ngIf="shareEditForm.value.nombre_part_max_tontine <  minStokvelShare">
+          <div class="error-message">
+            <ion-icon name="information-circle-outline"></ion-icon>
+            <span [innerHTML]="'ERROR_MIN_TONTINE_SHARE' | translate :  { share : minStokvelShare }"></span>
+          </div>
+        </div>
+
+        <ion-col size="12">
+          <ion-item>
+            <ion-label position="floating">{{ 'TONTINE_DETAIL_TEXT19' | translate }}</ion-label>
+            <ion-input type="number" formControlName="numberlot" required="true"></ion-input>
+          </ion-item>
+        </ion-col>
+
+        <div class="validation-errors" *ngIf="shareEditForm.value.numberlot < 1">
+          <div class="error-message">
+            <ion-icon name="information-circle-outline"></ion-icon>
+            <span [innerHTML]="'ERROR_LOT_TONTINE_SHARE' | translate : { share: 1 }"></span>
+          </div>
+        </div>
+
+        <ion-col size="12">
+          <ion-item>
+            <ion-label position="floating">{{ 'TONTINE_EDIT_SHARE_TEXT9' | translate }}</ion-label>
+            <ion-input type="number"
+              (ionChange)="removeSpaces(shareEditForm.value.contribution_amount); checkContribution()"
+              formControlName="contribution_amount" required="true"></ion-input>
+            <span slot="end" class="slot-prefix ion-no-margin"> {{ tontineData.tontine.monnaie }} </span>
+          </ion-item>
+          <div class="validation-errors">
+            <div class="error-message" *ngIf="contribution.invalid">
+              <ion-icon name="information-circle-outline"></ion-icon>
+              <span [innerHTML]="'REQUIRED_FIELD_TEXT' | translate"></span>
+            </div>
+          </div>
+        </ion-col>
+
+        <ion-col size="8" *ngIf="shareEditForm.value.tontine_type_id === 3">
+          <ion-item>
+            <ion-label position="floating">{{ 'TONTINE_EDIT_SHARE_TEXT11' | translate }}</ion-label>
+            <ion-input type="text"
+              (ionChange)="HideOrShowIncrementField(shareEditForm.value.starter_bid_increment);checkMiseaPrix1(shareEditForm.value.starter_bid_increment)"
+              formControlName="starter_bid_increment">
+            </ion-input>
+            <span slot="end"  *ngIf="shareEditForm.value.type_starter_bid_increment === 'valeur'" class="slot-prefix ion-no-margin"> {{ tontineData.tontine.monnaie }} </span>
+          </ion-item>
+        </ion-col>
+
+        <ion-col size="4" *ngIf="shareEditForm.value.tontine_type_id === 3">
+          <ion-item>
+            <ion-label position="floating">{{ 'TYPE_TEXT' | translate }}</ion-label>
+            <ion-select (ionChange)="updateStarterBid()" formControlName="type_starter_bid_increment">
+              <ion-select-option *ngFor="let type of typeMiseaprix" [value]="type.value">{{ (type.name| translate)  }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12" *ngIf="shareEditForm.value.tontine_type_id === 3">
+          <div class="ion-padding-horizontal" color="dark">
+            <ion-icon name="information-circle-outline"></ion-icon>
+            <small [innerHTML]="'BidEditMsg' | translate"></small>
+          </div>
+        </ion-col>
+
+        <div class="validation-errors" *ngIf="starter_bid_increment.invalid || errorMiseaprix0">
+          <div class="error-message">
+            <ion-icon name="information-circle-outline"></ion-icon>
+            <span [innerHTML]="'MIS_A_PRIX_FIELD_TEXT' | translate : {amount : shareEditForm.value.type_starter_bid_increment === 'valeur' ? (getFloatNumber(shareEditForm.value.contribution_amount)/4) : 25, currency : shareEditForm.value.type_starter_bid_increment === 'valeur' ? tontineData.tontine.monnaie : '%' }"></span>
+          </div>
+        </div>
+
+        <ion-col size="8" *ngIf="shareEditForm.value.tontine_type_id === 3 && showField">
+          <ion-item>
+            <ion-label position="floating">{{ 'TONTINE_EDIT_SHARE_TEXT17' | translate }}</ion-label>
+            <ion-input type="text" (ionChange)="checkIncrement(shareEditForm.value.miseaprixcaisse1)"
+              formControlName="miseaprixcaisse1"></ion-input>
+            <span slot="end"  *ngIf="shareEditForm.value.typeMiseaprix1 === 'valeur'" class="slot-prefix ion-no-margin"> {{ tontineData.tontine.monnaie }} </span>
+          </ion-item>
+        </ion-col>
+
+        <ion-col size="4" *ngIf="shareEditForm.value.tontine_type_id === 3 && showField">
+          <ion-item>
+            <ion-label position="floating">{{ 'TYPE_TEXT' | translate }}</ion-label>
+            <ion-select (ionChange)="updateBidIncrement()" formControlName="typeMiseaprix1">
+              <ion-select-option *ngFor="let type of typeMiseaprix" [value]="type.value">{{ (type.name| translate)  }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+
+        <div class="validation-errors" *ngIf="(miseaprixcaisse1.invalid || errorMiseaprix1) && showField">
+          <div class="error-message">
+            <ion-icon name="information-circle-outline"></ion-icon>
+            <span [innerHTML]="'INCREMENT_FIELD_TEXT' | translate : {amount :  shareEditForm.value.typeMiseaprix1 === 'valeur' ? (getFloatNumber(shareEditForm.value.contribution_amount)/2) : 50 , currency : shareEditForm.value.typeMiseaprix1 === 'valeur' ?  tontineData.tontine.monnaie  : '%' }"></span>
+          </div>
+        </div>
+
+        <!-- Not use by the system now -->
+        <!-- <ion-col size="12">
+          <ion-item>
+            <ion-label>{{ 'TONTINE_EDIT_SHARE_TEXT15' | translate }}</ion-label>
+            <ion-toggle formControlName="contributeCas1"></ion-toggle>
+          </ion-item>
+        </ion-col> -->
+        
+        <!-- Not use by the system now -->
+       <!--  <ion-col size="12"  > 
+          <ion-item>
+            <ion-label>{{ 'TONTINE_EDIT_SHARE_TEXT16' | translate }}</ion-label>
+            <ion-toggle formControlName="contributeCas2"></ion-toggle>
+          </ion-item>
+        </ion-col> -->
+        
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>
+
+<ion-footer class="ion-padding ion-text-center">
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-button expand="full" color="warning" class="ion-text-uppercase"
+          [disabled]="canDisableEditShare()"
+          (click)="updateShare()" shape="round">
+          {{ 'SAVE_TEXT' | translate }}
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button expand="full" fill="outline" color="warning" class="ion-text-uppercase" shape="round"
+          (click)="closeShareEdit('cancel')">
+          {{ 'CANCEL_TEXT' | translate }}
+        </ion-button>
+      </ion-col>
+    </ion-row>
+    <p class="ion-text-center">
+      <ion-spinner *ngIf="loading" name="circles"></ion-spinner>
+    </p>
+  </ion-grid>
+</ion-footer>

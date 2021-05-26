@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-toolbar class="with-logo2">
+    <ion-buttons slot="start">
+      <ion-back-button color="primary" defaultHref="/dashboard/my-tontines"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center title-md-right">
+        <ion-img class="logo" [src]="'assets/logo-toupesu.svg'"></ion-img>
+    </ion-title>
+  </ion-toolbar>
+  <ion-toolbar class="ion-text-center subtitle ion-padding">
+    <ion-title>{{ 'NOTIFICATION_TEXT' | translate }}</ion-title>
+    <ion-row *ngIf="tontines && tontines.length > 0 && filterData && filterData.length > 0">
+      <ion-col>
+        <ion-item (click)="showTontines()">
+          <ion-label>{{ 'M_TONTINE_TEXT' | translate }} : </ion-label>
+          <p><strong> {{ troncateName(tontineName,12)}}</strong> </p>          
+          <ion-icon name="chevron-down-outline" slot="end"></ion-icon>
+        </ion-item>  
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="notifications">
+  <p class="ion-text-center"  *ngIf="loading">
+    <ion-spinner  name="circles"></ion-spinner>
+  </p>
+  <ion-refresher slot="fixed" (ionRefresh)="refreSher($event)">
+    <ion-refresher-content
+      pullingIcon="reload-outline"
+      refreshingSpinner="circles"
+      refreshingText="{{ 'M_REFRESHING_TEXT' | translate }}">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <ion-grid>
+    <ion-row class="notification" *ngFor="let notif of notifications">
+      <ion-col>
+        <ion-card class="ion-no-margin">
+          <ion-item lines="none">
+            <ion-icon color="primary" name="notifications-circle" slot="start"></ion-icon>
+            <ion-label> {{notif.titre | translate }}</ion-label>
+            <span slot="end"><small>{{notif.created_at ? notif.created_at.split(' ')[0] : '' }}</small></span>
+          </ion-item>        
+          <ion-card-content>
+            {{ notif.description | translate }}
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  
+  <div  *ngIf="notifications && notifications.length === 0 && !loading">
+    <p  class="ion-text-center"> {{ 'NOTIFICATIONS_MESSAGE' | translate }}</p>
+  </div>
+
+  <ion-infinite-scroll threshold="250px" (ionInfinite)="infinteScrollData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="{{ 'M_LOADING_MORE_DATA' | translate }}">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+</ion-content>

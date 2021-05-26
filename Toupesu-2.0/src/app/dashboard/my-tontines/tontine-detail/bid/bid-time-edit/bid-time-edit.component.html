@@ -1,0 +1,152 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center">{{ 'TONTINE_TIME_PARAM_TEXT' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="tontineBidTime">
+    <ion-grid>
+      <ion-row >
+        <ion-col>
+          <ion-text>
+            <b>{{ 'SESSION_TIME_TEXT' | translate }}</b>
+          </ion-text>
+        </ion-col>
+      </ion-row>
+      <div formGroupName="sessionTime">
+        <div formGroupName="startTime">
+          <ion-row>
+            <ion-col>              
+              <ion-item>
+                <ion-label>{{ 'CYCLE_START_ON' | translate }}</ion-label>
+                <ion-datetime (ionChange)="OnDateChange($event.value)"  formControlName="startDay" displayFormat="DDDD D MMM, YYYY" [min]="startDateSelect.getFullYear()" pickerFormat="DD MMMM YYYY"></ion-datetime>
+              </ion-item>               
+            </ion-col>
+          </ion-row>
+        </div>
+      </div>
+      <ion-row>
+        <ion-col class="ion-padding-top">
+          <ion-text>
+            <b>{{ 'BID_TIME_TEXT' | translate }}</b>
+          </ion-text>
+        </ion-col>
+      </ion-row>
+      <div formGroupName="bidTime">
+        <div formGroupName="startTime">
+          <ion-row>
+            <ion-col>
+              <ion-item-divider color="light">
+                <ion-label>
+                  {{ 'CYCLE_START_ON' | translate }}
+                </ion-label>
+              </ion-item-divider>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="2" *ngIf="tontine.tontine.periodicite !=='day'">
+              <ion-label>{{ 'DAY_TEXT' | translate }}</ion-label>
+              <ion-select  (ionChange)="SelectStartPeriod(StartPeriod[0].label)" formControlName="startDay">
+                <ion-select-option *ngFor="let d of dayList" [value]="d">{{d}}</ion-select-option>       
+              </ion-select>
+            </ion-col>
+            <ion-col size="3">
+              <ion-label>{{ 'HOUR_TEXT' | translate }}</ion-label>
+              <ion-select formControlName="startHour" (ionChange)="SelectStartPeriod(StartPeriod[1].label)">
+                <ion-select-option *ngFor="let h of hourList" [value]="h.value">{{h.label}}</ion-select-option>       
+              </ion-select>
+            </ion-col>
+            <ion-col size="3">
+              <ion-label>Minute(s)</ion-label>
+              <ion-select formControlName="startMin" (ionChange)="SelectStartPeriod(StartPeriod[2].label)">
+                <ion-select-option *ngFor="let m of minList" [value]="m.value">{{m.label}}</ion-select-option>       
+              </ion-select>
+            </ion-col>
+            <ion-col size="4">
+              <ion-label>{{ 'SECOND_TEXT' | translate }}</ion-label>
+              <ion-select formControlName="startSnd" (ionChange)="SelectStartPeriod(StartPeriod[3].label)">
+                <ion-select-option *ngFor="let s of secList" [value]="s.value">{{s.label}}</ion-select-option>       
+              </ion-select>
+            </ion-col>
+          </ion-row>
+        </div>
+        <div formGroupName="endTime">
+          <ion-row>
+            <ion-col>
+              <ion-item-divider color="light">
+                <ion-label>
+                  {{ 'CYCLE_END_ON' | translate }}
+                </ion-label>
+              </ion-item-divider>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="2" *ngIf="tontine.tontine.periodicite !=='day'"> 
+              <ion-label>{{ 'DAY_TEXT' | translate }}</ion-label>
+              <ion-select formControlName="endDay" (ionChange)="SelectEndPeriod(EndPeriod[0].label)">
+                <ion-select-option *ngFor="let d of dayList" [value]="d">{{d}}</ion-select-option>       
+              </ion-select>
+            </ion-col>
+            <ion-col size="3">
+              <ion-label>{{ 'HOUR_TEXT' | translate }}</ion-label>
+              <ion-select formControlName="endHour" (ionChange)="SelectEndPeriod(EndPeriod[1].label)">
+                <ion-select-option *ngFor="let h of hourList" [value]="h.value">{{h.label}}</ion-select-option>       
+              </ion-select>
+            </ion-col>
+            <ion-col size="3">
+              <ion-label>Minute(s)</ion-label>
+              <ion-select formControlName="endMin" (ionChange)="SelectEndPeriod(EndPeriod[2].label)">
+                <ion-select-option *ngFor="let m of minList" [value]="m.value">{{m.label}}</ion-select-option>       
+              </ion-select>
+            </ion-col>
+            <ion-col size="4">
+              <ion-label>{{ 'SECOND_TEXT' | translate }}</ion-label>
+              <ion-select formControlName="endSnd" (ionChange)="SelectEndPeriod(EndPeriod[3].label)">
+                <ion-select-option *ngFor="let s of secList" [value]="s.value">{{s.label}}</ion-select-option>       
+              </ion-select>
+            </ion-col>
+          </ion-row>
+        </div>
+      </div>
+      
+    </ion-grid>
+  </form>
+</ion-content>
+
+<ion-footer class="ion-padding ion-text-center">
+  <ion-grid>
+    <ion-row>          
+      <ion-col>
+          <ion-button expand="full"  (click)="resetForm()"
+                fill="outline"
+                color="warning" 
+                class="ion-text-uppercase"
+                shape="round">
+                {{ 'RESET_TEXT' | translate }}
+          </ion-button>
+      </ion-col>  
+      <ion-col>
+          <ion-button expand="full" 
+                fill="outline"
+                color="warning" 
+                class="ion-text-uppercase"
+                shape="round" (click)="closeBidTimeEdit()">
+                {{ 'CANCEL_TEXT' | translate }}
+          </ion-button>
+      </ion-col>
+      <ion-col>
+          <ion-button expand="full"   [disabled]="loadingReg || EditTimeBid.time_debut_bid === ''|| EditTimeBid.time_fin_bid === ''"
+                color="warning" 
+                class="ion-text-uppercase"
+                shape="round"  (click)="editTimeFunc()">
+                {{ 'SAVE_TEXT' | translate }}
+          </ion-button>
+      </ion-col> 
+      <p class="ion-text-center">
+        <ion-spinner *ngIf="loadingReg"  name="circles"></ion-spinner>
+      </p>     
+    </ion-row>
+  </ion-grid>
+</ion-footer>
+

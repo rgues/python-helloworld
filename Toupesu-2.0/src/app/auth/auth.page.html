@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar class="welcome">
+    <ion-title class="ion-text-center 
+            ion-text-uppercase 
+            welcome-title" color="primary">
+      <span>{{'WELCOME_MSG1' | translate}}</span>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="home-policy">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" size-md="8" offset-md="2" class="ion-padding ion-align-items-center">
+          <ion-img [src]="'assets/home-anim.svg'"></ion-img>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
+
+<ion-footer class="ion-padding ion-text-center">
+  <p>{{'WELCOME_MSG2' | translate}}
+    <a routerLink="terms" routerDirection="forward">
+      {{'WELCOME_MSG3' | translate }}
+    </a>
+  </p>
+  <ion-button expand="full" [disabled]="canDisable==='OK'"
+        color="warning" 
+        class="ion-text-uppercase"
+        shape="round" routerLink="register-phone">
+        {{'WELCOME_MSG4' | translate}}
+  </ion-button>
+</ion-footer>

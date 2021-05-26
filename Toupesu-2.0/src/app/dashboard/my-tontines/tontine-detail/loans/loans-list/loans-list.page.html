@@ -1,0 +1,135 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button color="primary" [defaultHref]="['/','dashboard','my-tontines',currentTontine.tontine.tontine_id,'loans']" slot="text-only"></ion-back-button>
+    </ion-buttons>
+    <ion-avatar slot="start">
+        <ion-img [src]="'assets/join-icon.svg'" class="thumb-img"></ion-img>
+    </ion-avatar>
+    <ion-title class="no-padding">
+   {{ 'ALL_LOANS' | translate }}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="loans-list">
+
+  <ion-refresher slot="fixed" (ionRefresh)="refreSher($event)">
+    <ion-refresher-content
+      pullingIcon="reload-outline"
+      refreshingSpinner="circles"
+      refreshingText="{{ 'M_REFRESHING_TEXT' | translate }}">
+    </ion-refresher-content>
+  </ion-refresher>
+  <p class="ion-text-center"  *ngIf="loading">
+    <ion-spinner  name="circles"></ion-spinner>
+  </p>
+
+  <ion-grid *ngIf="!loading">
+    <div class="block-1">
+      <ion-row class="row-1">
+        <ion-col size="6" class="ion-text-center" (click)="selectPool()">
+          <b>{{ 'CYCLE_TEXT' | translate }} / {{ 'SESSION_TEXT' | translate }}</b> <ion-icon *ngIf="allLoansData && allLoansData.length > 0" name="ios-arrow-down"></ion-icon><br/> 
+          {{currentLoanData ? currentLoanData.numero_cycle : 0}}/{{currentLoanData ? currentLoanData.numero_seance : 0}}
+        </ion-col>
+        <ion-col size="6" class="ion-text-center">
+          <b>{{ 'INTEREST_EARNED_TEXT' | translate }}</b><br/> 
+          {{currentLoanData ? (currentLoanData.interest_earned | commadumper) : 0}} {{currentTontine ? currentTontine.tontine.monnaie : ''}}
+        </ion-col>
+      </ion-row>
+    </div>
+    <div class="block-2">
+      <ion-card>
+        <ion-card-content class="ion-text-center ion-no-padding">
+          <ion-row>
+            <ion-col size="12">
+              <div class="t-balance">
+                <ion-text color="danger">
+                  <span class="desc">{{ 'CASH_AVALAIBLE' | translate }}: {{currentLoanData ? (currentLoanData.cash_available | commadumper) : 0}} {{currentTontine ? currentTontine.tontine.monnaie : ''}}</span> 
+                </ion-text> <br/>
+                <ion-text  color="dark">
+                  <span class="desc">({{ 'INITIAL_CASH' | translate }}: {{currentLoanData ? (currentLoanData.solde_initial | commadumper) : 0}} {{currentTontine ? currentTontine.tontine.monnaie : ''}})</span>
+                </ion-text>
+              </div>
+            </ion-col> 
+            <ion-col size="4" class="col-button">
+                <div class="desc">{{ 'LOAN_TEXT' | translate }} <br/>{{ 'REQUEST_TEXT' | translate }}<br/>({{currentTontine ? currentTontine.tontine.monnaie : ''}})</div>
+                <div class="menu-amount">{{currentLoanData ? (currentLoanData.cash_total_loan_seance | commadumper) : 0}}</div>
+            </ion-col>
+            <ion-col size="4" class="col-button">
+                <div class="desc">{{ 'LOAN_TEXT' | translate }}<br/> {{ 'APPROVE_TEXT' | translate }}<br/>({{currentTontine ? currentTontine.tontine.monnaie : ''}})</div>
+                <div class="menu-amount">{{currentLoanData ? (currentLoanData.cash_loan_approval | commadumper) : 0}}</div>
+            </ion-col>
+            <ion-col size="4" class="col-button">
+              <div class="desc">{{ 'LOAN_TEXT' | translate }} <br/>  {{ 'REJECT_TEXT' | translate }}<br/>({{currentTontine ? currentTontine.tontine.monnaie : ''}})</div>
+              <div class="menu-amount">{{currentLoanData ? (currentLoanData.cash_loan_refusal | commadumper) : 0}}</div>
+          </ion-col>
+          </ion-row>            
+        </ion-card-content>
+      </ion-card>
+    </div>
+    <div class="block-3">
+      <ion-list>
+        <ion-item-divider sticky="true" *ngIf="filterData && filterData.length > 0">
+          <ion-input (ionChange)="searchForMember($event)" placeholder="{{ 'M_NAME_TEXT' | translate }}"></ion-input>
+          <ion-select (ionChange)="searchForStatus(status)" [(ngModel)]="status" placeholder="{{'STATUS_TEXT' | translate}}">
+            <ion-select-option value="pending">{{ 'PENDING_TEXT' | translate }}</ion-select-option>
+            <ion-select-option value="refused">{{ 'REJECT_TEXT' | translate }}</ion-select-option>
+            <ion-select-option value="approved">{{ 'APPROVE_TEXT' | translate }}</ion-select-option>
+            <ion-select-option value="tout_paye">{{ 'REQUEST_STATUT_4' | translate }}</ion-select-option>
+            <ion-select-option value="pas_tout_paye">{{ 'REQUEST_STATUT_5' | translate }}</ion-select-option>
+            <ion-select-option value="">{{ 'ALL_TEXT' | translate }}</ion-select-option>
+          </ion-select>
+        </ion-item-divider> 
+        <ion-item lines="none">
+          <small>{{ 'TOTAL_FOUND' | translate }}: {{currentLoanData ? currentLoanData.count_requests : 0}} <em>({{ 'PENDING_TEXT' | translate }}: {{currentLoanData ? currentLoanData.count_requests_pending : 0}}  | {{ 'REJECT_TEXT' | translate }}: {{currentLoanData ? currentLoanData.count_requests_rejected : 0}} | {{ 'APPROVE_TEXT' | translate }}: {{currentLoanData ? currentLoanData.count_requests_approved : 0}})</em></small>
+        </ion-item>
+        <ion-item *ngFor="let member of members">             
+          <ion-label>
+            <ion-text color="primary"><h2><small>{{ 'M_NAME_TEXT' | translate }}: </small><b>{{member.infos_user ? member.infos_user.firstname : '' }} {{member.infos_user ? member.infos_user.lastname : '' }}</b></h2></ion-text>
+            <p><small>{{ 'EMAIL_TEXT' | translate }}:</small> {{member.infos_user ? member.infos_user.email : '' }}</p>              
+            <p><small>{{ 'PHONE_TEXT' | translate }}: </small> {{member.infos_user ? member.infos_user.phone : '' }} </p>                
+            <p>
+              <ion-text color="dark">
+                <span class="ion-float-left"><small>{{ 'A_SHARE_TEXT' | translate }}: </small>{{ member.numero_part ? member.numero_part : ''}}</span> 
+                <span class="ion-float-right"><small>{{ 'LOAN_TEXT' | translate }} {{ 'DUE_TEXT' | translate }}: </small>{{ member.loan_due ? (member.loan_due | commadumper) : 0}} {{currentTontine ? currentTontine.tontine.monnaie : ''}}</span>
+              </ion-text>
+            </p> 
+            <p>
+              <ion-text color="dark">
+                <span class="ion-float-left"><small>{{ 'LOAN_TEXT' | translate }} {{ 'PAID_TEXT' | translate }}: </small>{{ member.loan_paid ? (member.loan_paid | commadumper) : 0}} {{currentTontine ? currentTontine.tontine.monnaie : ''}}</span> 
+                <span class="ion-float-right"><small>{{ 'OUTSTANDING_TEXT' | translate }}: </small>{{ member.outstanding ? (member.outstanding | commadumper) : 0}}  {{currentTontine ? currentTontine.tontine.monnaie : ''}}</span>
+              </ion-text>
+            </p>          
+            <div class="request-row" *ngIf="member.current_request  != 0">
+              <ion-text color="dark">
+                <p>
+                  <span class="ion-float-left"><small>{{ 'STATUS_TEXT' | translate }}: </small>{{ member.status_loan ? getRequestStatut(member.status_loan) : ''}}  <a *ngIf="member&&member.status_loan ==='refused'" (click)="showRejectReason(member)"> ({{'VIEW_DETAIL_TEXT' | translate}})</a></span> 
+                  <span class="ion-float-right"><small>{{ 'VALIDATION_QUOTA' | translate }}: </small>{{ member.nbre_admin_ayant_approuve ? member.nbre_admin_ayant_approuve : member.nbre_admin_ayant_refuse ? member.nbre_admin_ayant_refuse :  0}} / {{ member.number_max_admin_that_validate_loan ? member.number_max_admin_that_validate_loan : 0}}</span>
+                </p> 
+                <br/>               
+              </ion-text>
+              <ion-text class="ion-float-left" color="warning">
+                <h2><small>{{ 'CURRENT_REQUESTED' | translate }}: </small><b>{{ member.current_request ? (member.current_request | commadumper) : 0}} {{currentTontine ? currentTontine.tontine.monnaie : ''}}</b></h2>
+              </ion-text>
+              <ion-buttons class="ion-float-right popover-menu" *ngIf="canAcceptOrRejectLoanRequest(member)">
+                <ion-button (click)="openContextMenu($event, member)">
+                  <ion-icon name="ellipsis-vertical" color="primary"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </div>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
+  </ion-grid>
+
+  
+  <ion-infinite-scroll threshold="250px" (ionInfinite)="infinteScrollData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="{{ 'M_LOADING_MORE_DATA' | translate }}">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+</ion-content>

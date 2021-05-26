@@ -1,0 +1,58 @@
+<ion-list class="ion-padding-top" class="debts-menu-popover">
+  <ion-item (click)="closeDebtsMenu()" 
+  [routerLink]="['/', 'dashboard', 'my-tontines', currentTontine.tontine.tontine_id, 'debts', 'due']"
+  lines="none">
+    <ion-label>
+      {{ 'DUES_TEXT' | translate }}
+    </ion-label>
+  </ion-item>
+  <ion-item (click)="closeDebtsMenu()" 
+  [routerLink]="['/', 'dashboard', 'my-tontines', currentTontine.tontine.tontine_id, 'debts', 'in-progress-list']"
+  lines="none">
+    <ion-label>
+     {{ 'IN_PROGRESS_TEXT' | translate }}
+    </ion-label>
+  </ion-item>
+  <ion-item (click)="closeDebtsMenu()" *ngIf="checkIfAdmin()"
+  [routerLink]="['/', 'dashboard', 'my-tontines', currentTontine.tontine.tontine_id, 'debts', 'in-approval']"
+  lines="none">
+    <ion-label>
+      {{ 'IN_APPROUVAL_TEXT' | translate }}
+    </ion-label>
+  </ion-item>
+  <ion-item (click)="closeDebtsMenu()" *ngIf="!checkIfAdmin()"
+  [routerLink]="['/', 'dashboard', 'my-tontines', currentTontine.tontine.tontine_id, 'debts', 'in-approval-user']"
+  lines="none">
+    <ion-label>
+      {{ 'IN_APPROUVAL_TEXT' | translate }}
+    </ion-label>
+  </ion-item>
+  <ion-item (click)="closeDebtsMenu()"  *ngIf="checkIfAdmin()"
+  [routerLink]="['/', 'dashboard', 'my-tontines', currentTontine.tontine.tontine_id, 'debts', 'approved']"
+  lines="none">
+    <ion-label>
+      {{'COMPLETED_TEXT' | translate}}
+    </ion-label>
+  </ion-item>
+  <ion-item (click)="closeDebtsMenu()"  *ngIf="!checkIfAdmin()"
+  [routerLink]="['/', 'dashboard', 'my-tontines', currentTontine.tontine.tontine_id, 'debts', 'approved-user']"
+  lines="none">
+    <ion-label>
+      {{'COMPLETED_TEXT' | translate}}
+    </ion-label>
+  </ion-item>
+  <ion-item (click)="closeDebtsMenu()"  *ngIf="checkIfAdmin()"
+  [routerLink]="['/', 'dashboard', 'my-tontines', currentTontine.tontine.tontine_id, 'debts', 'rejected']"
+  lines="none">
+    <ion-label>
+      {{'REJECTED_TEXT' | translate}}
+    </ion-label>
+  </ion-item>
+  <ion-item (click)="closeDebtsMenu()"   *ngIf="!checkIfAdmin()"
+  [routerLink]="['/', 'dashboard', 'my-tontines', currentTontine.tontine.tontine_id, 'debts', 'user-rejected']"
+  lines="none">
+    <ion-label>
+      {{'REJECTED_TEXT' | translate}}
+    </ion-label>
+  </ion-item>
+</ion-list>

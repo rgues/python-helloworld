@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center">{{ 'TONTINE_PENALTY_TEXT1' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="my-penalities">
+  <ion-refresher slot="fixed" (ionRefresh)="refreSher($event)">
+    <ion-refresher-content
+      pullingIcon="reload-outline"
+      refreshingSpinner="circles"
+      refreshingText="{{ 'M_REFRESHING_TEXT' | translate }}">
+    </ion-refresher-content>
+  </ion-refresher>
+  <p class="ion-text-center"  *ngIf="loading">
+    <ion-spinner  name="circles"></ion-spinner>
+  </p>
+  <ion-list>
+    <ion-item *ngFor="let penality of penalities">
+      <ion-label>
+        <p>{{ 'TONTINE_DETAIL_TEXT10' | translate }}: <b>{{penality.numero_seance? penality.numero_seance : ''}}</b> </p>
+        <p>{{ 'TONTINE_DETAIL_TEXT5' | translate }}: <b>{{penality.type_penalite ? getPenalitiesTypeName(penality.type_penalite) : ''}}</b> </p>
+        <p>{{ 'AMOUNT_TEXT' | translate }}: <b>{{penality.montant_restant_a_payer ? penality.montant_restant_a_payer : ''}} {{tontineData.tontine ? tontineData.tontine.monnaie : ''}}</b> </p>
+        <p>{{ 'DATE_TEXT' | translate }}: <b>{{penality.date_penalite ? penality.date_penalite.split(' ')[0] : ''}}</b> </p>
+      </ion-label>
+      <ion-button slot="end" color="warning" class="pay-btn"
+        (click)="confirmPin(penality)">
+          <ion-text>{{ 'PAY_TEXT' | translate }}</ion-text>
+          <ion-icon name="wallet"></ion-icon>
+      </ion-button>
+    </ion-item>   
+  </ion-list>
+  <div  *ngIf="penalities && penalities.length === 0 && !loading">
+    <p  class="ion-text-center"> {{ 'M_PENALITIES_MSG' | translate }}</p>
+  </div>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="infinteScrollData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="{{ 'M_LOADING_MORE_DATA' | translate }}">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>
+
+<ion-footer class="ion-padding ion-text-center">
+  <ion-grid>
+    <ion-row>   
+      <ion-col>
+        <ion-button expand="full" 
+              fill="outline"
+              color="warning" 
+              class="ion-text-uppercase"
+              shape="round" (click)="closePenalitiesList()">
+          {{ 'CANCEL_TEXT' | translate }}
+        </ion-button>
+      </ion-col>      
+    </ion-row>
+  </ion-grid>
+</ion-footer>

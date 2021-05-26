@@ -1,0 +1,32 @@
+<ion-list class="ion-padding-top" class="mytontines-menu-popover">
+  <ion-item (click)="createTontinePage()" lines="none">
+    <ion-label>
+      {{'MENU_NEW_TONTINE' | translate }}
+    </ion-label>
+  </ion-item>  
+  <ion-item (click)="inviteMember()" lines="none">
+    <ion-label>
+      {{ 'TONTINE_INVITED_TEXT1' | translate }}
+    </ion-label>
+  </ion-item>
+  <ion-item (click)="joinTontinePage()" lines="none">
+    <ion-label>
+      {{ 'MENU_JOIN_TONTINE' | translate }}
+    </ion-label>
+  </ion-item>
+  <ion-item (click)="openWallet()" lines="none">
+    <ion-label>
+      {{ 'MENU_MY_WALLET' | translate }}
+    </ion-label>
+  </ion-item>
+  <ion-item (click)="notification()" lines="none">
+    <ion-label>
+      {{ 'NOTIFICATION_TEXT' | translate }}
+    </ion-label>
+  </ion-item>
+  <ion-item (click)="archiveTontine()" *ngIf="tontines && tontines.length > 0" lines="none">
+    <ion-label>
+      {{ 'MENU_ARCHIVE_TEXT' | translate }}
+    </ion-label>
+  </ion-item>
+</ion-list>

@@ -1,0 +1,95 @@
+<ion-header>
+  <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button color="primary"></ion-back-button>
+      </ion-buttons>
+    <ion-title class="ion-text-center title-md-right">{{ 'MY_TICKETS_TEXT' | translate }}</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+      <ion-card class="ion-no-margin ticket-form">
+          <ion-card-content>
+            <form [formGroup]="notificationForm">
+              <ion-grid>
+                <ion-row>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label position="floating">{{ 'SUBJECT_TEXT' | translate }}</ion-label>
+                      <ion-input type="text" formControlName="subject" required></ion-input>
+                    </ion-item>
+                    <div class="validation-errors">
+                      <ng-container *ngFor="let validation of validationMessages.subject">
+                        <div class="error-message" *ngIf="ticketSubject.value && ticketSubject.hasError(validation.type) && (ticketSubject.dirty || ticketSubject.touched)">
+                          <ion-icon name="information-circle-outline" ></ion-icon>
+                          {{ validation.message }}
+                        </div>
+                      </ng-container>
+                    </div> 
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label position="floating">{{ 'M_MESSAGE' | translate }}</ion-label>
+                      <ion-textarea type="text" formControlName="message" required></ion-textarea>
+                    </ion-item>
+                    <div class="validation-errors">
+                      <ng-container *ngFor="let validation of validationMessages.message">
+                        <div class="error-message" *ngIf="tickectMessage.value && tickectMessage.hasError(validation.type) && (tickectMessage.dirty || tickectMessage.touched)">
+                          <ion-icon name="information-circle-outline" ></ion-icon>
+                          {{ validation.message }}
+                        </div>
+                      </ng-container>
+                    </div> 
+                  </ion-col>
+                </ion-row>
+                <ion-row class="ion-justify-content-end">
+                  <ion-col size="4">
+                    <ion-button expand="full"  [disabled]="notificationForm.invalid"  (click)="sendNotification()"
+                        color="primary"
+                        shape="round">
+                      {{ 'SEND_TEXT' | translate }}
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>     
+            </form>
+          </ion-card-content>
+        </ion-card>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ticket"> 
+  <ion-refresher slot="fixed" (ionRefresh)="refreSher($event)">
+    <ion-refresher-content
+      pullingIcon="reload-outline"
+      refreshingSpinner="circles"
+      refreshingText="{{ 'M_REFRESHING_TEXT' | translate }}">
+    </ion-refresher-content>
+  </ion-refresher>
+  <ion-grid>
+    <ion-row class="notification" *ngFor="let notif of LastNotifsEvent">
+      <ion-col>
+        <ion-card class="ion-no-margin">
+          <ion-item lines="none">
+              <ion-icon color="primary" name="text" slot="start"></ion-icon>
+            <ion-label>{{ (notif.tontine_event_type =='VISITOR'  ? 'YOU_TEXT' : 'TOUPESUTEAM_TEXT') | translate}} - {{ notif.subject }}</ion-label>
+          </ion-item>
+        
+          <ion-card-content>
+            {{ notif.content }}
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <div  *ngIf="LastNotifsEvent && LastNotifsEvent.length === 0 && !loading">
+    <p  class="ion-text-center"> {{ 'M_NO_NOTIFICATIONS' | translate }}</p>
+  </div>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="infinteScrollData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="{{ 'M_LOADING_MORE_DATA' | translate }}">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

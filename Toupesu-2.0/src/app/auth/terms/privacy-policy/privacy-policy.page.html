@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar class="with-logo">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/auth/terms"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+        <ion-img class="logo" [src]="'assets/logo-toupesu.svg'"></ion-img>
+    </ion-title>
+  </ion-toolbar>
+  <ion-toolbar class="ion-text-center subtitle">
+      <ion-title>{{ 'TERM_PRIVACY_POLICY' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+    <div [innerHTML]="'TERM_PRIVACY_POLICY_TEXT1' | translate"></div>
+</ion-content>

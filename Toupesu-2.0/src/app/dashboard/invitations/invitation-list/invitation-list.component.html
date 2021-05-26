@@ -1,0 +1,104 @@
+
+  <ion-refresher slot="fixed" (ionRefresh)="refreSher($event)">
+    <ion-refresher-content
+      pullingIcon="reload-outline"
+      refreshingSpinner="circles"
+      refreshingText="{{ 'M_REFRESHING_TEXT' | translate }}">
+    </ion-refresher-content>
+  </ion-refresher>
+<ion-grid  *ngIf="tontines && tontines.length > 0">
+  <form [formGroup]="formInvited">
+    <ion-row >
+      <ion-col size="12">
+        <ion-item (click)="showTontines()">
+          <ion-label>{{ 'M_TONTINE_TEXT' | translate }} : </ion-label>
+          <p><strong> {{getTruncateName(formInvited.value, 15)}}</strong> </p>          
+          <ion-icon name="chevron-down-outline" slot="end"></ion-icon>
+        </ion-item>  
+      </ion-col>
+    </ion-row>
+  </form>
+</ion-grid>
+<ion-grid  *ngIf="!loading">
+  <ion-row>
+    <ion-col>
+      <ion-searchbar placeholder="{{ 'LOGIN_TEXT1' | translate }}" type="text" debounce="500" (ionChange)="searchForInvitation($event)">
+      </ion-searchbar>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+<ion-grid id="invitation-list">
+
+  <p class="ion-text-center"  *ngIf="loading">
+    <ion-spinner  name="circles"></ion-spinner>
+  </p>
+  <ion-row *ngIf="invitations && invitations.length > 0 && !loading">
+    <ion-col>
+      <ion-list>
+        <ion-item *ngFor="let invitation of invitations, index as num">
+          <ion-badge color="warning" slot="start">{{num + 1}}</ion-badge>
+          <ion-label>
+            <h2><small>{{ 'TONTINE_INVITE_SUBTEXT2' | translate }}:</small> {{invitation.InviteEmail || invitation.InvitePhone}}</h2>
+            <h3><small>{{ 'M_TONTINE_INVITE_BY' | translate }}:</small>
+              {{invitation.tontine_admin_firstname ? invitation.tontine_admin_firstname : ''}}
+              {{invitation.tontine_admin_lastname ?  invitation.tontine_admin_lastname :  invitation.tontine_admin_phone_with_prefix }}</h3>
+            <div *ngIf="invitation.EtatInvitation === 'en attente'; then pending; else activated">
+            </div>
+            <ng-template #pending>
+              <div class="button-area">
+                <ion-row>
+                  <ion-col>
+                    <ion-button fill="outline"*ngIf="checkCodeInValid(invitation)" color="warning" (click)="getTontineInvitationCode(invitation, formInvited.value.id)">
+                      {{ 'TONTINE_INVITE_SUBTEXT8' | translate }}</ion-button>
+                    <ion-button fill="outline" color="medium" *ngIf="isAdmin(invitation)" (click)="openDeleteInvitationDialog(invitation, formInvited.value.id)">
+                      {{ 'DELETE_TEXT' | translate }}</ion-button>
+                  </ion-col>
+                  <ion-col class="ion-padding-top">
+                    <ion-badge color="primary"  *ngIf="checkCodeValid(invitation)">{{ 'TONTINE_INVITE_SUBTEXT7' | translate }} ...</ion-badge>
+                  </ion-col>
+                </ion-row>
+                </div>
+            </ng-template>
+            <ng-template #activated>
+              <div class="button-area">
+                <ion-row>
+                  <ion-col>
+                    <ion-button fill="outline" color="warning" *ngIf="isActivated(invitation)" (click)="confirmUserInvitation(invitation, formInvited.value.id)">
+                      {{ 'TONTINE_INVITE_SUBTEXT3' | translate }}</ion-button>
+                    <ion-button fill="outline" color="medium"  *ngIf="isActivated(invitation)" (click)="openDenyInvitationDialog(invitation, formInvited.value.id)">
+                      {{ 'TONTINE_INVITE_SUBTEXT4' | translate }}</ion-button>
+                      <ion-button fill="outline" color="medium" *ngIf="canDelete(invitation)" (click)="openDeleteInvitationDialog(invitation, formInvited.value.id)">
+                        {{ 'DELETE_TEXT' | translate }}</ion-button>
+                  </ion-col>
+                  <ion-col class="ion-padding-top">
+                    <ion-badge color="primary" *ngIf="isRefused(invitation)">{{ 'TONTINE_INVITE_SUBTEXT5' | translate }}
+                      ...</ion-badge>
+                      <ion-badge color="primary" *ngIf="isCancelled(invitation)">{{ 'TEXT_CANCEL' | translate }}
+                      ...</ion-badge>
+                      <ion-badge color="primary" *ngIf="isAccepted(invitation)">{{ 'TONTINE_INVITE_SUBTEXT6' | translate }}
+                      ...</ion-badge>
+                  </ion-col>
+                </ion-row>
+              </div>
+           
+            </ng-template>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-col>
+  </ion-row>
+  <ion-row *ngIf="invitations && invitations.length === 0 &&  !loading">
+    <ion-col >
+      <p class="ion-text-center"> 
+        {{ 'TONTINE_INVITE_TEXT8' | translate }}
+      </p>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+<ion-infinite-scroll threshold="100px" (ionInfinite)="infinteScrollData($event)">
+  <ion-infinite-scroll-content
+    loadingSpinner="bubbles"
+    loadingText="{{ 'M_LOADING_MORE_DATA' | translate }}">
+  </ion-infinite-scroll-content>
+</ion-infinite-scroll>

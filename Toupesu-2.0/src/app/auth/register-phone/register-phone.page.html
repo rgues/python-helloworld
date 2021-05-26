@@ -1,0 +1,91 @@
+<ion-header>
+  <ion-toolbar class="with-logo">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/auth"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+        <ion-img class="logo" [src]="'assets/logo-toupesu.svg'"></ion-img>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding register-phone">
+  <ion-refresher slot="fixed" (ionRefresh)="refreSher($event)">
+    <ion-refresher-content
+      pullingIcon="reload-outline"
+      refreshingSpinner="circles"
+      refreshingText="{{ 'M_REFRESHING_TEXT' | translate }}">
+    </ion-refresher-content>
+  </ion-refresher>
+  <div class="ion-text-center"  *ngIf="isLoadingShow">
+    <p> <ion-spinner name="circles"></ion-spinner></p>
+    <p>{{'M_COUNTRY_LOADING' | translate}}</p> 
+  </div>
+ 
+  <form [formGroup]="phoneRegisterForm">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <p>{{'REGISTER_MMSG1' | translate}} <br /> {{'M_PIN_MSG' | translate}}
+          </p>        
+        </ion-col>
+      </ion-row>  
+      <ion-row>
+        <ion-col size="12">
+          <ion-item (click)="showCountries()">
+            <ion-label>{{'REGISTER_MTEXT1' | translate}} : </ion-label>
+            <p><strong> {{ getCountryName(phoneRegisterForm.value) }} </strong> </p>          
+            <ion-icon name="chevron-down-outline" slot="end"></ion-icon>
+          </ion-item>  
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validationMessages.country_id">
+              <div class="error-message" *ngIf="country.hasError(validation.type) && (country.dirty || country.touched)">
+                <ion-icon name="information-circle-outline" ></ion-icon>
+                {{ validation.message }}
+              </div>
+            </ng-container>
+          </div>     
+        </ion-col>
+      </ion-row> 
+      <ion-row>
+        <ion-col size="4">
+          <ion-item>
+            <ion-label position="floating">+</ion-label>
+            <ion-input type="text" formControlName="phoneid"></ion-input>
+          </ion-item>        
+        </ion-col>
+        <ion-col size="8">
+          <ion-item>
+            <ion-label position="floating">{{ 'REGISTER_MPHONE' | translate }}</ion-label>
+            <ion-input type="tel" (ionChange)="removeSpace()" formControlName="phone_number" (keyup.enter)="confirmPhone()"></ion-input>
+          </ion-item>        
+        </ion-col>
+        <ion-col size="12">
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validationMessages.phoneid">
+              <div class="error-message" *ngIf="phoneid.hasError(validation.type) && (phoneid.dirty || phoneid.touched)">
+                <ion-icon name="information-circle-outline" ></ion-icon>
+                {{ validation.message }}
+              </div>
+            </ng-container>
+            <ng-container *ngFor="let validation of validationMessages.phone">
+              <div class="error-message" *ngIf="phone.hasError(validation.type) && (phone.dirty || phone.touched)">
+                <ion-icon name="information-circle-outline" ></ion-icon>
+                {{ validation.message }}
+              </div>
+            </ng-container>
+          </div>    
+        </ion-col>
+      </ion-row> 
+    </ion-grid>
+  </form>  
+</ion-content>
+
+<ion-footer class="ion-padding ion-text-center">
+  <ion-button expand="full"  [disabled]="phoneRegisterForm.invalid"
+        color="warning" 
+        class="ion-text-uppercase"
+        shape="round" (click)="confirmPhone()">
+        {{'NEXT_TEXT' | translate}}
+  </ion-button>
+</ion-footer>

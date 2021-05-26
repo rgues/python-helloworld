@@ -1,0 +1,80 @@
+<form [formGroup]="paymentForm">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">        
+        <ion-card class="paidmode">
+          <ion-card-content class="ion-text-center">
+              <ion-row class="ion-padding-bottom">
+                <ion-col size="12">
+                  <ion-item>
+                    <ion-label position="floating">{{ 'AMOUNT_PAY_TEXT' | translate }}</ion-label>
+                    <ion-input type="number" formControlName="montant_total"></ion-input>
+                    <span slot="end" class="slot-prefix ion-no-margin"> {{ paymentForm.value.currency }} </span>
+                  </ion-item> 
+                  <div class="validation-errors">
+                    <ng-container *ngFor="let validation of validationMessages.amount">
+                      <div class="error-message" *ngIf="amount.hasError(validation.type) && (amount.dirty || amount.touched)">
+                        <ion-icon name="information-circle-outline" ></ion-icon>
+                        {{ validation.message }}
+                      </div>
+                    </ng-container>
+                  </div>          
+                </ion-col>
+                <ion-col size="12">
+                  <ion-item>
+                    <ion-label position="floating">{{ 'LEAVE_COMMENT' | translate }}</ion-label>
+                    <ion-textarea  type="text"  formControlName="proofMessage"></ion-textarea>
+                  </ion-item> 
+                  <div class="validation-errors">
+                    <ng-container *ngFor="let validation of validationMessages.proofMessage">
+                      <div class="error-message" *ngIf="proofMessage.hasError(validation.type) && (proofMessage.dirty || proofMessage.touched)">
+                        <ion-icon name="information-circle-outline" ></ion-icon>
+                        {{ validation.message }}
+                      </div>
+                    </ng-container>
+                  </div>          
+                </ion-col>
+                <ion-col  *ngIf="paymentForm.value.receipt" size="12" class="ion-padding"> 
+                  <ion-thumbnail>
+                    <img src="{{paymentForm.value.receipt}}">
+                  </ion-thumbnail>
+                </ion-col>
+                <ion-col size="12" class="ion-padding">
+                  <ion-button  color="primary" size="medium" class="ion-text-capitalize" (click)="getProof()">
+                    <ion-icon name="add"></ion-icon>
+                    {{ 'PROF_PAYMENT' | translate }}
+                 </ion-button>
+                </ion-col>
+              </ion-row>                            
+          </ion-card-content>
+        </ion-card>
+      </ion-col>      
+    </ion-row>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="auto">
+        <ion-button expand="full" [disabled]="paymentForm.invalid || loadingPay"
+              (click)="paidWithBank(contributionData)"
+              color="warning" 
+              class="ion-text-uppercase"
+              shape="round"
+              [class.ion-hide]="amountPay - (type !== 'interest' ? paymentForm.value.montant_total : amountPay) === 0"
+              >
+         {{ 'SAVE_PARTIAL_PAYMENT' | translate }}
+        </ion-button>
+        <ion-button expand="full" [disabled]="paymentForm.invalid || loadingPay"
+              (click)="paidWithBank(contributionData)"
+              color="warning" 
+              class="ion-text-uppercase"
+              shape="round"
+              [class.ion-hide]="amountPay - (type !== 'interest' ? paymentForm.value.montant_total : amountPay)  !== 0"
+              >
+         {{ 'SUBMIT_FOR_APPROVAL' | translate }}
+        </ion-button>
+      </ion-col>
+      <p class="ion-text-center" *ngIf="loadingPay">
+        <ion-spinner  name="circles"></ion-spinner> 
+      </p>
+    </ion-row>  
+  </ion-grid>
+  </form> 
+  

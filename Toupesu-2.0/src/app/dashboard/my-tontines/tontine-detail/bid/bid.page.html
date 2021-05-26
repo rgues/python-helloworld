@@ -1,0 +1,114 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button color="primary" [defaultHref]="'/dashboard/my-tontines/' + tontineId" slot="text-only"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="no-padding ion-text-center">
+      {{ 'M_BID_INFORMATIONS' | translate }}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="bid">
+  <ion-refresher slot="fixed" (ionRefresh)="refreSher($event)">
+    <ion-refresher-content
+      pullingIcon="reload-outline"
+      refreshingSpinner="circles"
+      refreshingText="{{ 'M_REFRESHING_TEXT' | translate }}">
+    </ion-refresher-content>
+  </ion-refresher>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+          <ion-img class="inner-image" [src]="'assets/bid.svg'"></ion-img>
+      </ion-col>
+    </ion-row>
+    <div class="bid-info ion-padding">
+      <p class="ion-no-margin"><b>{{ 'SESSION_TIME_TEXT' | translate }}</b></p>
+      <ion-row class="row-1">      
+        <ion-col size="6" class="ion-text-center">
+          <b>{{ 'CYCLE_START_ON' | translate }}</b><br/>{{seance && seance.date_debut ? seance.date_debut.split(' ')[0]  : ('TONTINE_LIST_CONFIG' | translate) }}
+          <span *ngIf="seance">-</span>  {{seance ? seance.heure_debut : ''}}
+        </ion-col>
+        <ion-col size="6" class="ion-text-center">
+          <b>{{ 'CYCLE_END_ON' | translate }}</b><br/>{{seance && seance.date_fin ? seance.date_fin.split(' ')[0]  : ('TONTINE_LIST_CONFIG' | translate) }} 
+          <span *ngIf="seance">-</span> {{seance ? seance.heure_fin : ''}}
+        </ion-col>
+      </ion-row>
+      <p class="ion-no-margin"><b>{{ 'BID_TIME_TEXT' | translate }}</b></p>
+      <ion-row class="row-2">      
+        <ion-col size="6" class="ion-text-center">
+          <b>{{ 'BID_START_ON' | translate }}:</b><br/>{{ currentTontine && currentTontine.tontine && currentTontine.tontine.time_debut_bid ? currentTontine.tontine.time_debut_bid : ''}} {{currentTontine && currentTontine.tontine && currentTontine.tontine.type_time_debut_bid ? (currentTontine.tontine.type_time_debut_bid | translate) : ''}} {{ 'BID_AFTER_TIME' | translate }}
+        </ion-col>
+        <ion-col size="6" class="ion-text-center">
+          <b>{{ 'BID_END_ON' | translate }}: </b><br/>{{currentTontine && currentTontine.tontine && currentTontine.tontine.time_fin_bid ? currentTontine.tontine.time_fin_bid : ''}} {{ currentTontine && currentTontine.tontine && currentTontine.tontine.type_time_fin_bid ? (currentTontine.tontine.type_time_fin_bid | translate) : ''}} {{ 'BID_BEFORE_TIME' | translate }}
+        </ion-col>
+      </ion-row>
+      <ion-buttons class="edit-btn" *ngIf="currentTontine && currentTontine.tontine && currentTontine.tontine.administrator === 1 && seance === null">
+        <ion-button (click)="openbidtimeEdit(currentTontine)">
+         <ion-icon color="warning" name="create" slot="icon-only"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </div>  
+    <p class="ion-text-center"  *ngIf="loading">
+      <ion-spinner  name="circles"></ion-spinner>
+    </p>
+    <ion-row *ngIf="currentAmount && currentAmount.length > 0 && !loading">
+      <ion-col size="12">
+        <ion-card  *ngFor="let data of currentAmount; let i =index;">
+          <ion-card-header>
+            <ion-card-subtitle>
+              <ion-chip>
+                <ion-label color="primary">{{ 'TONTINE_LIST_TEXT3B' | translate }} # {{data.numero_lot}}</ion-label>
+              </ion-chip>
+              <ion-text color="danger" class="ion-float-right countdown">{{compteur | compteurFormat}}</ion-text>
+            </ion-card-subtitle>
+          </ion-card-header>
+        
+          <ion-card-content>
+            <p class="ion-text-center">{{ 'TONTINE_BID_TEXT4' | translate }}: <ion-text><b>{{ (ConvertToFloat(data.MiseAPrix) | commadumper) }} {{data.monnaie}}</b></ion-text></p>
+            <p class="ion-text-center">{{ 'TONTINE_BID_TEXT3' | translate }}: <ion-text color="warning"><b>{{ (data.somme !== 0) ? (data.somme | commadumper) : (data.StarterAmount | commadumper)}} {{data.monnaie}}</b></ion-text></p>
+            <p class="ion-text-center">{{ 'BENEFICIARY_TEXT' | translate }}: <ion-text><b>{{(data.somme !== 0) ? getCreatorName(members.liste_membre, data.userID) : ('TONTINE_LIST_TEXT6' | translate)}}</b></ion-text></p>
+            <p class="error" *ngIf="!checkMemberContributionSeance(members.liste_membre) && compteur && compteur > 0 && canBid">{{'TONTINE_BID_TEXT9' | translate}}</p>
+            <p class="error" *ngIf="compteur && compteur > 0 && !canBid">{{'TONTINE_BID_TEXT14' | translate}}</p>
+            <ion-button   *ngIf="canBidLot(data)"
+                color="warning"
+                class="ion-text-capitalize ion-float-right ion-margin-vertical"
+                fill="solid"
+                size="small"
+                (click)="openbidConfirm(myTontine,user.id,currentBidPart, data.seanceID,data.numero_lot,(data.somme !== 0) ? data.somme : 0, sessionInfo.inc)">
+                {{ 'TONTINE_BID_TEXT5' | translate }}
+                {{ (data.somme !== 0) ? (SumFloat(data.somme,sessionInfo.inc) | commadumper) : (SumFloat(data.StarterAmount,sessionInfo.inc) | commadumper) }}
+                {{data.monnaie}}
+            </ion-button>
+
+            <p class="error" *ngIf="(getPourcentageCurrentBid(data.MiseAPrix, (data.somme !== 0) ? data.somme : 1) >= 50) && 
+              (getPourcentageCurrentBid(data.MiseAPrix, (data.somme !== 0) ? data.somme : 1) < 90)">
+              {{'TONTINE_BID_TEXT11' | translate}}
+            </p>
+
+            <p class="error" *ngIf="(getPourcentageCurrentBid(data.MiseAPrix, (data.somme !== 0) ? data.somme : 1) >= 90)">
+              {{'TONTINE_BID_TEXT12' | translate}}
+            </p>
+
+          </ion-card-content>
+        </ion-card>
+  
+      </ion-col>
+    </ion-row>  
+    
+  </ion-grid>
+</ion-content>
+
+<ion-footer class="ion-padding ion-text-center" *ngIf="currentTontine && currentTontine.tontine && currentTontine.tontine.administrator === 1 && !seance">
+  <ion-button expand="full" 
+        color="warning" 
+        class="ion-text-uppercase"
+        shape="round"
+        (click)="openShareEdit(currentTontine)">
+    {{ 'M_EDIT_NB_POOL' | translate }}
+  </ion-button>
+</ion-footer>
+
+
+
