@@ -78,7 +78,7 @@ export class MemberCautionPage implements OnInit {
   }
 
   memberIsAdmin(members: any, memberId: number) {
-    return this.tontinesData.isMemberAdmin(members, memberId)
+    return this.tontinesData.isMemberAdmin(members, memberId);
   }
 
   // get the active members parts

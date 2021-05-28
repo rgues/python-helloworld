@@ -87,7 +87,6 @@ export class TontineDetailPage implements OnInit {
     this.tontineId = this.activeRoute.snapshot.params.tontineId;
     this.user = this.userService.getUserData();
     const tontineData = this.tontine.getCurrentTontineData();
-    console.log(tontineData);
     this.currentSeance = tontineData.seance_courante;
     this.currentAmount = [];
     this.seancesList = [];
@@ -101,7 +100,7 @@ export class TontineDetailPage implements OnInit {
     this.checkPaidCaution = false;
     this.loadingPay = false;
 
-    this.event.subscribe('cautionPaid', data => {
+    this.event.subscribe('cautionPaid', () => {
       this.checkCaution();
     });
   }
@@ -300,8 +299,6 @@ export class TontineDetailPage implements OnInit {
   checkBidStatus(seance: any, numlot: any) {
     const tontineData = this.tontine.getCurrentTontineData();
     this.contribution.getDataMembresAyantBouffe(tontineData.seance_courante.cycle_id, tontineData.tontine.tontine_id).then((reponse: any) => {
-
-      console.log(reponse);
 
       const listPart = reponse.tontine && reponse.tontine.membres && reponse.tontine.membres.liste_membre ? reponse.tontine.membres.liste_membre : []
       const userId = this.user.id;
@@ -705,16 +702,12 @@ export class TontineDetailPage implements OnInit {
   getCautionData(cycleId: any, userId: any) {
     this.checkPaidCaution = false;
     this.tontine.getMembersPaidPartialCautions(cycleId).subscribe(data => {
-      console.log(data);
       if (data && data.message === 'success') {
         let members = data.liste_members;
         members = members.filter((member: any) => { return parseInt(member.infos_user.id, 10) === parseInt(userId, 10) });
         this.hasPaidCaution = members.length > 0 ? false : true;
         this.cautionAmount = members.length > 0 ? parseFloat(members[0].rest_amount_to_pay ? members[0].rest_amount_to_pay : 0) : 0;
         this.checkPaidCaution = true;
-        console.log(this.checkPaidCaution);
-        console.log(this.hasPaidCaution);
-        console.log(this.cautionAmount);
       }
     }, error => {
       if (error && error.error && error.error.message === 'error') {

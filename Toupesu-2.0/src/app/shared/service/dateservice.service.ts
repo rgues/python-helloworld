@@ -75,13 +75,10 @@ export class DateserviceService {
     return mDate;
   }
 
-
-
   encodeDate(day: string, month: string, year: string) {
     const mDate = year + '-' + month + '-' + day;
     return mDate;
   }
-
 
   formatterDate(date: any) {
 
@@ -121,9 +118,6 @@ export class DateserviceService {
     return formatDate;
   }
 
-
-
-  
   formatDate(date: any) {
     const dateFormat = new Date(date);
     const month = (dateFormat.getMonth() < 10) ? '0' + (dateFormat.getMonth()) : (dateFormat.getMonth());

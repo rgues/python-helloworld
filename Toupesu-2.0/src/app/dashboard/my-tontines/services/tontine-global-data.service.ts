@@ -91,9 +91,6 @@ export class TontineGlobalDataService {
     return isIn;
   }
 
-
-
-
   // Get day Translation 
   getDayTranslation(day: string) {
     return new Observable(subscriber => {

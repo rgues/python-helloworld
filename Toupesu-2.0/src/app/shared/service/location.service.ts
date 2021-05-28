@@ -207,7 +207,6 @@ export class LocationService {
     });
   }
 
-
   // Get country information
   getLastVersion() {
     return this.api.get(`version/get`);
@@ -248,7 +247,6 @@ export class LocationService {
   getPositionUser() {
     return this.http.get('https://pro.ip-api.com/json/?key=OTLs8gHCV0rJyYz');
   }
-
 
   // Get the currency country data informations of word
   getCurrentWordCountryInfo(refresher: boolean) {

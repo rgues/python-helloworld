@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { ErrorService } from './error.service';
 import { UiService } from './ui.service';
 
 @Injectable({
@@ -10,8 +9,7 @@ export class PaymentErrorService {
 
   constructor(
     private ui: UiService,
-    private translate: TranslateService,
-    private error: ErrorService
+    private translate: TranslateService
   ) { }
 
 

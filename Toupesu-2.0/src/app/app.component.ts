@@ -48,7 +48,6 @@ export class AppComponent {
     private error: ErrorService,
     private localStorage: LocalStorageService
   ) {
-
     // set the token state
     this.localStorage.setItem('startRefreshToken', 'false');
     this.contribution.getTypeContributionTontine(true);
@@ -96,17 +95,14 @@ export class AppComponent {
       });
       this.oneSignal.endInit(); 
 
-
-       // add the google analytics
-       this.googleAnalytic.startTrackerWithId('app-analytics-30260')
+      // add the google analytics
+      this.googleAnalytic.startTrackerWithId('app-analytics-30260')
       .then(() => {
        this.googleAnalytic.trackView('Toupesu app');
-       alert('Google Analytic ok');
        // Tracker is ready
        // You can now track pages or set additional information such as AppVersion or UserId
       })
       .catch(e =>{});
-     
       });
 
   }

@@ -18,7 +18,7 @@ export class EventService {
           // You can also use ReplaySubject with one concequence
           this.channels[topic] = new Subject<any>();
       }
-
+      console.log('subscribe for', topic);
       return this.channels[topic].subscribe(observer);
   }
 
@@ -33,6 +33,8 @@ export class EventService {
           // Or you can create a new subject for future subscribers
           return;
       }
+
+      console.log('publish event',topic);
 
       subject.next(data);
   }

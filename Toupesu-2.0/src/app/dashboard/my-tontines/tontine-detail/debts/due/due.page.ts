@@ -188,6 +188,7 @@ export class DuePage implements OnInit {
         dueDatta = dueDatta.concat(this.util.orderByKeyUp(this.filterItems(reponse.liste_seances_contribution),'date_debut'));
         dueDatta = dueDatta.concat(this.util.orderByKeyUp(this.filterItems(reponse.liste_seances_penalite),'date_debut'));
         this.allData = dueDatta;
+        console.log(this.allData);
         this.selectedDebts = [];
         this.allData.forEach(data => {
           this.selectedDebts.push({choice: false, value : data});

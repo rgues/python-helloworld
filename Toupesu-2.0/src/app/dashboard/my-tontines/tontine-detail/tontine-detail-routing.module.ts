@@ -16,11 +16,14 @@ const routes: Routes = [
         path: 'members',
         loadChildren: () => import('./members/members.module').then(m => m.MembersPageModule)
     },
+    { 
+        path: 'member-caution', 
+        loadChildren: () => import('./members/member-caution/member-caution.module').then(m => m.MemberCautionPageModule)
+    },
     {
         path: 'shares',
         loadChildren: () => import('./shares/shares.module').then(m => m.SharesPageModule)
-    }
-    ,
+    },
     {
         path: 'roles',
         loadChildren: () => import('./roles/roles.module').then(m => m.RolesPageModule)

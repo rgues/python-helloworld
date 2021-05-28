@@ -47,7 +47,6 @@ const routes: Routes = [
                 path: ':eventID/my-tickets',
                 loadChildren: () => import('./tontines-events/event-detail/events-tickets/events-tickets.module').then(m => m.EventsTicketsPageModule) 
             }
-          
         ]
     },
     {
@@ -73,8 +72,7 @@ const routes: Routes = [
             {
                 path: 'history',
                 loadChildren: () => import('./my-wallet/history/history.module').then(m => m.HistoryPageModule) 
-            }
-            ,
+            },
             {
                 path: 'withdrawal',
                 loadChildren: () => import('./my-wallet/withdrawal/withdrawal.module').then(m => m.WithdrawalPageModule)
@@ -107,8 +105,7 @@ const routes: Routes = [
             {
                 path: 'auto-pay-tontine',
                 loadChildren: () => import('./user/auto-pay-tontine/auto-pay-tontine.module').then(m => m.AutoPayTontinePageModule) 
-            },
-
+            }
         ]
     },
     { 

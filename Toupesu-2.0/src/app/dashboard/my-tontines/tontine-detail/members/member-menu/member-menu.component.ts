@@ -46,53 +46,33 @@ export class MemberMenuComponent implements OnInit {
 
   // Can edit share 
   canEditShare() {
-    let canEdit = false;
-    if (((!this.seance && this.myTontine.active === 0) || (!this.seance && !this.previousSeance && this.myTontine.active === 1) || 
-      (this.seance && this.seance.numero_seance < 2 && this.myTontine.active === 1)) && this.myTontine.administrator === 1) {
-        canEdit = true;
-    }
-    return canEdit
+    return (((!this.seance && this.myTontine.active === 0) || (!this.seance && !this.previousSeance && this.myTontine.active === 1) || 
+      (this.seance && this.seance.numero_seance < 2 && this.myTontine.active === 1)) && this.myTontine.administrator === 1);
   }
 
   // can enable member
   canEnable() {
-    let canEnable = false;
-    if ((this.cycle &&  this.myTontine.active === 1 && (!this.seance || this.seance && this.seance.numero_seance < 2 )) 
-    && this.myTontine.administrator === 1 && this.myTontine.user_id && this.myTontine.user_id === this.userData.id && this.user.id !== this.myTontine.user_id) {
-      canEnable = true;
-    }
-    return canEnable
+    return ((this.cycle &&  this.myTontine.active === 1 && (!this.seance || this.seance && this.seance.numero_seance < 2 )) 
+    && this.myTontine.administrator === 1 && this.myTontine.user_id && this.myTontine.user_id === this.userData.id && this.user.id !== this.myTontine.user_id);
   }
 
   // Can update role
   canUpdateRole() {  
-    let canUpadte = false;
-    if (this.myTontine.number_admin_current < this.myTontine.number_admin_max && this.myTontine.administrator === 1 
-       && this.myTontine.user_id && this.myTontine.user_id === this.userData.id && this.user.id !== this.myTontine.user_id) {
-      canUpadte = true;
-    }
-    return canUpadte ;
+    return (this.myTontine.number_admin_current < this.myTontine.number_admin_max && this.myTontine.administrator === 1 
+       && this.myTontine.user_id && this.myTontine.user_id === this.userData.id && this.user.id !== this.myTontine.user_id) ;
   }
 
 
   // can add share 
   canAddShare() {
-    let canAdd = false;
-      if (this.canEditShare() &&  this.curentMemberParams.nbPart < this.myTontine.nombre_part_max_membre 
-      && this.curentMemberParams.nbPartMax < this.myTontine.nombre_part_max_tontine) {
-        canAdd = true;
-      }
-    return canAdd;
+    return (this.canEditShare() &&  this.curentMemberParams.nbPart < this.myTontine.nombre_part_max_membre 
+      && this.curentMemberParams.nbPartMax < this.myTontine.nombre_part_max_tontine);
   }
 
 
   // Can remove share
   canRemoveShare() {
-    let canRemove = false;
-    if (this.canEditShare() && this.curentMemberParams.nbPart > 1 &&  this.curentMemberParams.nbPart <= this.myTontine.nombre_part_max_membre) {
-      canRemove = true;
-    }
-    return canRemove;
+    return (this.canEditShare() && this.curentMemberParams.nbPart > 1 &&  this.curentMemberParams.nbPart <= this.myTontine.nombre_part_max_membre) ;
   }
 
   async onSharePopover() {

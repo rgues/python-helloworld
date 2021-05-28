@@ -12,6 +12,7 @@ import { ContributeSeanceComponent } from '../contribute-seance/contribute-seanc
 import { TontineErrorService } from 'src/app/dashboard/my-tontines/services/tontine-error.service';
 import { UiService } from 'src/app/shared/service/ui.service';
 import { UserService } from 'src/app/dashboard/user/service/user.service';
+import { EventService } from 'src/app/shared/service/events.service';
 
 @Component({
   selector: 'app-session',
@@ -32,7 +33,7 @@ export class SessionPage implements OnInit {
   hascheckPreviousSeance: boolean;
   seancesList: any;
   loadingPay: any;
-  currentTontine:any;
+  currentTontine: any;
   hasPaidCaution: boolean;
   checkPaidCaution: boolean;
   cautionAmount: number;
@@ -45,6 +46,7 @@ export class SessionPage implements OnInit {
     private ui: UiService,
     private tontineError: TontineErrorService,
     private tontine: TontineService,
+    private events: EventService,
     private translate: TranslateService,
     private alertController: AlertController,
     private popop: PopoverController,
@@ -151,8 +153,6 @@ export class SessionPage implements OnInit {
     return await popover.present();
   }
 
-
-
   // update the current data
   getDetailInfos() {
     this.tontine.getTontineDetail(this.myTontine.tontine_id).subscribe((reponse: any) => {
@@ -173,8 +173,6 @@ export class SessionPage implements OnInit {
       }
     });
   }
-
-
 
   // show option to pay previous seance
   async canPayPreviousSeance(translations: string[], pin: any) {
@@ -226,7 +224,6 @@ export class SessionPage implements OnInit {
     }
   }
 
-
   getContributions(event?: any) {
     const currentTontine = this.tontine.getCurrentTontineData();
     const currentCycle = currentTontine.cycle_courant;
@@ -236,7 +233,7 @@ export class SessionPage implements OnInit {
     this.hascheckPreviousSeance = false;
     this.contribution.getSeancesNotContribute(param).subscribe((reponse: any) => {
       if (reponse && reponse.liste_seances && reponse.liste_seances.length > 0) {
-        
+
         // Get the seances of cycles
         const listSeances = reponse.liste_seances.filter(data => {
           return currentCycle && (data.cycle_id === currentCycle.id)
@@ -320,23 +317,21 @@ export class SessionPage implements OnInit {
     return paymentData;
   }
 
-
-   // check if i can contribute seance
-   checkContributeCondition() {
+  // check if i can contribute seance
+  checkContributeCondition() {
     let ican = false;
-    if (this.currentSeance 
-      && this.currentTontine 
-      && this.currentTontine.tontine 
-      && this.currentTontine.tontine.active === 1 
-      && this.checkPaidCaution 
+    if (this.currentSeance
+      && this.currentTontine
+      && this.currentTontine.tontine
+      && this.currentTontine.tontine.active === 1
+      && this.checkPaidCaution
       && this.hasPaidCaution
       && this.hascheckPreviousSeance
-      ) {
+    ) {
       ican = true;
     }
     return ican;
   }
-
 
   // can pay caution
   icanPayCaution(currentTontine: any) {
@@ -351,150 +346,150 @@ export class SessionPage implements OnInit {
       ican = true;
     }
     return ican;
-  }  
-
-  
-checkCaution() {
-  const tontineData = this.tontine.getCurrentTontineData();
-  if (tontineData && tontineData.tontine && tontineData.cycle_courant) {
-    this.checkIfcautionPaid(tontineData.tontine, tontineData.cycle_courant.id, this.user.id);
   }
-}
 
-// check if a tontine has a caution 
-checkTontineCaution(tontineData: any) {
-  return this.tontinesData.hasTontineCaution(tontineData);
-}
-
-// check if a user has paid a caution
-checkIfcautionPaid(tontineData: any, cycleId: any, userId: any) {
-  if (this.checkTontineCaution(tontineData)) {
-    this.getCautionData(cycleId, userId);
-  } else {
-    this.hasPaidCaution = true;
-    this.checkPaidCaution = true;
+  checkCaution() {
+    const tontineData = this.tontine.getCurrentTontineData();
+    if (tontineData && tontineData.tontine && tontineData.cycle_courant) {
+      this.checkIfcautionPaid(tontineData.tontine, tontineData.cycle_courant.id, this.user.id);
+    }
   }
-}
 
-// Check if the cycle is define
-hasCycle(tontineData: any) {
-  return this.tontinesData.hasTontineCycle(tontineData);
-}
+  // check if a tontine has a caution 
+  checkTontineCaution(tontineData: any) {
+    return this.tontinesData.hasTontineCaution(tontineData);
+  }
 
-// get the caution data
-getCautionData(cycleId: any, userId: any) {
-  this.checkPaidCaution = false;
-  this.tontine.getMembersPaidPartialCautions(cycleId).subscribe(data => {
-    if (data && data.message === 'success') {
-      let members = data.liste_members;
-      members = members.filter((member: any) => { return parseInt(member.infos_user.id, 10) === parseInt(userId, 10) });
-      this.hasPaidCaution = members.length > 0 ? false : true;
-      this.cautionAmount = members.length > 0 ? parseFloat(members[0].rest_amount_to_pay ? members[0].rest_amount_to_pay : 0) : 0;
+  // check if a user has paid a caution
+  checkIfcautionPaid(tontineData: any, cycleId: any, userId: any) {
+    if (this.checkTontineCaution(tontineData)) {
+      this.getCautionData(cycleId, userId);
+    } else {
+      this.hasPaidCaution = true;
       this.checkPaidCaution = true;
     }
-  }, error => {
-    if (error && error.error && error.error.message === 'error') {
-      if (error.error.user_not_found) {
-        this.errorservice.renewSession().then((session: any) => {
-          if (session && session.result === "OK") {
-            this.getCautionData(cycleId, userId);
-          } else {
-            this.checkPaidCaution = true;
-          }
-        });
+  }
+
+  // Check if the cycle is define
+  hasCycle(tontineData: any) {
+    return this.tontinesData.hasTontineCycle(tontineData);
+  }
+
+  // get the caution data
+  getCautionData(cycleId: any, userId: any) {
+    this.checkPaidCaution = false;
+    this.tontine.getMembersPaidPartialCautions(cycleId).subscribe(data => {
+      if (data && data.message === 'success') {
+        let members = data.liste_members;
+        members = members.filter((member: any) => { return parseInt(member.infos_user.id, 10) === parseInt(userId, 10) });
+        this.hasPaidCaution = members.length > 0 ? false : true;
+        this.cautionAmount = members.length > 0 ? parseFloat(members[0].rest_amount_to_pay ? members[0].rest_amount_to_pay : 0) : 0;
+        this.checkPaidCaution = true;
+      }
+    }, error => {
+      if (error && error.error && error.error.message === 'error') {
+        if (error.error.user_not_found) {
+          this.errorservice.renewSession().then((session: any) => {
+            if (session && session.result === "OK") {
+              this.getCautionData(cycleId, userId);
+            } else {
+              this.checkPaidCaution = true;
+            }
+          });
+        } else {
+          this.checkPaidCaution = true;
+          this.tontineError.manageTontineError(error)
+        }
       } else {
         this.checkPaidCaution = true;
-        this.tontineError.manageTontineError(error)
+        this.errorservice.manageError(error);
       }
-    } else {
-      this.checkPaidCaution = true;
-      this.errorservice.manageError(error);
-    }
-  });
-}
+    });
+  }
 
-// pay the cation
-payCaution(currentTontine: any, userId: number) {
-  const param = {
-    cycle_id: currentTontine.cycle_courant.id,
-    amount: this.cautionAmount
-  };
+  // pay the cation
+  payCaution(currentTontine: any, userId: number) {
+    const param = {
+      cycle_id: currentTontine.cycle_courant.id,
+      amount: this.cautionAmount
+    };
 
-  this.loadingPay = true;
-  this.translate.get('TOPUP_TEXT1').subscribe(trans => {
-    this.ui.presentLoading(trans);
-  });
+    this.loadingPay = true;
+    this.translate.get('TOPUP_TEXT1').subscribe(trans => {
+      this.ui.presentLoading(trans);
+    });
 
-  this.contribution.payMemberCaution(param).subscribe((reponse: any) => {
+    this.contribution.payMemberCaution(param).subscribe((reponse: any) => {
 
-    if (reponse && reponse.message === 'success') {
-      this.translate.get('PAY_CAUTION_RESULT_MSG').subscribe(trans => {
-        this.ui.presentToast(trans);
-      });
-      this.checkIfcautionPaid(this.currentTontine.tontine, this.currentTontine.cycle_courant.id, this.user.id);
-    }
-    this.loadingPay = false;
-    this.ui.dismissLoading();
-  }, error => {
-    this.loadingPay = false;
-
-    if (error && error.error && error.error.message === 'error') {
-      if (error.error.user_not_found) {
-        this.loadingPay = true;
-        this.errorservice.renewSession().then((session: any) => {
-          this.ui.dismissLoading();
-          if (session && session.result === "OK") {
-            this.payCaution(currentTontine, userId);
-          } else {
-            this.loadingPay = false;
-          }
+      if (reponse && reponse.message === 'success') {
+        this.translate.get('PAY_CAUTION_RESULT_MSG').subscribe(trans => {
+          this.ui.presentToast(trans);
         });
+        this.events.publish('cautionPaid');
+        this.checkIfcautionPaid(this.currentTontine.tontine, this.currentTontine.cycle_courant.id, this.user.id);
+      }
+      this.loadingPay = false;
+      this.ui.dismissLoading();
+    }, error => {
+      this.loadingPay = false;
+
+      if (error && error.error && error.error.message === 'error') {
+        if (error.error.user_not_found) {
+          this.loadingPay = true;
+          this.errorservice.renewSession().then((session: any) => {
+            this.ui.dismissLoading();
+            if (session && session.result === "OK") {
+              this.payCaution(currentTontine, userId);
+            } else {
+              this.loadingPay = false;
+            }
+          });
+        } else {
+          this.ui.dismissLoading();
+          this.tontineError.manageTontineError(error)
+        }
       } else {
         this.ui.dismissLoading();
-        this.tontineError.manageTontineError(error)
+        this.errorservice.manageError(error);
       }
-    } else {
-      this.ui.dismissLoading();
-      this.errorservice.manageError(error);
-    }
-  });
-}
-
-// show option to pay previous seance
-async canPayCaution(translations: string[], currentTontine: any, userId: number) {
-  const alert = await this.alertController.create({
-    header: `${translations[0]}`,
-    message: `${translations[1]}`,
-    buttons: [
-      {
-        text: `${translations[2]}`,
-        role: 'cancel',
-        cssClass: 'secondary',
-        handler: () => {
-
-        }
-      }, {
-        text: `${translations[3]}`,
-        handler: () => {
-          this.payCaution(currentTontine, userId);
-        }
-      }
-    ]
-  });
-  await alert.present();
-}
-
-// confim Payment
-confirmCautionPin(currentTontine: any, userId: number) {
-  const translationsData = [];
-  this.translate.get(['PAY_CAUTION_TEXT', 'PAY_CAUTION_OK_MSG', 'CANCEL_TEXT', 'YES_TEXT'],
-    { amount: this.cautionAmount, currency: currentTontine.tontine.monnaie }).subscribe(trans => {
-      translationsData.push(trans.PAY_CAUTION_TEXT);
-      translationsData.push(trans.PAY_CAUTION_OK_MSG);
-      translationsData.push(trans.CANCEL_TEXT);
-      translationsData.push(trans.YES_TEXT);
-      this.canPayCaution(translationsData, currentTontine, userId);
     });
-}
+  }
+
+  // show option to pay previous seance
+  async canPayCaution(translations: string[], currentTontine: any, userId: number) {
+    const alert = await this.alertController.create({
+      header: `${translations[0]}`,
+      message: `${translations[1]}`,
+      buttons: [
+        {
+          text: `${translations[2]}`,
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+
+          }
+        }, {
+          text: `${translations[3]}`,
+          handler: () => {
+            this.payCaution(currentTontine, userId);
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  // confim Payment
+  confirmCautionPin(currentTontine: any, userId: number) {
+    const translationsData = [];
+    this.translate.get(['PAY_CAUTION_TEXT', 'PAY_CAUTION_OK_MSG', 'CANCEL_TEXT', 'YES_TEXT'],
+      { amount: this.cautionAmount, currency: currentTontine.tontine.monnaie }).subscribe(trans => {
+        translationsData.push(trans.PAY_CAUTION_TEXT);
+        translationsData.push(trans.PAY_CAUTION_OK_MSG);
+        translationsData.push(trans.CANCEL_TEXT);
+        translationsData.push(trans.YES_TEXT);
+        this.canPayCaution(translationsData, currentTontine, userId);
+      });
+  }
 
 }
