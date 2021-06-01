@@ -14,7 +14,15 @@ const routes: Routes = [
   {
     path: '',
     component: MyWalletPage
-  }
+  },
+  {
+    path: 'history',
+    loadChildren: () => import('./history/history.module').then(m => m.HistoryPageModule)
+},
+{
+    path: 'withdrawal',
+    loadChildren: () => import('./withdrawal/withdrawal.module').then(m => m.WithdrawalPageModule)
+}
 ];
 
 @NgModule({

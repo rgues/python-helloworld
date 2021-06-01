@@ -31,7 +31,7 @@
               <ion-button [disabled]="periodForm.invalid" (click)="filterByDate(periodForm.value)">
                 <ion-icon slot="icon-only" name="search" color="warning"></ion-icon>
               </ion-button>
-            </ion-buttons>            
+            </ion-buttons>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -55,21 +55,22 @@
       <ion-col>
         <span *ngIf="!loading">{{'TOTAL_TRANS_TEXT' | translate }}: {{tontinesHistory && tontinesHistory.length > 0 ? allData.length : tontinesHistory.length }}</span>
         <ion-list>
-          <ion-item *ngFor="let transaction of tontinesHistory">                          
+          <ion-item *ngFor="let transaction of tontinesHistory">
             <ion-label>
-              <ion-text color="primary"><h2><small>{{'TONTINE_USERS_TEXT5' | translate }}: </small><b>{{transaction.firstname ? transaction.firstname : ''}} {{transaction.lastname ? transaction.lastname : ''}}</b>
-                <span> 
+              <ion-text color="primary"><h2>
+                <span>
                   <ion-icon [color]="transaction.status === 'entrant' ? 'success' :  'danger'" [name]="transaction.status === 'entrant' ? 'arrow-back' :  'arrow-forward'" ></ion-icon>
                  </span>
+                <small>{{'TONTINE_USERS_TEXT5' | translate }}: </small><b>{{transaction.firstname ? transaction.firstname : ''}} {{transaction.lastname ? transaction.lastname : ''}}</b>
               </h2></ion-text>
-              <p><small>Ref.:</small>  {{transaction.reference_transaction ? transaction.reference_transaction : ''}}</p>              
-              <p><small>{{'DATE_TEXT' | translate }}: </small> {{transaction.updated_at ? transaction.updated_at : ''}} </p>                
+              <p><small>Ref.:</small>  {{transaction.reference_transaction ? transaction.reference_transaction : ''}}</p>
+              <p><small>{{'DATE_TEXT' | translate }}: </small> {{transaction.updated_at ? transaction.updated_at : ''}} </p>
               <p>
                 <ion-text color="dark">
-                  <span class="ion-float-left"><small>{{'TYPE_TEXT' | translate }}: </small>{{transaction.status ? getTransactionFlux(transaction.status) : ''}}</span> 
+                  <span class="ion-float-left"><small>{{'TYPE_TEXT' | translate }}: </small>{{transaction.status ? getTransactionFlux(transaction.status) : ''}}</span>
                   <span class="ion-float-right"><small>{{ 'REASON_TEXT' | translate}}: </small>{{transaction.motif ? getTransactionType(transaction.motif) : ''}}</span>
                 </ion-text>
-              </p>              
+              </p>
               <h2><ion-text color="warning"><small>{{'AMOUNT_TEXT' | translate}}: </small><b>{{transaction.somme ? (transaction.somme | commadumper) : ''}} {{transaction.device_name ? transaction.device_name : ''}}</b></ion-text></h2>
             </ion-label>
           </ion-item>

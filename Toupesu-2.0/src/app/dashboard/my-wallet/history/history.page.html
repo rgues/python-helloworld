@@ -10,7 +10,7 @@
       <ion-button (click)="goDashboard()">
         <ion-icon name="home" color="primary"></ion-icon>
       </ion-button>
-    </ion-buttons> 
+    </ion-buttons>
   </ion-toolbar>
   <ion-toolbar class="ion-text-center subtitle ion-padding">
     <ion-title>{{ 'MENU_MY_WALLET' | translate }}: <ion-text color="primary" class="ion-text-capitalize">{{ 'HISTORY_PAGE_TITLE' | translate }}</ion-text></ion-title>
@@ -21,7 +21,7 @@
           <ion-select (ionChange)="filterTransType(filterIndex)" [(ngModel)]="filterIndex">
             <ion-select-option [value]="-1" >{{'ALL_TRANSACTIONS' | translate }}</ion-select-option>
             <ion-select-option [value]="i" *ngFor="let filter of filterDataType; let i = index">
-              <small> {{filter.trans}}</small> 
+              <small> {{filter.trans}}</small>
             </ion-select-option>
           </ion-select>
         </ion-item>
@@ -42,27 +42,28 @@
     <ion-spinner  name="circles"></ion-spinner>
   </p>
   <ion-list>
-    <ion-item  *ngFor="let transaction of activelistTransactions">                                  
+    <ion-item  *ngFor="let transaction of activelistTransactions">
       <ion-label>
-        
+
         <ion-text *ngIf="transaction&&transaction.method_payment"  color="primary">
-            <h2><b>{{ transaction.method_payment ? (transaction.method_payment | translate) : ''}}</b>
-              <span> 
+            <h2>
+              <span>
                 <ion-icon [color]="transaction.status === 'entrant' ? 'success' :  'danger'" [name]="transaction.status === 'entrant' ? 'arrow-back' :  'arrow-forward'" ></ion-icon>
                </span>
+              <b>{{ transaction.method_payment ? (transaction.method_payment | translate) : ''}}</b>
             </h2>
-           
+
         </ion-text>
-        <p><small>Ref.:</small>   {{transaction.reference_transaction ? transaction.reference_transaction : ''}}</p>      
-        <p *ngIf="transaction&&transaction.tontine_name"><small> {{ 'M_TONTINE_TEXT' | translate }}  : </small>  {{ transaction.tontine_name ?  transaction.tontine_name  : ''}}</p>                
-        <p><small>{{'DATE_TEXT' | translate }}: </small> {{transaction.updated_at ? transaction.updated_at.split(' ')[0] : ''}} </p>  
+        <p><small>Ref.:</small>   {{transaction.reference_transaction ? transaction.reference_transaction : ''}}</p>
+        <p *ngIf="transaction&&transaction.tontine_name"><small> {{ 'M_TONTINE_TEXT' | translate }}  : </small>  {{ transaction.tontine_name ?  transaction.tontine_name  : ''}}</p>
+        <p><small>{{'DATE_TEXT' | translate }}: </small> {{transaction.updated_at ? transaction.updated_at.split(' ')[0] : ''}} </p>
         <p>
           <ion-text color="dark">
             <span class="ion-float-left"><small>{{'TYPE_TEXT' | translate }}: </small>{{transaction.status ? getTransactionType(transaction.status) : ''}}</span>
-            <span class="ion-float-right"><small>{{ 'REASON_TEXT' | translate}}: </small>{{transaction.motif ?getTransactionFlux(transaction.motif) : ''}}</span> 
+            <span class="ion-float-right"><small>{{ 'REASON_TEXT' | translate}}: </small>{{transaction.motif ?getTransactionFlux(transaction.motif) : ''}}</span>
           </ion-text>
-        </p>     
-      
+        </p>
+
         <h2><ion-text color="warning"><small>{{'AMOUNT_TEXT' | translate}}: </small><b>{{transaction.somme ? (transaction.somme | commadumper) : ''}} {{transaction.device_name ? transaction.device_name : ''}}</b> </ion-text></h2>
       </ion-label>
     </ion-item>

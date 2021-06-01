@@ -14,7 +14,16 @@ const routes: Routes = [
   {
     path: '',
     component: MyTontinesPage
-  }
+  },
+
+  {
+    path: 'new',
+    loadChildren: () => import('./tontine-new/tontine-new.module').then(m => m.TontineNewPageModule)
+},
+{
+    path: ':tontineId',
+    loadChildren: () => import('./tontine-detail/tontine-detail.module').then(m => m.TontineDetailPageModule)
+}
 ];
 
 @NgModule({

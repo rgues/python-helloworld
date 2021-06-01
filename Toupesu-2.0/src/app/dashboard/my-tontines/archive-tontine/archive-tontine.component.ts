@@ -7,7 +7,6 @@ import { TontineService } from '../services/tontine.service';
 import { EventService } from 'src/app/shared/service/events.service';
 import { UiService } from 'src/app/shared/service/ui.service';
 
-
 @Component({
   selector: 'app-archive-tontine',
   templateUrl: './archive-tontine.component.html',
@@ -96,7 +95,7 @@ export class ArchiveTontineComponent implements OnInit {
   // select or deselect all tontinies
   selectAll(option: boolean) {
     this.loading = true;
-    
+
     this.allData.forEach((data, index, arr) => {
       arr[index].select = option ? true : false;
     });
@@ -212,7 +211,7 @@ export class ArchiveTontineComponent implements OnInit {
         this.closeModal();
 
       }, error => {
-   
+
         if (error && error.error && error.error.message === "error") {
           if (error && error.error && error.error.user_not_found) {
             this.error.renewSession().then((ans: any) => {

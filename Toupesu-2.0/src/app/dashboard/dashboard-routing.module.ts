@@ -9,45 +9,11 @@ const routes: Routes = [
     },
     {
         path: 'my-tontines',
-        children: [
-            {
-                path: '',
-                loadChildren: () => import('./my-tontines/my-tontines.module').then(m => m.MyTontinesPageModule)
-            },
-            {
-                path: 'new',
-                loadChildren: () => import('./my-tontines/tontine-new/tontine-new.module').then(m => m.TontineNewPageModule)
-            },
-            {
-                path: ':tontineId',
-                loadChildren: () => import('./my-tontines/tontine-detail/tontine-detail.module').then(m => m.TontineDetailPageModule)
-            }
-        ]
+        loadChildren: () => import('./my-tontines/my-tontines.module').then(m => m.MyTontinesPageModule)
     },
     {
         path: 'tontines-events',
-        children: [
-            {
-                path: '',
-                loadChildren: () => import('./tontines-events/tontines-events.module').then(m => m.TontinesEventsPageModule)
-            },
-            {
-                path: 'new',
-                loadChildren: () => import('./tontines-events/new-event/new-event.module').then(m => m.NewEventPageModule)
-            },
-            {
-                path: 'invitations',
-                loadChildren: () => import('./tontines-events/invite-event/invite-event.module').then(m => m.InviteEventPageModule)
-            },
-            {
-                path: ':eventID',
-                loadChildren: () => import('./tontines-events/event-detail/event-detail.module').then(m => m.EventDetailPageModule)
-            },
-            {
-                path: ':eventID/my-tickets',
-                loadChildren: () => import('./tontines-events/event-detail/events-tickets/events-tickets.module').then(m => m.EventsTicketsPageModule) 
-            }
-        ]
+        loadChildren: () => import('./tontines-events/tontines-events.module').then(m => m.TontinesEventsPageModule)
     },
     {
         path: 'join-tontine',
@@ -55,29 +21,11 @@ const routes: Routes = [
     },
     {
         path: 'invitations',
-        children: [
-            {
-                path: '',
-                loadChildren: () => import('./invitations/invitations.module').then(m => m.InvitationsPageModule)
-            }
-        ]
+        loadChildren: () => import('./invitations/invitations.module').then(m => m.InvitationsPageModule)
     },
     {
         path: 'my-wallet',
-        children: [
-            {
-                path: '',
-                loadChildren: () => import('./my-wallet/my-wallet.module').then(m => m.MyWalletPageModule)
-            },
-            {
-                path: 'history',
-                loadChildren: () => import('./my-wallet/history/history.module').then(m => m.HistoryPageModule) 
-            },
-            {
-                path: 'withdrawal',
-                loadChildren: () => import('./my-wallet/withdrawal/withdrawal.module').then(m => m.WithdrawalPageModule)
-            }
-        ]
+        loadChildren: () => import('./my-wallet/my-wallet.module').then(m => m.MyWalletPageModule)
     },
     {
         path: 'notifications',
@@ -85,36 +33,21 @@ const routes: Routes = [
     },
     {
         path: 'user',
-        children: [
-            {
-                path: '',
-                loadChildren: () => import('./user/user.module').then(m => m.UserPageModule)
-            },
-            {
-                path: 'profil',
-                loadChildren: () => import('./user/user-profil/user-profil.module').then(m => m.UserProfilPageModule)
-            },
-            {
-                path: 'security',
-                loadChildren: () => import('./user/user-security/user-security.module').then(m => m.UserSecurityPageModule)
-            },
-            {
-                path: 'pay-method',
-                loadChildren:  () => import('./user/user-pay-method/user-pay-method.module').then(m => m.UserPayMethodPageModule)
-            },
-            {
-                path: 'auto-pay-tontine',
-                loadChildren: () => import('./user/auto-pay-tontine/auto-pay-tontine.module').then(m => m.AutoPayTontinePageModule) 
-            }
-        ]
+        loadChildren: () => import('./user/user.module').then(m => m.UserPageModule)
     },
-    { 
-      path: 'my-invitations', loadChildren: () => import('./my-invitations/my-invitations.module').then(m => m.MyInvitationsPageModule) 
+    {
+        path: 'my-invitations',
+        loadChildren: () => import('./my-invitations/my-invitations.module').then(m => m.MyInvitationsPageModule)
     },
-    { path: 'contact-us', loadChildren: () => import('./contact/contact-us/contact-us.module').then(m => m.ContactUsPageModule) },
-    { path: 'feedback', loadChildren: () => import('./contact/feedback/feedback.module').then(m => m.FeedbackPageModule) },
-    { 
-        path: 'pesuswap',  loadChildren: () => import('./pesuswap/pesuswap.module').then(m => m.PesuswapPageModule) 
+    {   path: 'contact-us',
+        loadChildren: () => import('./contact/contact-us/contact-us.module').then(m => m.ContactUsPageModule)
+    },
+    {   path: 'feedback',
+        loadChildren: () => import('./contact/feedback/feedback.module').then(m => m.FeedbackPageModule)
+    },
+    {
+        path: 'pesuswap',
+        loadChildren: () => import('./pesuswap/pesuswap.module').then(m => m.PesuswapPageModule)
     }
 
 
