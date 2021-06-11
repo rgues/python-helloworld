@@ -65,8 +65,8 @@
           <ion-label class="ion-padding-vertical">
             <p>
               <span>
-                <b><em>{{'CREATED_ON' | translate}} {{currentTontine && currentTontine.tontine &&
-                    currentTontine.tontine.created_at? currentTontine.tontine.created_at.split(' ')[0] : ''}}</em></b>
+                <b><em>{{'SESSION_START' | translate}} {{currentTontine && currentTontine.tontine &&
+                    currentTontine.tontine.date_debut? currentTontine.tontine.date_debut : ''}}</em></b>
               </span>
             </p>
             <span><b><em>{{'DESCRIPTION_TEXT' | translate }} : </em> </b></span>
@@ -77,7 +77,7 @@
             <p>
               <span>
                 <b><em>{{'ENDED_ON' | translate}} {{currentTontine && currentTontine.tontine &&
-                    currentTontine.tontine.date_fin_cycle ? currentTontine.tontine.date_fin_cycle.split(' ')[0] :
+                    currentTontine.tontine.date_fin_cycle ? currentTontine.tontine.date_fin_cycle :
                     ''}}</em></b>
               </span>
             </p>
@@ -172,16 +172,16 @@
               lines="none" detail>
               <ion-text>{{ 'VIEW_BID' | translate }}</ion-text>
             </ion-item>
-            <ion-item *ngIf="!checkTontineCaution(currentTontine.tontine)"
+            <ion-item
               [routerLink]="['/', 'dashboard', 'my-tontines', currentTontine.tontine.tontine_id, 'members']"
               lines="none" detail>
               <ion-text>{{ 'TONTINE_DETAIL_TEXT15' | translate }}</ion-text>
             </ion-item>
-            <ion-item *ngIf="checkTontineCaution(currentTontine.tontine)"
+ <!--        <ion-item *ngIf="checkTontineCaution(currentTontine.tontine)"
               [routerLink]="['/', 'dashboard', 'my-tontines', currentTontine.tontine.tontine_id, 'member-caution']"
               lines="none" detail>
               <ion-text>{{ 'TONTINE_DETAIL_TEXT15' | translate }}</ion-text>
-            </ion-item>
+            </ion-item> -->
             <ion-item *ngIf="isClassement()"
               [routerLink]="['/', 'dashboard', 'my-tontines', currentTontine.tontine.tontine_id, 'jackpot-order']"
               lines="none" detail>

@@ -87,6 +87,7 @@ export class TontineDetailPage implements OnInit {
     this.tontineId = this.activeRoute.snapshot.params.tontineId;
     this.user = this.userService.getUserData();
     const tontineData = this.tontine.getCurrentTontineData();
+    console.log(tontineData);
     this.currentSeance = tontineData.seance_courante;
     this.currentAmount = [];
     this.seancesList = [];
@@ -185,7 +186,7 @@ export class TontineDetailPage implements OnInit {
             this.initTontineData(tontineData);
           }
         }
-        // get the tontine wallet 
+        // get the tontine wallet
         this.getWalletData(event);
       }, error => {
         if (error && error.error && error.error.bad_token) {
@@ -376,7 +377,7 @@ export class TontineDetailPage implements OnInit {
   // init the tontine data
   initTontineData(data: any) {
     this.setTontineData(data);
-    // Get the current bid 
+    // Get the current bid
     if (this.currentTontine && this.currentTontine.tontine && this.currentTontine.tontine.drawingtype_id === 3) {
       if (this.seance && this.seance.id) {
         this.checkBidStatus(this.seance, this.myTontine.nbrOfBaches);
@@ -638,7 +639,7 @@ export class TontineDetailPage implements OnInit {
       && this.hascheckPreviousSeance
       && this.hasCycle(currentTontine)
       && this.cautionAmount > 0
-      && (currentTontine.seance_courante && currentTontine.seance_courante.numero_seance < 3 || !currentTontine.seance_courante)
+      && (currentTontine.seance_courante && currentTontine.seance_courante.numero_seance < 2 || !currentTontine.seance_courante)
     ) {
       ican = true;
     }
@@ -669,7 +670,7 @@ export class TontineDetailPage implements OnInit {
     return this.myTontine && this.myTontine.type === 5;
   }
 
-  // if the tontine has a caution 
+  // if the tontine has a caution
   checkCaution() {
     const tontineData = this.tontine.getCurrentTontineData();
     if (tontineData && tontineData.tontine && tontineData.cycle_courant) {
@@ -677,7 +678,7 @@ export class TontineDetailPage implements OnInit {
     }
   }
 
-  // check if a tontine has a caution 
+  // check if a tontine has a caution
   checkTontineCaution(tontineData: any) {
     return this.tontinesData.hasTontineCaution(tontineData);
   }

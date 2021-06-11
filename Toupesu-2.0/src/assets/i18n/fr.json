@@ -279,7 +279,7 @@
     "USER_INFO_TEXT1":"Informations Personnelles",
     "INVALID_FIELD_TEXT":"Ce champ n'est pas  <strong>valide</strong>",
     "USER_SECURITY_TEXT10":"Confirmer pin",
-    "TONTINE_LIST_TEXT12":"Aucune tontine disponible maintenant!",
+    "TONTINE_LIST_TEXT12":"Aucune tontine n'est disponible maintenant! Vous pouvez démarrer une tontine demo avec les administrateurs de Toupesu en cliquant sur le bouton ci-dessous.",
     "TONTINE_DETAIL_TEXT30":"Solde",
     "TONTINE_DETAIL_TEXT31":"Contributions",
     "TONTINE_DETAIL_TEXT32":"Pénalités",
@@ -856,7 +856,7 @@
     "DENY_MEMBER_INVITATION":"Le membre a été réfusé d'accès.",
     "MIN_DATE_ERROR_TEXT":"La <b>date de la tontine</b> doit être supérieur à la date courante.",
     "MIN_DATE_EVENT_ERROR_TEXT":"La <b>date de la tontine Event </b> doit être supérieur ou égale à la date courante.",
-    
+
     "PRIVATE_TEXT":"Privée",
     "PUBLIC_TEXT":"Publique",
     "ADD_IMAGE_TEXT":"Ajouter Image",
@@ -1278,7 +1278,7 @@
     "Pénalité":"Pénalité",
     "Bid":"Enchère",
     "Intérêt":"Intérêt",
-    "Remboursement":"Remboursement", 
+    "Remboursement":"Remboursement",
     "created":"crée",
     "pending":"en cours",
     "approved":"approuvé",
@@ -1457,8 +1457,8 @@
     "ORDER_SUCCES_MSG":"L'ordre de bouffage a été sauvegardé.",
     "JACKPOT_SET_MSG":"La liste des bénéficiaires a été sauvegardé.",
     "TRANSACTION_TYPE_ID13":"Transfert caisse",
-    "TRANSACTION_IN_PROGRESS":"en cours", 
-    "TRANSACTION_APPROVED":"approuvé", 
+    "TRANSACTION_IN_PROGRESS":"en cours",
+    "TRANSACTION_APPROVED":"approuvé",
     "TRANSACTION_PENDING":"en attente",
     "TRANSACTION_REFUSED":"refusé",
     "transfert caisse":"transfert caisse",
@@ -1550,7 +1550,7 @@
     "USER_HAS_ALREADY_REJECT_REQUEST":"Vous avez déjà rejeté la requête.",
     "CASH_TEXT":"Montant",
     "lOAN_EDIT_SUCCESS_MSG":"Les informations sur les emprunts ont été mis à jour avec succès.",
-    "CURRENT_LOAN_AMOUNT_REQUEST_ERROR" : "Le montant de l'emprunt demandé doit-être inférieur ou égale à ",  
+    "CURRENT_LOAN_AMOUNT_REQUEST_ERROR" : "Le montant de l'emprunt demandé doit-être inférieur ou égale à ",
     "MAX_BASE_CONTRIBUTION_ERROR":"Le montant doit être inférieur ou égale à la somme des contributions de tous les membres ",
     "lOAN_REQUEST_SUCCESS_MSG":"La requête d'emprunt a été envoyé avec succès. Veuillez attendre la validation des administrateurs.",
     "OK_TEXT":"OK",
@@ -1784,6 +1784,8 @@
     "DEVICE_NOT_EXIT_WALLET_TEXT":"La devise n'existe pas dans votre portemonnaie.",
     "BALANCE_INSUFFICIENT_TEXT":"Le solde de votre portemonnaie est insuffisant.",
     "SECOURS_TEXT":"secours",
-    "PREFIX_TEXT":"Choisir le préfixe"
+    "PREFIX_TEXT":"Choisir le préfixe",
+    "TONTINE_DEMO_TEXT":"Créer Tontine Demo",
+    "TONTINE_NEW_DEMO_MSG1":"Cliquer sur le bouton the button ci-dessous et faites votre première contribution dans la tontine.",
+    "SESSION_START":"Cycle débute le"
 }
-    

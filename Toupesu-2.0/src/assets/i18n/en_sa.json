@@ -283,7 +283,7 @@
     "USER_INFO_TEXT1" : "Personal Informations",
     "INVALID_FIELD_TEXT" : "This field is  <strong>invalid</strong>",
     "USER_SECURITY_TEXT10" : "Confirm pin",
-    "TONTINE_LIST_TEXT12" : "No Stokvel available now !",
+    "TONTINE_LIST_TEXT12" : "No Stokvel available now ! You can started a tontine demo with Toupesu administrator by clicking on the button bellow.",
     "TONTINE_DETAIL_TEXT30" : "Total balance",
     "TONTINE_DETAIL_TEXT31" : "Total contribution",
     "TONTINE_DETAIL_TEXT32" : "Total penalties",
@@ -859,7 +859,7 @@
     "MIN_DATE_ERROR_TEXT":"The <b>Stokvel date</b> must be greather than the current date.",
     "MIN_DATE_EVENT_ERROR_TEXT":"The <b>Stokvel event date</b> must be greather or egal than the current date.",
     "RESET_TEXT": "Reset",
-    
+
     "PRIVATE_TEXT":"Private",
     "PUBLIC_TEXT":"Public",
     "ADD_IMAGE_TEXT":"Add Image",
@@ -1283,7 +1283,7 @@
     "Pénalité":"Penalty",
     "Bid":"Bid",
     "Intérêt":"Interest",
-    "Remboursement":"Refund", 
+    "Remboursement":"Refund",
     "created":"created",
     "pending":"pending",
     "approved":"approved",
@@ -1463,8 +1463,8 @@
     "ORDER_SUCCES_MSG":"Stokvel order has been successfully saved.",
     "JACKPOT_SET_MSG":"Jackpot beneficiaries has been saved.",
     "TRANSACTION_TYPE_ID13":"checkout transfert",
-    "TRANSACTION_IN_PROGRESS":"in progress", 
-    "TRANSACTION_APPROVED":"approved", 
+    "TRANSACTION_IN_PROGRESS":"in progress",
+    "TRANSACTION_APPROVED":"approved",
     "TRANSACTION_PENDING":"pending",
     "TRANSACTION_REFUSED":"refused",
     "transfert caisse":"checkout transfert",
@@ -1556,7 +1556,7 @@
     "USER_HAS_ALREADY_REJECT_REQUEST":"You are already reject the request.",
     "CASH_TEXT":"Cash",
     "lOAN_EDIT_SUCCESS_MSG":"Loan has been successfully updated.",
-    "CURRENT_LOAN_AMOUNT_REQUEST_ERROR" : "Current loan amount requested must be less or egal than ", 
+    "CURRENT_LOAN_AMOUNT_REQUEST_ERROR" : "Current loan amount requested must be less or egal than ",
     "MAX_BASE_CONTRIBUTION_ERROR":"The amount must less or egal than the sum of contribution of all members ",
     "lOAN_REQUEST_SUCCESS_MSG":"Loan request has been successfully sent. Please wait the admin validation.",
     "OK_TEXT":"OK",
@@ -1790,6 +1790,8 @@
     "DEVICE_NOT_EXIT_WALLET_TEXT":"Currency does not exist in your wallet.",
     "BALANCE_INSUFFICIENT_TEXT":"Your wallet balance is insufficient.",
     "SECOURS_TEXT":"help",
-    "PREFIX_TEXT":"Choose the prefix"
+    "PREFIX_TEXT":"Choose the prefix",
+    "TONTINE_DEMO_TEXT":"New Stokvelf Demo",
+    "TONTINE_NEW_DEMO_MSG1":"Click on the button bellow and start make your fisrt contribution to the tontine.",
+    "SESSION_START":"Session started on"
     }
-    

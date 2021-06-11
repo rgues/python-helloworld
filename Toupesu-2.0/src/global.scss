@@ -241,6 +241,7 @@ ion-toolbar.with-logo2 {
         padding-right: 40px;
     }
 }
+
 ion-toolbar.subtitle {
     .title-ios.title-default,
     .title-md.title-default {
@@ -255,7 +256,7 @@ ion-toolbar {
     .logo {
         height: 3rem;
         margin: 10px auto 0 auto;
-    } 
+    }
     .logo-no-right-slot {
         height: 3rem;
         margin: 10px auto 0 auto;
@@ -263,16 +264,16 @@ ion-toolbar {
     .logo-arrow-no-right-slot.md {
         height: 3rem;
        margin: 10px auto 0 -48px;
-    }  
+    }
     .logo-no-right-slot.md {
         margin: 10px auto 0 40px;
-    } 
+    }
     .logo-all-slot.md {
         margin: 0;
-    }   
+    }
     ion-title {
         font-weight: 400;
-        font-size: 1.4rem;
+        font-size: 1.1rem;
     }
 }
 ion-button.button-round {
@@ -284,7 +285,7 @@ ion-button.button-round {
     height: 2.8em;
     font-size: .99rem;
     font-weight: 400;
-}    
+}
 ion-img.inner-image,
 svg.inner-image {
     height: 8rem;
@@ -328,11 +329,11 @@ ion-backdrop {
 }
 .label-floating.sc-ion-label-md-h, .label-stacked.sc-ion-label-md-h,
 .label-floating.sc-ion-label-ios-h, .label-stacked.sc-ion-label-ios-h,
-.item-has-focus.label-floating.sc-ion-label-md-h, 
-.item-has-focus .label-floating.sc-ion-label-md-h, 
-.item-has-placeholder.label-floating.sc-ion-label-md-h, 
-.item-has-placeholder .label-floating.sc-ion-label-md-h, 
-.item-has-value.label-floating.sc-ion-label-md-h, 
+.item-has-focus.label-floating.sc-ion-label-md-h,
+.item-has-focus .label-floating.sc-ion-label-md-h,
+.item-has-placeholder.label-floating.sc-ion-label-md-h,
+.item-has-placeholder .label-floating.sc-ion-label-md-h,
+.item-has-value.label-floating.sc-ion-label-md-h,
 .item-has-value .label-floating.sc-ion-label-md-h,
 .item.item-datetime .sc-ion-label-md-h,
 .item.item-datetime .sc-ion-label-ios-h,
@@ -362,7 +363,7 @@ ion-backdrop {
         }
     }
 }
-.sc-ion-segment-ios-hion-toolbar.sc-ion-segment-ios-s > ion-segment-button, 
+.sc-ion-segment-ios-hion-toolbar.sc-ion-segment-ios-s > ion-segment-button,
 ion-toolbar .sc-ion-segment-ios-h.sc-ion-segment-ios-s > ion-segment-button {
     max-width: 150px;
     font-size: 13px;
@@ -457,7 +458,7 @@ ion-toolbar .sc-ion-segment-ios-h.sc-ion-segment-ios-s > ion-segment-button {
 .wrap-pay-btn {
     #pay-btn, #pay-btn1, #pay-btn2 {
         width: 25%;
-        height: auto;        
+        height: auto;
         .arc-part {
             transform: translate(-0.84px, -0.89px)
         }
@@ -477,12 +478,12 @@ ion-toolbar .sc-ion-segment-ios-h.sc-ion-segment-ios-s > ion-segment-button {
             fill: #fff;
             font-family: Nyala-Regular, Nyala;
         }
-    }  
+    }
     #pay-btn {
         .pay-btn-border {
             clip-path: url(#pay-btn-shape);
         }
-    }    
+    }
     #pay-btn1 {
         .pay-btn-border {
             clip-path: url(#pay-btn-shape1);
@@ -500,7 +501,7 @@ ion-toolbar .sc-ion-segment-ios-h.sc-ion-segment-ios-s > ion-segment-button {
 .welcome {
     .welcome-title {
         font-weight: 500;
-        overflow: visible !important; 
+        overflow: visible !important;
         padding-left: 0;
         padding-right: 0;
         padding-top: 1.5rem;
@@ -529,11 +530,11 @@ ion-toolbar .sc-ion-segment-ios-h.sc-ion-segment-ios-s > ion-segment-button {
         --border-width: 1px;
         --background: #ffffff;
         --background-activated: #ffffff;
-        --background-focused: #ffffff; 
+        --background-focused: #ffffff;
         --background-hover: #ffffff;
         text-align: center;
         text-transform: uppercase;
-        --inner-border-width: 0px 0px 0px 0px;      
+        --inner-border-width: 0px 0px 0px 0px;
     }
     .resend {
         color: var(--ion-color-warning);
@@ -563,7 +564,7 @@ ion-toolbar .sc-ion-segment-ios-h.sc-ion-segment-ios-s > ion-segment-button {
     font-size: .99rem;
     .item-label {
         font-weight: 300;
-    } 
+    }
 }
 
 /* ----------- My tontine page custom style ---------- */
@@ -576,8 +577,8 @@ ion-toolbar .sc-ion-segment-ios-h.sc-ion-segment-ios-s > ion-segment-button {
     }
     ion-card {
         box-shadow: 0 0 1px rgba(0, 0, 0, .5);
-        border: 1px solid #ccc;       
-        background-color: #b0bec5; 
+        border: 1px solid #ccc;
+        background-color: #b0bec5;
         ion-grid, ion-col {
             padding: 0;
         }
@@ -599,7 +600,7 @@ ion-toolbar .sc-ion-segment-ios-h.sc-ion-segment-ios-s > ion-segment-button {
                 text-overflow: ellipsis;
                 white-space: nowrap;
                 overflow: hidden;
-            }            
+            }
         }
         ion-card-header+.card-content-md,
         ion-card-header+.card-content-ios {
@@ -617,7 +618,7 @@ ion-toolbar .sc-ion-segment-ios-h.sc-ion-segment-ios-s > ion-segment-button {
                     font-size: .8rem;
                     font-weight: 400;
                     line-height: 1.1rem;
-                }                    
+                }
             }
 
             .col-button.inactive {
@@ -626,7 +627,7 @@ ion-toolbar .sc-ion-segment-ios-h.sc-ion-segment-ios-s > ion-segment-button {
                     font-size: .8rem;
                     font-weight: 400;
                     line-height: 1.1rem;
-                }                    
+                }
             }
         }
         ion-card-subtitle {
@@ -642,12 +643,9 @@ ion-toolbar .sc-ion-segment-ios-h.sc-ion-segment-ios-s > ion-segment-button {
             font-size: 15px;
         }
     }
-    
+
 }
-.my-tontine > ion-card > ion-grid > ion-row,
-.my-tontine > ion-card > a > ion-grid > ion-row {
-    background: #ccc;
-}
+
 .mytontines-menu-popover {
     margin-bottom: 0;
     font-size: .99rem;
@@ -666,7 +664,7 @@ ion-toolbar .sc-ion-segment-ios-h.sc-ion-segment-ios-s > ion-segment-button {
 /* ----------- invitation page custom style ---------- */
 #invitation-list {
     ion-avatar {
-        margin-inline-end: 0; 
+        margin-inline-end: 0;
     }
     .button-area {
         text-align: right;
@@ -700,11 +698,11 @@ my-invitation {
     }
     ion-card {
         box-shadow: 0 0 1px rgba(0, 0, 0, .5);
-        border: 1px solid #ccc;        
+        border: 1px solid #ccc;
         ion-grid, ion-col {
             padding: 0;
         }
-        
+
     }
     .block-1 {
         background-color: #f9f9ff;
@@ -727,9 +725,9 @@ my-invitation {
     }
     .block-1 > ion-card-content {
         padding: 5px;
-    } 
-    .block-2 {     
-        position: relative;   
+    }
+    .block-2 {
+        position: relative;
         .row-1, .row-2 {
             border-bottom: 1px solid #ccc;
         }
@@ -755,20 +753,20 @@ my-invitation {
             --padding-top: 0.5rem;
             --padding-bottom: 0.5rem;
             height: 1.8rem;
-        }  
+        }
         .list-ios {
             margin-bottom: 10px;
-        }      
+        }
         ion-item {
             --background: #f9f9ff;
-            font-size: 14px;            
+            font-size: 14px;
             ion-list {
                 padding-top: 0;
                 padding-bottom: 0;
                 ion-text {
                     padding: 2px 0
                 }
-            }            
+            }
         }
     }
     .block-4 {
@@ -782,10 +780,10 @@ my-invitation {
 .tontine-contribute {
     ion-card {
         box-shadow: 0 0 1px rgba(0, 0, 0, .5);
-        border: 1px solid #ccc;  
-        margin: 5px;    
+        border: 1px solid #ccc;
+        margin: 5px;
     }
-    
+
 }
 .tontine-wallet {
     .t-balance {
@@ -800,7 +798,7 @@ my-invitation {
         border-right: 1px solid #ccc;
     }
     .line-height095:last-child {
-        border-right: 0 solid #ccc;        
+        border-right: 0 solid #ccc;
     }
     .desc {
         font-size: 0.8rem;
@@ -832,11 +830,11 @@ my-invitation {
             }
             ion-card-header {
                 padding: .2rem;
-            }   
+            }
             ion-card-content {
                 padding: 0.4rem 1rem;
                 border-bottom: .5px solid gainsboro;
-            }         
+            }
         }
         .btn-icon-only {
             --background-activated: gainsboro;
@@ -849,11 +847,11 @@ my-invitation {
 .tontine-topup {
     ion-card {
         box-shadow: 0 0 1px rgba(0, 0, 0, .5);
-        border: 1px solid #ccc;   
-        background-color: #fff;  
+        border: 1px solid #ccc;
+        background-color: #fff;
         ion-item {
-            --background: #fff;  
-        } 
+            --background: #fff;
+        }
     }
     .block-1 {
         background-color: #f9f9ff;
@@ -879,7 +877,7 @@ my-invitation {
         margin: .5rem .25rem .5rem 1rem;
         padding: 0;
         border-radius: .75rem;
-        border: 1px solid darkorange;        
+        border: 1px solid darkorange;
         ion-item {
             border: 1px solid #1077ab;
             border-radius: 5px;
@@ -890,11 +888,12 @@ my-invitation {
 }
 
 .paidmode {
-    background-color: #fff;
+
     .logooperator {
         width: 80%;
         padding: 0 0 5px 0;
-    }        
+    }
+    background-color: #fff;
     ion-item {
         --background: none;
         ion-label {
@@ -906,10 +905,10 @@ my-invitation {
 .add-member {
     ion-card {
         box-shadow: 0 0 1px rgba(0, 0, 0, .5);
-        border: 1px solid #ccc;      
+        border: 1px solid #ccc;
     }
     .mber-invited {
-        background-color: #fff;        
+        background-color: #fff;
         ion-item {
             --background: none;
             ion-label {
@@ -972,11 +971,11 @@ my-invitation {
     }
     ion-card {
         box-shadow: 0 0 1px rgba(0, 0, 0, .5);
-        border: 1px solid #ccc;        
+        border: 1px solid #ccc;
         ion-grid, ion-col {
             padding: 0;
         }
-        
+
     }
     .block-1 {
         background-color: #f9f9ff;
@@ -995,7 +994,7 @@ my-invitation {
     }
     .block-1 > ion-card-content {
         padding: 5px;
-    } 
+    }
     .block-1 > ion-card-content > ion-row:first-child {
         margin-bottom: 5px;
     }
@@ -1003,25 +1002,25 @@ my-invitation {
 .in-progress {
     ion-card {
         box-shadow: 0 0 1px rgba(0, 0, 0, .5);
-        border: 1px solid #ccc;        
+        border: 1px solid #ccc;
         ion-grid, ion-col {
             padding: 0;
-        }    
+        }
         ion-card-content {
             padding: 5px;
-        }    
+        }
     }
 }
 .in-approval-detail {
     ion-card {
         box-shadow: 0 0 1px rgba(0, 0, 0, .5);
-        border: 1px solid #ccc;        
+        border: 1px solid #ccc;
         ion-grid, ion-col {
             padding: 0;
-        }    
+        }
         ion-card-content {
             padding: 5px;
-        }    
+        }
     }
 }
 
@@ -1041,7 +1040,7 @@ my-invitation {
                 font-size: 12px;
                 color: var(--ion-color-primary);
             }
-        }  
+        }
         .edit-btn {
             position: absolute;
             top: 1rem;
@@ -1059,7 +1058,7 @@ my-invitation {
             margin-top: 11px;
         }
     }
-    
+
 }
 
 /* ----------- Tontine (detail) session page custom style ---------- */
@@ -1077,7 +1076,7 @@ my-invitation {
             path {
                 fill: none;
             }
-        }        
+        }
         .cls-3 {
             fill: #f04141;
             transition: color 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -1101,8 +1100,8 @@ my-invitation {
             ion-icon {
                 --ion-color-base: var(--ion-color-warning) !important;
             }
-        }       
-        
+        }
+
     }
 }
 .share-popover, .role-popover, .delete-popover {
@@ -1121,7 +1120,7 @@ my-invitation {
         padding-bottom: 5px;
         border-bottom: 1px solid var(--ion-color-primary);
     }
-  
+
 }
 
 /* ----------- Statistique Pool detail page custom style ---------- */
@@ -1134,11 +1133,11 @@ my-invitation {
     }
     ion-card {
         box-shadow: 0 0 1px rgba(0, 0, 0, .5);
-        border: 1px solid #ccc;        
+        border: 1px solid #ccc;
         ion-grid, ion-col {
             padding: 0;
         }
-        
+
     }
     .block-1 {
         background-color: #f9f9ff;
@@ -1155,7 +1154,7 @@ my-invitation {
     }
     .block-1 > ion-card-content {
         padding: 5px;
-    } 
+    }
     .mytontine-icon {
         position: relative;
         display:block;
@@ -1165,7 +1164,7 @@ my-invitation {
             path {
                 fill: none;
             }
-        }        
+        }
         .cls-3 {
             fill: #f04141;
             transition: color 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -1212,7 +1211,7 @@ my-invitation {
     }
     .block-1 > ion-card-content {
         padding: 5px;
-    } 
+    }
     ion-card {
         box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
         border: 1px solid #ccc;
@@ -1220,7 +1219,7 @@ my-invitation {
         .logooperator {
             width: 80%;
             padding: 0 0 5px 0;
-        }        
+        }
         ion-item {
             --background: none;
             ion-label {
@@ -1251,11 +1250,11 @@ my-invitation {
     }
     ion-card {
         box-shadow: 0 0 1px rgba(0, 0, 0, .5);
-        border: 1px solid #ccc;        
+        border: 1px solid #ccc;
         ion-grid, ion-col {
             padding: 0;
         }
-        
+
     }
     .block-1 {
         background-color: #f9f9ff;
@@ -1278,7 +1277,7 @@ my-invitation {
     }
     .block-1 > ion-card-content {
         padding: 5px;
-    } 
+    }
 }
 
 /* ----------- Tontine loans edit page custom style ---------- */
@@ -1311,13 +1310,13 @@ my-invitation {
     }
     ion-card {
         box-shadow: 0 0 1px rgba(0, 0, 0, .5);
-        border: 1px solid #ccc;        
+        border: 1px solid #ccc;
         ion-grid, ion-col {
             padding: 0;
         }
-        
+
     }
-    .block-1 {  
+    .block-1 {
         b {
             font-size: 12px;
             color: var(--ion-color-primary);
@@ -1331,7 +1330,7 @@ my-invitation {
     .block-2 {
         ion-card {
             background-color: #f9f9ff;
-            padding:10px;    
+            padding:10px;
             .desc {
                 font-size: 0.8rem;;
                 line-height: 1rem;
@@ -1346,18 +1345,18 @@ my-invitation {
             .t-balance {
                 background-color: antiquewhite;
             }
-        }     
+        }
     }
     .block-1 > ion-card-content {
         padding: 5px;
-    } 
+    }
 }
 
 
 /* ----------- Tontine my loans page custom style ---------- */
 .all-my-loans {
-    .block-1 {     
-        position: relative;   
+    .block-1 {
+        position: relative;
         .row-1, .row-2 {
             border-bottom: 1px solid #ccc;
             border-top: 1px solid #ccc;
@@ -1387,8 +1386,8 @@ my-invitation {
 
 /* ----------- Tontine my loans page custom style ---------- */
 .my-loans {
-    .block-1 {     
-        position: relative;   
+    .block-1 {
+        position: relative;
         .row-1, .row-2 {
             padding-bottom: 12px;
             border-bottom: 1px solid #ccc;
@@ -1424,7 +1423,7 @@ my-invitation {
 /* ----------- Pesuswap page custom style ---------- */
 .bar-balance {
     border: 1px solid #ccc;
-    background: #f9f9ff;    
+    background: #f9f9ff;
     p {
         margin-top: 0;
         margin-bottom: 0;
@@ -1445,10 +1444,10 @@ my-invitation {
             font-weight: 600;
             color: #000;
         }
-    } 
+    }
     .swapform {
-        --padding-start: 0;    
-        border: none; 
+        --padding-start: 0;
+        border: none;
         background: border-box;
     }
     form {
@@ -1456,7 +1455,7 @@ my-invitation {
             background: ghostwhite;
             box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
             margin-bottom: 5px;
-        }        
+        }
         ion-select {
             border: 1px solid #ccc;
             background: green;
@@ -1479,9 +1478,9 @@ my-invitation {
         }
         .swapamount {
             --border-width: 1px;
-            border-radius: 10px;  
-            --inner-border-width: 0;    
-            --min-height: 40px;      
+            border-radius: 10px;
+            --inner-border-width: 0;
+            --min-height: 40px;
         }
         .item-inner {
             border: 0;
@@ -1522,11 +1521,11 @@ my-invitation {
                 ion-icon {
                     --ion-color-base: var(--ion-color-warning) !important;
                 }
-            }       
-            
+            }
+
         }
     }
-    
+
 }
 
 .swap-btn-sommary {
@@ -1597,7 +1596,7 @@ my-invitation {
     --min-height: 300px;
     --background: linear-gradient(45deg, rgba(76,185,196,.4) 0%, rgba(61,211,174,.3) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4cb9c4', endColorstr='#3dd3ae', GradientType=.4 );
- 
+
 /*     --background: linear-gradient(20deg, rgba(28, 28, 28, .8) 20%, rgba(255, 255, 255, .8) 100%);
  *//*  --background: rgba(76,185,196,1);
     --background: -moz-linear-gradient(45deg, rgba(76,185,196,1) 0%, rgba(61,211,174,1) 100%);
@@ -1614,7 +1613,7 @@ my-invitation {
     }
     ion-buttons[slot="end"] {
         right: 0;    }
-    
+
 }
 .toolbar-img-title {
     position: absolute;
@@ -1624,7 +1623,7 @@ my-invitation {
     ion-buttons {
         display: none;
     }
-    ion-title {        
+    ion-title {
         font-weight: bolder;
         font-family: sans-serif;
         font-size: 1.5rem;
@@ -1640,13 +1639,13 @@ my-invitation {
     left: 0;
 }
 ion-toolbar[style*="opacity: 0"] ~ .toolbar-img-title {
-    ion-title { 
+    ion-title {
         color: #c1c4cd;
         font-family: var(--ion-font-family,inherit);
         font-size: 20px;
         font-weight: 500;
         letter-spacing: 0.0125em;
-        margin-left: 0;        
+        margin-left: 0;
     }
     .title-ios {
         padding-left: 4.2rem;
@@ -1666,14 +1665,14 @@ ion-toolbar[style*="opacity: 0"] ~ .toolbar-img-title {
             }
             ion-card-header {
                 padding: .2rem;
-            }   
+            }
             ion-card-content {
                 border-top: 1px solid #ccc;
                 padding: .4rem;
-            }         
+            }
         }
     }
-    .block-1 {        
+    .block-1 {
         .row-1, .row-2 {
             border-bottom: 1px solid #ccc;
         }
@@ -1690,7 +1689,7 @@ ion-toolbar[style*="opacity: 0"] ~ .toolbar-img-title {
             --padding-top: 0.5rem;
             --padding-bottom: 0.5rem;
             height: 1.8rem;
-        }  
+        }
         .col-status {
             .pot-rate-text {
                 fill: #383a3e;
@@ -1710,7 +1709,7 @@ ion-toolbar[style*="opacity: 0"] ~ .toolbar-img-title {
                 path {
                     fill: none;
                 }
-            }        
+            }
             .cls-3 {
                 fill: #f04141;
                 transition: color 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -1739,10 +1738,10 @@ ion-toolbar[style*="opacity: 0"] ~ .toolbar-img-title {
 .ticket-form {
     ion-grid, ion-col {
         padding: 0;
-    } 
+    }
     box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
     border: 1px solid #ccc;
-    background: #f9f9ff;    
+    background: #f9f9ff;
     border-left-width: 0;
     border-right-width: 0;
     border-radius: 0;
@@ -1751,7 +1750,7 @@ ion-toolbar[style*="opacity: 0"] ~ .toolbar-img-title {
         color: #222;
         --border-color: rgba(0, 0, 0, .3);
     }
-}    
+}
 
 .ticket {
     .notification {
@@ -1764,25 +1763,25 @@ ion-toolbar[style*="opacity: 0"] ~ .toolbar-img-title {
             }
             ion-card-header {
                 padding: .2rem;
-            }   
+            }
             ion-card-content {
                 border-top: 1px solid #ccc;
                 padding: .4rem;
-            }         
+            }
         }
     }
-    
+
 }
 
 /* ----------- Tontine event join page custom style ---------- */
 .join-tontine {
     ion-card {
         box-shadow: 0 0 1px rgba(0, 0, 0, .5);
-        border: 1px solid #ccc;   
-        background-color: #fff;  
+        border: 1px solid #ccc;
+        background-color: #fff;
         ion-item {
-            --background: #fff;  
-        } 
+            --background: #fff;
+        }
     }
 }
 
@@ -1791,11 +1790,11 @@ ion-toolbar[style*="opacity: 0"] ~ .toolbar-img-title {
 .invited {
     ion-card {
         box-shadow: 0 0 1px rgba(0, 0, 0, .5);
-        border: 1px solid #ccc;   
-        background-color: #fff;  
+        border: 1px solid #ccc;
+        background-color: #fff;
         ion-item {
-            --background: #fff;  
-        } 
+            --background: #fff;
+        }
     }
 }
 
@@ -1803,11 +1802,11 @@ ion-toolbar[style*="opacity: 0"] ~ .toolbar-img-title {
 .wallet {
     ion-card {
         box-shadow: 0 0 1px rgba(0, 0, 0, .5);
-        border: 1px solid #ccc;   
-        background-color: #fff;  
+        border: 1px solid #ccc;
+        background-color: #fff;
         ion-item {
-            --background: #fff;  
-        } 
+            --background: #fff;
+        }
     }
     .block-1 {
         background-color: #f9f9ff;
@@ -1840,11 +1839,11 @@ ion-toolbar[style*="opacity: 0"] ~ .toolbar-img-title {
             }
             ion-card-header {
                 padding: .2rem;
-            }   
+            }
             ion-card-content {
                 border-top: 1px solid #ccc;
                 padding: .4rem;
-            }         
+            }
         }
     }
 }
@@ -1870,14 +1869,14 @@ ion-toolbar[style*="opacity: 0"] ~ .toolbar-img-title {
                 color: #ff9933;
             }
         }
-        
+
     }
 }
 
 
 /* ----------- media query CSS ------------------- */
 
-@media (min-width: 576px) {   
+@media (min-width: 576px) {
 
 }
 
@@ -1928,7 +1927,7 @@ ion-toolbar[style*="opacity: 0"] ~ .toolbar-img-title {
 
     ion-toolbar .logo-arrow-no-right-slot {
         height: 1rem;
-    } 
+    }
 
     ion-title.no-padding.md {
         padding: 0 0 0 10px;
@@ -1942,7 +1941,7 @@ ion-toolbar[style*="opacity: 0"] ~ .toolbar-img-title {
     .toolbar-img-title ion-title {
         font-size: 2rem;
     }
-    ion-toolbar.subtitle .title-ios.title-default, 
+    ion-toolbar.subtitle .title-ios.title-default,
     ion-toolbar.subtitle .title-md.title-default {
         font-size: 1.4rem;
     }
@@ -2019,7 +2018,7 @@ ion-toolbar[style*="opacity: 0"] ~ .toolbar-img-title {
                 ion-card-title {
                     font-size: 1.3rem;
                 }
-            } 
+            }
             ion-card-content {
                 .col-button.contributed {
                     background-color: var(--ion-color-success);
@@ -2027,7 +2026,7 @@ ion-toolbar[style*="opacity: 0"] ~ .toolbar-img-title {
                         font-size: 1rem;
                         margin: 1.1rem 0;
                         font-weight: 400;
-                    }                    
+                    }
                 }
 
                 .col-button.inactive {
@@ -2036,9 +2035,9 @@ ion-toolbar[style*="opacity: 0"] ~ .toolbar-img-title {
                         font-size: 1rem;
                         margin: 1.1rem 0;
                         font-weight: 400;
-                    }                    
+                    }
                 }
-            } 
+            }
             ion-card-subtitle {
                 font-size: 1.1rem;
             }
@@ -2050,7 +2049,7 @@ ion-toolbar[style*="opacity: 0"] ~ .toolbar-img-title {
                 font-size: 1.1rem;
                 margin-bottom: 0.5rem;
             }
-        } 
+        }
     }
     .tontine-detail {
         .block-1 {
@@ -2096,15 +2095,15 @@ ion-toolbar[style*="opacity: 0"] ~ .toolbar-img-title {
         }
     }
     .bid {
-        .bid-info {  
+        .bid-info {
             .row-1 {
                 margin-bottom: 1.5rem;
-            }          
+            }
             .row-1, .row-2 {
                 b {
                     font-size: 1.1rem;
                 }
-            }  
+            }
             .edit-btn {
                 position: absolute;
                 top: 1rem;
@@ -2127,10 +2126,10 @@ ion-toolbar[style*="opacity: 0"] ~ .toolbar-img-title {
         }
     }
     .detail-members {
-        
+
     }
     .wallet {
-        
+
         .paidmode .logooperator {
             width: 60%;
             padding: 0 0 5px 0;
@@ -2146,13 +2145,13 @@ ion-toolbar[style*="opacity: 0"] ~ .toolbar-img-title {
                 font-weight: 400;
                 font-size: 1.1rem;
                 text-align: right;
-            }            
-        }    
+            }
+        }
         .card-content-ios,
         .card-content-md {
             font-size: 1.05rem;
-        }        
-    } 
+        }
+    }
     .user-home {
         .sc-ion-label-ios-s h2,
         .sc-ion-label-md-s h2 {
@@ -2167,19 +2166,19 @@ ion-toolbar[style*="opacity: 0"] ~ .toolbar-img-title {
         }
     }
     .my-tontines-events {
-        ion-card {            
+        ion-card {
             .event-img-block {
                 height: 250px;
                 min-height: 250px;
                 max-height: 250px;
             }
         }
-    } 
+    }
     .detail-share {
         ion-item {
             font-size: 1.1rem;
         }
-    } 
+    }
     .detail-penalities {
         ion-item {
             font-size: 1.1rem;
@@ -2197,10 +2196,10 @@ ion-toolbar[style*="opacity: 0"] ~ .toolbar-img-title {
         }
     }
     .user-profil {
-        
+
     }
-    
-    
+
+
 }
 
 @media (min-width: 1200px) {
@@ -2238,8 +2237,8 @@ ion-toolbar[style*="opacity: 0"] ~ .toolbar-img-title {
 }
 
 @media only screen and (min-width : 320px) and (max-width : 480px) {
-    
-    
+
+
 }
 
 

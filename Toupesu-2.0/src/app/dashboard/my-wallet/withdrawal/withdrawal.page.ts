@@ -203,10 +203,10 @@ export class WithdrawalPage implements OnInit {
 
   // can make disable the withdrawal
   canDisabledWithdrawal() {
-    return !this.amounValid 
-    || (this.withdrawal.value.method_payment_id !== 0 && this.paymentMethods && this.paymentMethods[this.currentIndex] &&this.paymentMethods[this.currentIndex].name !== 'PAYPAL' && !this.withdrawal.value.phoneNumber) 
+    return !this.amounValid
+    || (this.withdrawal.value.method_payment_id !== 0 && this.paymentMethods && this.paymentMethods[this.currentIndex] &&this.paymentMethods[this.currentIndex].name !== 'PAYPAL' && !this.withdrawal.value.phoneNumber)
     || this.loading || this.withdrawal.invalid ||
-    (this.errorEmail && this.paymentMethods && this.paymentMethods[this.currentIndex] && this.paymentMethods[this.currentIndex].name === 'PAYPAL') 
+    (this.errorEmail && this.paymentMethods && this.paymentMethods[this.currentIndex] && this.paymentMethods[this.currentIndex].name === 'PAYPAL')
     || (this.errorPhone && this.paymentMethods && this.paymentMethods[this.currentIndex] && (this.paymentMethods[this.currentIndex].name === 'MTN MOBILE MONEY' || this.paymentMethods[this.currentIndex].name === 'ORANGE MONEY' ));
   }
 
@@ -550,20 +550,63 @@ export class WithdrawalPage implements OnInit {
       });
   }
 
-    // check the number 
+
+
+    // get the user pin
+    async getUserPin(translations: string[]) {
+      const userPin = this.userService.getUserSecret();
+      const alert = await this.alertController.create({
+        header: `${translations[0]}`,
+        inputs: [
+          {
+            name: 'pin',
+            type: 'tel',
+            placeholder: `${translations[1]}`,
+          }
+        ],
+        buttons: [
+          {
+            text: `${translations[2]}`,
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: () => {
+
+            }
+          }, {
+            text: `${translations[3]}`,
+            handler: (ans) => {
+
+              // Check if the pin is correct
+              if (parseInt(ans.pin, 10) === parseInt(userPin.password, 10)) {
+                // call function
+                this.sendBankRequest();
+              } else {
+                this.translate.get('M_PIN_INVALID').subscribe(trans => {
+                  this.ui.presentToast(trans);
+                });
+              }
+
+            }
+          }
+        ]
+      });
+      await alert.present();
+    }
+
+    // check the number
     checkNumberAndPin() {
       const user = this.userService.getUserSecret();
       if (this.withdrawal.value.phoneNumber === user.email_or_phone) {
         this.sendBankRequest();
       } else {
-          this.ui.confirmPin(this.sendBankRequest);
+         const transalation =  this.ui.confirmPin();
+         this.getUserPin(transalation);
       }
     }
 
   // Add a new account
   sendBankRequest() {
-
-  this.loading = true;
+    this.loading = true;
     if (this.withdrawal.value.method_payment_id === 0) {
       this.withdrawal.get('direct_transfert_to_bank_account').setValue(1);
     } else {
@@ -602,7 +645,7 @@ export class WithdrawalPage implements OnInit {
         } else {
           this.error.manageError(error);
         }
-      }); 
+      });
   }
 
 }

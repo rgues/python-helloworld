@@ -1,17 +1,17 @@
 <form [formGroup]="paymentForm">
 <ion-grid>
   <ion-row>
-    <ion-col size="12">      
+    <ion-col size="12">
       <ion-card class="paidmode">
-        <ion-card-content class="ion-text-center">   
+        <ion-card-content class="ion-text-center">
             <ion-row>
               <ion-col size="12">
                 <ion-item>
                   <ion-label>{{ 'DESTINATION_TEXT' | translate }}</ion-label>
                   <ion-select (ionChange)="updateCheckout(paymentForm.value.checkoutName)" formControlName="checkoutName">
-                    <ion-select-option *ngFor="let checkout of typesCaisses" [value]="checkout.index">{{ checkout.name }}</ion-select-option>          
+                    <ion-select-option *ngFor="let checkout of typesCaisses" [value]="checkout.index">{{ checkout.name }}</ion-select-option>
                   </ion-select>
-                </ion-item>   
+                </ion-item>
                 <div class="validation-errors">
                   <ng-container *ngFor="let validation of validationMessages.checkoutName">
                     <div class="error-message" *ngIf="checkoutName.hasError(validation.type) && (checkoutName.dirty || checkoutName.touched)">
@@ -19,17 +19,17 @@
                       {{ validation.message }}
                     </div>
                   </ng-container>
-                </div>   
+                </div>
               </ion-col>
-            </ion-row>   
+            </ion-row>
             <ion-row>
               <ion-col size="12">
                 <ion-item>
                   <ion-label>{{'COUNTRY_TEXT' | translate}}</ion-label>
                   <ion-select (ionChange)="updateCurrencyCountry(paymentForm.value.country_id)" name="country_id" formControlName="country_id">
-                    <ion-select-option [value]="country.country_id" *ngFor="let country of states">{{ country.country_label }}</ion-select-option>          
+                    <ion-select-option [value]="country.country_id" *ngFor="let country of states">{{ country.country_label }}</ion-select-option>
                   </ion-select>
-                </ion-item>   
+                </ion-item>
                 <div class="validation-errors">
                   <ng-container *ngFor="let validation of validationMessages.country_id">
                     <div class="error-message" *ngIf="country.hasError(validation.type) && (country.dirty || country.touched)">
@@ -37,23 +37,23 @@
                       {{ validation.message }}
                     </div>
                   </ng-container>
-                </div>     
+                </div>
               </ion-col>
-            </ion-row>    
+            </ion-row>
             <ion-row class="ion-justify-content-end" *ngIf="paymentForm.value.country_id && paymentMethods && paymentMethods.length > 0">
               <ion-col size="4">
                 <ion-img [src]="paymentMethods && paymentMethods[paymentForm.value.typePaymentIndex] ? paymentMethods[paymentForm.value.typePaymentIndex].logo : ' '" class="logooperator"></ion-img>
               </ion-col>
-            </ion-row>   
+            </ion-row>
             <ion-row  *ngIf="paymentForm.value.country_id && paymentMethods && paymentMethods.length > 0">
               <ion-col size="12">
                 <ion-item>
                   <ion-label>{{ 'SOURCE_FOUND_TEXT' | translate }}</ion-label>
                   <ion-select (ionChange)="updatePaymentMethod(paymentForm.value.typePaymentIndex)" name="typePaymentIndex" formControlName="typePaymentIndex">
                     <ion-select-option *ngFor="let operator of paymentMethods; let operatorId = index"
-                    [value]="operatorId">{{ operator.name | uppercase }}</ion-select-option>           
+                    [value]="operatorId">{{ operator.name | uppercase }}</ion-select-option>
                   </ion-select>
-                </ion-item>   
+                </ion-item>
                 <div class="validation-errors">
                   <ng-container *ngFor="let validation of validationMessages.payementtype">
                     <div class="error-message" *ngIf="payementtype.hasError(validation.type) && (payementtype.dirty || payementtype.touched)">
@@ -61,17 +61,17 @@
                       {{ validation.message }}
                     </div>
                   </ng-container>
-                </div>   
+                </div>
               </ion-col>
-            </ion-row>           
+            </ion-row>
             <ion-row *ngIf="checkCaisse()">
               <ion-col size="12">
                 <ion-item>
                   <ion-label>{{'WALLET_TYPE' | translate }}</ion-label>
                   <ion-select formControlName="checkoutType">
-                    <ion-select-option *ngFor="let walletType of walletTypes" [value]="walletType">{{ walletType }}</ion-select-option>          
+                    <ion-select-option *ngFor="let walletType of walletTypes" [value]="walletType">{{ walletType }}</ion-select-option>
                   </ion-select>
-                </ion-item>   
+                </ion-item>
                 <div class="validation-errors">
                   <ng-container *ngFor="let validation of validationMessages.payementtype">
                     <div class="error-message"  *ngIf="checkoutType.hasError(validation.type) && (checkoutType.dirty || checkoutType.touched)" >
@@ -79,38 +79,38 @@
                       {{ validation.message }}
                     </div>
                   </ng-container>
-                </div>   
+                </div>
               </ion-col>
-            </ion-row>    
+            </ion-row>
             <ion-row *ngIf="checkMobileOperator()">
             <ion-col size="4">
               <ion-item >
                 <ion-label position="floating">+</ion-label>
-                <ion-input placeholder="{{paymentForm.value.country_prefix}}" type="text"></ion-input>
-              </ion-item>        
+                <ion-input  formControlName="country_prefix"  type="text"></ion-input>
+              </ion-item>
             </ion-col>
             <ion-col size="8">
               <ion-item  >
                 <ion-label position="floating">{{ 'REGISTER_MPHONE' | translate }}</ion-label>
                 <ion-input (ionChange)="checckEmailOrPhone(paymentForm.value.phone,paymentForm.value.typePaymentIndex)" type="tel" formControlName="phone"></ion-input>
-              </ion-item> 
-            </ion-col>  
-            <ion-col size="12"> 
+              </ion-item>
+            </ion-col>
+            <ion-col size="12">
                 <div class="validation-errors" *ngIf="errorPhone">
                   <div class="error-message">
                     <ion-icon name="information-circle-outline" ></ion-icon>
                     <span [innerHTML]="'USER_DETAIL_TEXT11' | translate"></span>
                   </div>
-              </div>        
+              </div>
             </ion-col>
-            </ion-row> 
+            </ion-row>
             <ion-row class="ion-padding-bottom">
               <ion-col size="12">
                 <ion-item>
                   <ion-label position="floating" >{{ 'AMOUNT_TEXT' | translate }}</ion-label>
                   <ion-input  (ionChange)="updatePaypalAmount(); removeSpaceAmount()" type="number" formControlName="amount"></ion-input>
                   <span slot="end" class="slot-prefix ion-no-margin"> {{ currentTontine.tontine.monnaie }} </span>
-                </ion-item> 
+                </ion-item>
                 <div class="validation-errors">
                   <ng-container *ngFor="let validation of validationMessages.amount">
                     <div class="error-message" *ngIf="amount.hasError(validation.type) && (amount.dirty || amount.touched)">
@@ -118,14 +118,14 @@
                       {{ validation.message }}
                     </div>
                   </ng-container>
-                </div>         
+                </div>
               </ion-col>
             </ion-row>
             <ion-col size="12">
               <ion-item  >
                 <ion-input type="text" placeholder="{{ 'M_INVITE_DELETE_PLACEHOLDER' | translate }}" formControlName="reason"></ion-input>
-              </ion-item> 
-            </ion-col> 
+              </ion-item>
+            </ion-col>
             <ion-row  *ngIf="canShowPaypalMessage()">
               <ion-col>
                 <div class="padding">
@@ -141,17 +141,17 @@
                   <ion-icon name="camera"></ion-icon>
                 </ion-button>
               </ion-col>
-            </ion-row>                          
+            </ion-row>
         </ion-card-content>
       </ion-card>
-    </ion-col>      
+    </ion-col>
   </ion-row>
   <ion-row>
     <svg height="0" width="0" viewBox="0 0 27.7 28.93">
       <defs>
         <clipPath id="pay-btn-shape" >
-          <path d="M2.57,17.21A11.18,11.18,0,0,1,9.17,5.77h.06l.17-.22.11-.23c-1-.73-1.56-1.42-1.39-2,.42-1.32,5-1.17,10.22.33S27.43,7.47,27,8.81c-.16.48-.86.76-1.88.86h0v.1a5,5,0,0,0,.08.66,3.77,3.77,0,0,0,.1.46l.07.23c2,4,1.7,8.37-1.73,12.53a12.23,12.23,0,0,1-18.42-.1A11.55,11.55,0,0,1,2.57,17.21Z" />            
-        </clipPath>        
+          <path d="M2.57,17.21A11.18,11.18,0,0,1,9.17,5.77h.06l.17-.22.11-.23c-1-.73-1.56-1.42-1.39-2,.42-1.32,5-1.17,10.22.33S27.43,7.47,27,8.81c-.16.48-.86.76-1.88.86h0v.1a5,5,0,0,0,.08.66,3.77,3.77,0,0,0,.1.46l.07.23c2,4,1.7,8.37-1.73,12.53a12.23,12.23,0,0,1-18.42-.1A11.55,11.55,0,0,1,2.57,17.21Z" />
+        </clipPath>
       </defs>
     </svg>
     <ion-col size="12" class="ion-text-center wrap-pay-btn" *ngIf="canRecharge()"  (click)="showPayment(paymentForm.value)">
@@ -162,23 +162,23 @@
         </g>
         <path class="pot-entry" d="M22,6.27c-1.13-.38-2.45-.85-3.86-1.22-1-.28-2.17-.57-3.11-.75-2.64-.47-4.52-.57-4.62-.09-.09.19.19.57.75.85A24.19,24.19,0,0,0,17.46,7.4a22.19,22.19,0,0,0,7.07,1.13c.38-.09.66-.19.66-.28C25.32,7.9,24.05,7.15,22,6.27Z" />
         <text class="pay-text"><tspan style="letter-spacing: -0.05859375em">P</tspan><tspan x="4.94" y="0" style="letter-spacing: -0.087890625em">A</tspan><tspan x="10.56" y="0">Y</tspan></text>
-      </svg>      
+      </svg>
       <div class="glow-wrap">
         <i class="glow"></i>
-      </div>          
+      </div>
     </ion-col>
-  </ion-row>  
+  </ion-row>
   <ion-row  *ngIf="paypalLoading">
     <ion-col>
       <p class="ion-text-center ion-padding">
         <ion-spinner  name="circles"></ion-spinner>
       </p>
     </ion-col>
-  </ion-row> 
+  </ion-row>
   <ion-row *ngIf="canShowPaypalButton()">
     <ion-col class="ion-padding" size="12">
-      <div #paypalbuttoncontainer id="paypal-button-container"></div> 
+      <div #paypalbuttoncontainer id="paypal-button-container"></div>
     </ion-col>
   </ion-row>
 </ion-grid>
-</form> 
+</form>

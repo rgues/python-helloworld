@@ -80,8 +80,13 @@ export class TontineService {
   }
 
   // Create the tontine
-  createTontine(tontine) {
+  createTontine(tontine: any) {
     return this.api.post('tontine/create/v1/tontine_create', tontine);
+  }
+
+  // create demo tontine with Toupesu Administrator
+  createDemoTontine(tontine: any) {
+    return this.api.post('tontine/create/v1/tontine_create_demo', tontine);
   }
 
 

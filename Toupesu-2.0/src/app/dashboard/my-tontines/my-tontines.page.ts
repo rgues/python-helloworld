@@ -150,11 +150,11 @@ export class MyTontinesPage implements OnInit {
           const userId = this.user.id;
           const members = reponse.ans && reponse.ans.membres ? reponse.ans.membres : [];
           const numeroPart =  this.tontinesData.getCurrentBidPart(listPart,userId,members);
-    
+
           this.currentAmount.push({ somme: 0, seanceID: reponse.tontine.seance_courante.id, userID: 0, numero_lot: 0 });
-    
+
           MyTontinesPage.canConnect[reponse.index] = this.enchere.connexion(reponse.tontine.seance_courante.id);
-       
+
           this.enchere.memberConnection(userId, numeroPart, reponse.tontine.seance_courante.id, reponse.tontine.tontine.numberlot);
           let i = 1;
           while (i <= reponse.tontine.tontine.numberlot) {
@@ -363,6 +363,12 @@ export class MyTontinesPage implements OnInit {
     setTimeout(() => {
       this.loading = false;
     }, 200)
+  }
+
+
+  // Go to tontine demo
+  goToTontineDemo() {
+    this.router.navigate(['dashboard','my-tontines','new-demo']);
   }
 
 }

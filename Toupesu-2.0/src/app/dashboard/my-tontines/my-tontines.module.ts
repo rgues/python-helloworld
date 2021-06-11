@@ -17,8 +17,12 @@ const routes: Routes = [
   },
 
   {
-    path: 'new',
-    loadChildren: () => import('./tontine-new/tontine-new.module').then(m => m.TontineNewPageModule)
+    path: 'new-demo',
+    loadChildren: () => import('./tontine-new-demo/tontine-new-demo.module').then(m => m.TontineNewDemoPageModule)
+  },
+{
+  path: 'new',
+  loadChildren: () => import('./tontine-new/tontine-new.module').then(m => m.TontineNewPageModule)
 },
 {
     path: ':tontineId',

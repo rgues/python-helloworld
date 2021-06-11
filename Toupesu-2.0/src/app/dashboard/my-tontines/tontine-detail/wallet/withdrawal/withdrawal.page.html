@@ -53,7 +53,7 @@
                   <ion-label>{{ 'M_PAY_BY' | translate }}</ion-label>
                   <ion-select (ionChange)="updatePayment(withdrawal.value.method_payment_id)"
                     formControlName="method_payment_id">
-                    <ion-select-option *ngFor="let operator of paymentMethods; let m=index" [selected]="m===0" [value]="operator.id">{{ operator.label }}
+                    <ion-select-option *ngFor="let operator of paymentMethods; let m=index"  [value]="operator.id">{{ operator.label }}
                     </ion-select-option>
                   </ion-select>
                 </ion-item>
@@ -64,9 +64,9 @@
                     <ion-item>
                       <ion-label>{{ 'SOURCE_FOUND_TEXT' | translate }}</ion-label>
                       <ion-select formControlName="type_caisse_tontine">
-                        <ion-select-option *ngFor="let checkout of typesCaisses" [value]="checkout.id">{{ checkout.name }}</ion-select-option>          
+                        <ion-select-option *ngFor="let checkout of typesCaisses" [value]="checkout.id">{{ checkout.name }}</ion-select-option>
                       </ion-select>
-                    </ion-item>     
+                    </ion-item>
                   </ion-col>
                 </ion-row>
                 <div *ngIf="withdrawal.value.method_payment_id === 0; then bankTransfer else mobilTransfer"></div>
@@ -98,7 +98,7 @@
                   <ion-row>
                     <ion-col *ngIf="bankList && bankList.length > 0">
                       <ion-item>
-                        <ion-label position="floating">{{'WALLET_AMOUNT_WITHDRAWAL' | translate}} 
+                        <ion-label position="floating">{{'WALLET_AMOUNT_WITHDRAWAL' | translate}}
                           <span *ngIf="withdrawal.value.device_name">({{withdrawal.value.device_name}})</span></ion-label>
                         <ion-input (ionChange)="checkAmount(withdrawal.value.amount)" type="number"
                           formControlName="amount"></ion-input>
@@ -177,7 +177,7 @@
                           <ion-icon name="information-circle-outline"></ion-icon>
                           {{ 'ACCOUNT_NAME_REQUIRED' | translate }}
                         </div>
-                      </div>        
+                      </div>
                     </ion-col>
                   </ion-row>
                   <ion-row>
@@ -209,20 +209,20 @@
                       </div>
                     </ion-col>
                   </ion-row>
-                  <ion-row *ngIf="bankList && bankList.length > 0">   
+                  <ion-row *ngIf="bankList && bankList.length > 0">
                     <ion-col size="6">
-                        <ion-button 
+                        <ion-button
                               color="warning"  size="small" [disabled]="!withdrawal.value"
                               class="ion-text-lowercase"
                               shape="round" (click)="openUpdateBank(withdrawal.value)">
                               {{'M_UPDATE' | translate }}
                         </ion-button>
-                    </ion-col>   
+                    </ion-col>
                     <ion-col size="6">
                         <ion-button   [disabled]="!withdrawal.value.tontine_bank_profile_id"
                               class="ion-text-lowercase"
                               fill="outline"  size="small"
-                              color="warning" 
+                              color="warning"
                               shape="round" (click)="confirmDeleteAccount(withdrawal.value.tontine_bank_profile_id)">
                           {{'TEXT_DELETE' | translate }}
                         </ion-button>
@@ -263,7 +263,7 @@
                     <ion-col size="4">
                       <ion-item>
                         <ion-label position="floating">+</ion-label>
-                        <ion-input type="text" placeholder="{{withdrawal.value.phoneid}}"></ion-input>
+                        <ion-input type="text"  formControlName="phoneid"></ion-input>
                       </ion-item>
                     </ion-col>
                     <ion-col size="8">
@@ -278,7 +278,7 @@
                             <ion-icon name="information-circle-outline" ></ion-icon>
                            <span  [innerHTML]="'REGISTER_PHONE_INVALID' | translate"></span>
                           </div>
-                      </div>    
+                      </div>
                     </ion-col>
                   </ion-row>
                   <ion-row *ngIf="isOperator()">

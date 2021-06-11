@@ -10,7 +10,7 @@
       <ion-button (click)="openContextMenu($event)">
         <ion-icon name="ellipsis-vertical" color="primary"></ion-icon>
       </ion-button>
-    </ion-buttons> 
+    </ion-buttons>
   </ion-toolbar>
   <ion-toolbar class="ion-text-center subtitle">
     <ion-title>{{ 'TONTINE_LIST_TEXT1' | translate }}</ion-title>
@@ -18,7 +18,7 @@
   <ion-toolbar>
     <ion-row>
       <ion-col size="5">
-        <ion-item lines="none">                
+        <ion-item lines="none">
           <ion-toggle  (ionChange)="changeVisibility(isAdmin)" [(ngModel)]="isAdmin"></ion-toggle>
           <ion-label><small>{{ 'ADMIN_TEXT' | translate }}</small> </ion-label>
         </ion-item>
@@ -33,10 +33,10 @@
 <ion-content class="my-tontine">
   <ion-refresher slot="fixed" (ionRefresh)="refreSher($event)">
    <ion-refresher-content
-      pullingIcon="reload-outline" 
+      pullingIcon="reload-outline"
       refreshingSpinner="circles"
       refreshingText="{{ 'M_REFRESHING_TEXT' | translate }}">
-    </ion-refresher-content> 
+    </ion-refresher-content>
   </ion-refresher>
   <p class="ion-text-center"  *ngIf="loading">
     <ion-spinner  name="circles"></ion-spinner>
@@ -44,15 +44,15 @@
   <svg height="0" width="0" viewBox="0 0 47.8 37.12">
     <defs>
       <clipPath id="pot-cursor" >
-          <path d="M1.8,23.68a11.84,11.84,0,0,1,7-12.1h.1l.2-.2a.77.77,0,0,0,.1-.3c-1.1-.8-1.7-1.5-1.5-2.1.5-1.4,5.3-1.2,10.9.4s9.7,4,9.2,5.4c-.2.5-.9.8-2,.9h0v.1a2.25,2.25,0,0,0,.1.7c0,.2.1.3.1.5a.31.31,0,0,0,.1.2c2.1,4.2,1.8,8.9-1.8,13.3-4.6,5.6-14.4,6.1-19.6-.1A12.25,12.25,0,0,1,1.8,23.68Z" />             
-      </clipPath>        
+          <path d="M1.8,23.68a11.84,11.84,0,0,1,7-12.1h.1l.2-.2a.77.77,0,0,0,.1-.3c-1.1-.8-1.7-1.5-1.5-2.1.5-1.4,5.3-1.2,10.9.4s9.7,4,9.2,5.4c-.2.5-.9.8-2,.9h0v.1a2.25,2.25,0,0,0,.1.7c0,.2.1.3.1.5a.31.31,0,0,0,.1.2c2.1,4.2,1.8,8.9-1.8,13.3-4.6,5.6-14.4,6.1-19.6-.1A12.25,12.25,0,0,1,1.8,23.68Z" />
+      </clipPath>
     </defs>
   </svg>
   <ion-card button="true" *ngFor="let data of myTontines; let i=index" (click)="goTotontineDetail(data)">
     <ion-grid>
       <ion-row>
         <ion-col size="4" class="col-img ion-align-self-center">
-          <svg class="pot-status" preserveAspectRatio="xMidYMid slice" viewBox="0 0 48.8 39.12">                                    
+          <svg class="pot-status" preserveAspectRatio="xMidYMid slice" viewBox="0 0 48.8 39.12">
             <path class="pot-rate-color-1"
                 d="M19.4,6a2,2,0,0,0,2.77-.56l0,0a2,2,0,0,0-.56-2.77l0,0a1.93,1.93,0,0,0-2.69.48v0a2,2,0,0,0,.37,2.8Zm6.8-2.6A1.77,1.77,0,0,0,28.7.88a1.75,1.75,0,0,0-2.47,0l0,0h0a1.75,1.75,0,0,0,0,2.47Zm6.1-1a1.48,1.48,0,0,0,2,.44l.05,0a1.48,1.48,0,0,0,.44-2l0-.05a1.48,1.48,0,0,0-2-.44l-.05,0A1.69,1.69,0,0,0,32.3,2.38Zm5.4.2a1.25,1.25,0,0,0,1.61.74l.09,0a1.25,1.25,0,0,0,.74-1.61l0-.09A1.25,1.25,0,0,0,38.49.84l-.09,0A1.37,1.37,0,0,0,37.7,2.58Zm4.5,1.1a1.12,1.12,0,1,0,.9-1.3h0A1.13,1.13,0,0,0,42.2,3.68Zm3.6,1.7a1,1,0,1,0,1-1A1,1,0,0,0,45.8,5.38Z"
                     />
@@ -69,7 +69,7 @@
                     [class.pot-rate-60]="data.membres.pourcentage_contribution > 45 && data.membres.pourcentage_contribution <= 60"
                     [class.pot-rate-75]="data.membres.pourcentage_contribution > 60 && data.membres.pourcentage_contribution <= 75"
                     [class.pot-rate-90]="data.membres.pourcentage_contribution > 75 && data.membres.pourcentage_contribution <= 99"
-                    [class.pot-rate-100]="data.membres.pourcentage_contribution === 100"                       
+                    [class.pot-rate-100]="data.membres.pourcentage_contribution === 100"
                         d="M1.2,7.15s8.92-2.46,12.38,0,14.22,0,14.22,0V35.91H1.2Z"
                     />
                 </g>
@@ -82,16 +82,16 @@
                     />
             <text class="pot-rate-text" transform="translate(5.78 28.56)">
                 <tspan style="letter-spacing: -0.004883254918305625em"></tspan>
-                <tspan x="0" y="0">{{data.membres && data.membres.pourcentage_contribution < 100 ? data.membres.pourcentage_contribution : 100}}%</tspan>                                        
+                <tspan x="0" y="0">{{data.membres && data.membres.pourcentage_contribution < 100 ? data.membres.pourcentage_contribution : 100}}%</tspan>
             </text>
           </svg>
         </ion-col>
         <ion-col size="8" class="col-content">
-          <ion-card-header>            
+          <ion-card-header>
             <ion-card-title>{{data.tontine.name}}</ion-card-title>
             <ion-card-subtitle><b>{{ 'TONTINE_LIST_TEXT2' | translate }}: </b> {{getSeanceDate(data)}}</ion-card-subtitle>
           </ion-card-header>
-        
+
           <ion-card-content class="ion-text-center">
             <ion-row class="ion-justify-content-end">
               <ion-col *ngIf="data.tontine.drawingtype_id === 3 && data.seance_courante !== null" size="6" class="col-button">
@@ -107,7 +107,7 @@
           </ion-card-content>
         </ion-col>
       </ion-row>
-    </ion-grid> 
+    </ion-grid>
   </ion-card>
 
   <div  *ngIf="myTontines && myTontines.length === 0 && !loading">
@@ -121,3 +121,10 @@
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </ion-content>
+
+<ion-footer class="ion-padding ion-text-center" *ngIf="myTontines && myTontines.length === 0 && !loading">
+  <ion-button expand="full"  color="warning" class="ion-text-uppercase" shape="round"
+    (click)="goToTontineDemo()">
+    {{ 'TONTINE_DEMO_TEXT' | translate }}
+  </ion-button>
+</ion-footer>

@@ -90,7 +90,7 @@ export class MemberCautionPage implements OnInit {
     return nbPart;
   }
 
-  // open the member option 
+  // open the member option
   async openContextMenu(ev: any, mber: any) {
     const memberData = {
       member: mber,
@@ -222,12 +222,23 @@ export class MemberCautionPage implements OnInit {
   // get members who paid full caution
   getFullPaidCautionMember(cycleId: any, event: any) {
     this.tontine.getMembersPaidFullCautions(cycleId).subscribe(data => {
+
       if (data && data.message === 'success') {
         this.fullPaidMembers = data.liste_members;
         this.fullPaidMembers = this.formatMemberData(this.fullPaidMembers, 1);
         this.formatResponseData(this.fullPaidMembers, event);
       }
-      this.getPartialPaidCautionMember(cycleId, event);
+
+      // get members does not paid her caution
+      if (this.currentTontine && this.currentTontine.seance_courante && this.currentTontine.seance_courante.numero_seance < 2) {
+        this.getPartialPaidCautionMember(cycleId, event);
+      } else {
+        this.loading = false;
+        if (event) {
+          event.target.complete();
+        }
+      }
+
     }, error => {
       if (event) {
         event.target.complete();
@@ -255,6 +266,8 @@ export class MemberCautionPage implements OnInit {
   // get members who paid full caution
   getPartialPaidCautionMember(cycleId: any, event: any) {
     this.tontine.getMembersPaidPartialCautions(cycleId).subscribe(data => {
+      console.log('partial');
+      console.log(data);
       if (data && data.message === 'success') {
         this.partialPaidMembers = data.liste_members;
         this.partialPaidMembers = this.formatMemberData(this.partialPaidMembers, 0);

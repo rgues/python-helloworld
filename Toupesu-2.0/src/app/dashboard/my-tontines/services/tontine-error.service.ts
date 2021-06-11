@@ -26,12 +26,10 @@ export class TontineErrorService {
       });
     }
 
-    
-
     if (error && error.error && error.error.tontine_already_exist) {
       this.translate.get('TONTINE_ALREADY_EXIST').subscribe(value => {
         this.ui.presentToast(value);
-      });                   
+      });
     }
 
     if (error && error.error && error.error.remplir_tous_les_champs_required) {
@@ -72,7 +70,7 @@ export class TontineErrorService {
 
     if (error && error.error && error.error.timedebutbid_greather_than_timefinseance) {
       this.translate.get(['TONTINE_BID_ERROR5']).subscribe(value => {
-        this.ui.presentToast(`${value['TONTINE_BID_ERROR5']}`); 
+        this.ui.presentToast(`${value['TONTINE_BID_ERROR5']}`);
       });
     }
 
@@ -117,7 +115,7 @@ export class TontineErrorService {
         this.ui.presentToast(trans);
       });
     }
-    
+
     if (error && error.error && error.error.device_id_not_exist) {
       this.translate.get('CURRENCY_REQUIRED').subscribe(trans => {
         this.ui.presentToast(trans);

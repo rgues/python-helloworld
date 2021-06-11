@@ -284,7 +284,7 @@
     "USER_INFO_TEXT1" : "Personal Informations",
     "INVALID_FIELD_TEXT" : "This field is  <strong>invalid</strong>",
     "USER_SECURITY_TEXT10" : "Confirm pin",
-    "TONTINE_LIST_TEXT12" : "No tontine available now !",
+    "TONTINE_LIST_TEXT12" : "No tontine available now ! You can started a Stokvel demo with Toupesu administrator by clicking on the button bellow.",
     "TONTINE_DETAIL_TEXT30" : "Total balance",
     "TONTINE_DETAIL_TEXT31" : "Total contribution",
     "TONTINE_DETAIL_TEXT32" : "Total penalties",
@@ -857,7 +857,7 @@
     "DENY_MEMBER_INVITATION":"The member has been denied access.",
     "MIN_DATE_ERROR_TEXT":"The <b>tontine date</b> must be greather than the current date.",
     "MIN_DATE_EVENT_ERROR_TEXT":"The <b>tontine event date</b> must be greather or egal than the current date.",
-    
+
     "PRIVATE_TEXT":"Private",
     "PUBLIC_TEXT":"Public",
     "ADD_IMAGE_TEXT":"Add Image",
@@ -1282,7 +1282,7 @@
     "Pénalité":"Penalty",
     "Bid":"Bid",
     "Intérêt":"Interest",
-    "Remboursement":"Refund", 
+    "Remboursement":"Refund",
     "created":"created",
     "pending":"pending",
     "approved":"approved",
@@ -1462,8 +1462,8 @@
     "ORDER_SUCCES_MSG":"Tontine order has been successfully saved.",
     "JACKPOT_SET_MSG":"Jackpot beneficiaries has been saved.",
     "TRANSACTION_TYPE_ID13":"checkout transfert",
-    "TRANSACTION_IN_PROGRESS":"in progress", 
-    "TRANSACTION_APPROVED":"approved", 
+    "TRANSACTION_IN_PROGRESS":"in progress",
+    "TRANSACTION_APPROVED":"approved",
     "TRANSACTION_PENDING":"pending",
     "TRANSACTION_REFUSED":"refused",
     "transfert caisse":"checkout transfert",
@@ -1789,6 +1789,8 @@
     "DEVICE_NOT_EXIT_WALLET_TEXT":"Currency does not exist in your wallet.",
     "BALANCE_INSUFFICIENT_TEXT":"Your wallet balance is insufficient.",
     "SECOURS_TEXT":"help",
-    "PREFIX_TEXT":"Choose the prefix"
+    "PREFIX_TEXT":"Choose the prefix",
+    "TONTINE_DEMO_TEXT":"New Tontine Demo",
+    "TONTINE_NEW_DEMO_MSG1":"Click on the button bellow and start make your fisrt contribution to the tontine.",
+    "SESSION_START":"Session started on"
     }
-    

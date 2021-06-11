@@ -341,7 +341,7 @@ export class SessionPage implements OnInit {
       && this.hascheckPreviousSeance
       && this.hasCycle(currentTontine)
       && this.cautionAmount > 0
-      && (currentTontine.seance_courante && currentTontine.seance_courante.numero_seance < 3 || !currentTontine.seance_courante)
+      && (currentTontine.seance_courante && currentTontine.seance_courante.numero_seance < 2 || !currentTontine.seance_courante)
     ) {
       ican = true;
     }
@@ -355,7 +355,7 @@ export class SessionPage implements OnInit {
     }
   }
 
-  // check if a tontine has a caution 
+  // check if a tontine has a caution
   checkTontineCaution(tontineData: any) {
     return this.tontinesData.hasTontineCaution(tontineData);
   }
