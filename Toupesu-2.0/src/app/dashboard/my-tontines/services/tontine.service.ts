@@ -170,10 +170,10 @@ export class TontineService {
   }
 
   // Get the  tontine information
-  getTontineDetail(tontineId: number) {
+  getTontineDetail(tontineId: number, status ?: number) {
     this.token = this.userService.getUserToken();
     if (this.token) {
-      return this.api.get('tontine/visualiser/v1/visualiser_tontine/' + tontineId + '/' + this.token);
+      return this.api.get(`tontine/visualiser/${ status === 0 ? 'v1' : 'v2'}/visualiser_tontine/` + tontineId + '/' + this.token);
     }
   }
 

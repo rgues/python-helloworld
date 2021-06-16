@@ -138,7 +138,7 @@ export class PaidmodeLoanComponent implements OnInit {
     return this.userPayMethodForm.get('montant');
   }
 
-  // Init form 
+  // Init form
   initPaymentForm() {
     const currentPayment = this.paymentData.getDefaultPaymentMethod();
     this.userPayMethodForm = this.fb.group({
@@ -358,7 +358,7 @@ export class PaidmodeLoanComponent implements OnInit {
     }, 300);
   }
 
-  
+
   // update parameters
   updateParameters(data: any) {
     let amountToPay = parseFloat(this.userPayMethodForm.value.montant);
@@ -476,7 +476,7 @@ export class PaidmodeLoanComponent implements OnInit {
 
   /******************************** START WALLET PAYMENT *********************************************/
 
-  
+
   // update wallet parameters
   updateParametersWallet() {
     const translation = [];
@@ -515,7 +515,7 @@ export class PaidmodeLoanComponent implements OnInit {
     await alert.present();
   }
 
-  
+
   // paid loan with wallet
   paidWithWallet(contributionData: any) {
     switch (contributionData.type) {
@@ -551,10 +551,10 @@ export class PaidmodeLoanComponent implements OnInit {
         }
       }, error => {
 
-   
+
         if (error && error.error && error.error.message === 'error') {
           if (error.error.user_not_found) {
-         
+
             this.errorService.renewSession().then((data: any) => {
               if (data && data.result === "OK") {
                 this.ui.dismissLoading();
@@ -595,10 +595,10 @@ export class PaidmodeLoanComponent implements OnInit {
         }
       }, error => {
 
-     
+
         if (error && error.error && error.error.message === 'error') {
           if (error.error.user_not_found) {
-   
+
             this.errorService.renewSession().then((data: any) => {
               if (data && data.result === "OK") {
                 this.ui.dismissLoading();
@@ -825,9 +825,9 @@ export class PaidmodeLoanComponent implements OnInit {
     const params = this.loanService.getLoanData();
     const amount = this.getAmountFees(this.contributionData.all_Amount,params.currency_name);
     this.userPayMethodForm.get('montantAvecFees').setValue(amount);
-    
+
     if (params.currency_name !== this.userPayMethodForm.value.device_name) {
-      
+
             this.currency.convert(params.currency_name, this.userPayMethodForm.value.device_name,
               this.contributionData.all_Amount).then(montantsansFees => {
                 if (montantsansFees) {
@@ -848,7 +848,7 @@ export class PaidmodeLoanComponent implements OnInit {
                   device_name: this.userPayMethodForm.value.device_name, type: 'converted'
                 };
                 this.showConfirmationMessage(messageConfirmation, this.contributionDataParams);
-      
+
           } else {
             this.translate.get('CURRENCY_CONVERT_ERROR').subscribe(value => {
               this.ui.presentToast(value);
@@ -888,12 +888,12 @@ export class PaidmodeLoanComponent implements OnInit {
     this.userPayMethodForm.get('montantAvecFees').setValue(amount);
 
     if (params.currency_name !== this.userPayMethodForm.value.device_name) {
-       
+
             this.currency.convert(params.currency_name, this.userPayMethodForm.value.device_name,
               this.contributionData.all_Amount).then(montantsansFees => {
 
                 if (montantsansFees) {
-                  
+
                 const dataParams = {
                   list_loan: this.updateOperatorParams('convert', this.userPayMethodForm.value.device_name),
                   typepaiement_id: this.userPayMethodForm.value.type_payment_id,
@@ -912,7 +912,7 @@ export class PaidmodeLoanComponent implements OnInit {
                 };
 
                 this.showConfirmationMessage(messageConfirmation, this.contributionDataParams);
-          
+
           } else {
             this.translate.get('CURRENCY_CONVERT_ERROR').subscribe(value => {
               this.ui.presentToast(value);
@@ -953,7 +953,7 @@ export class PaidmodeLoanComponent implements OnInit {
 
 
     if (params.currency_name !== this.userPayMethodForm.value.device_name) {
-         
+
             this.currency.convert(params.currency_name, this.userPayMethodForm.value.device_name,
               this.contributionData.all_Amount).then(montantsansFees => {
 
@@ -976,7 +976,7 @@ export class PaidmodeLoanComponent implements OnInit {
                   device_name: this.userPayMethodForm.value.device_name, type: 'converted'
                 };
                 this.showConfirmationMessage(messageConfirmation, this.contributionDataParams);
-         
+
           } else {
             this.translate.get('CURRENCY_CONVERT_ERROR').subscribe(value => {
               this.ui.presentToast(value);
@@ -1095,7 +1095,7 @@ export class PaidmodeLoanComponent implements OnInit {
       }
     }, error => {
 
-    
+
       if (error && error.error && error.error.message === 'error') {
 
         if (error.error.user_not_found) {
@@ -1353,7 +1353,7 @@ export class PaidmodeLoanComponent implements OnInit {
       this.translate.get(['TRANSACTION_CANCEL', 'TOPUP_MSG9']).subscribe(trans => {
         this.ui.presentAlert(`${trans.TRANSACTION_CANCEL}`, `${trans.TOPUP_MSG9} ${refence}`);
       });
-    }, 300000);
+    }, 120000);
   }
 
   // exit the payment directly

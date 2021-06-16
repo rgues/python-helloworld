@@ -69,12 +69,12 @@ export class SelectDataComponent implements OnInit {
     this.allData = [];
     if (this.type === 'tontine') {
       data.forEach(element => {
-        this.allData.push({ id: element.tontine.tontine_id, name: element.tontine.name });
+        this.allData.push({ id: element.tontine.tontine_id, name: element.tontine.name, code: element.tontine.code_invitation });
       });
     } else if (this.type === 'invitation' || this.type === 'notification') {
       let index = 0;
       data.forEach(element => {
-        this.allData.push({ id: index, name: element.tontine.name });
+        this.allData.push({ id: index, name: element.tontine.name, code: element.tontine.code_invitation});
         index++;
       });
     }
@@ -89,7 +89,7 @@ export class SelectDataComponent implements OnInit {
     }
   }
 
-  
+
   // Infinite scroll data
   infinteScrollData(event) {
     setTimeout(() => {

@@ -465,7 +465,7 @@ export class PaidmodeEventComponent implements OnInit {
         }
       }, error => {
 
-    
+
         if (error && error.error && error.error.message === 'error') {
           if (error.error.user_not_found) {
             this.errorService.renewSession().then((data: any) => {
@@ -1136,7 +1136,7 @@ export class PaidmodeEventComponent implements OnInit {
       this.translate.get(['TRANSACTION_CANCEL', 'TOPUP_MSG9']).subscribe(trans => {
         this.ui.presentAlert(`${trans.TRANSACTION_CANCEL}`, `${trans.TOPUP_MSG9} ${refence}`);
       });
-    }, 300000);
+    }, 120000);
   }
 
   // exit the payment directly
@@ -1152,7 +1152,7 @@ export class PaidmodeEventComponent implements OnInit {
     this.events.publish('modal-close');
   }
 
-  
+
   ionicViewDidLeave() {
     if (this.loading) {
       this.exitPayment();

@@ -133,7 +133,7 @@ export class PaidmodeComponent implements OnInit {
     return this.userPayMethodForm.get('typePaymentIndex');
   }
 
-  // Init form message 
+  // Init form message
   initFormMessage() {
     this.translate.get(['REGISTER_PHONE_REQUIRED', 'M_COUNTRY_REQUIRED', 'AMOUNT_REQUIRED', 'PAID_MODE_REQUIRED'])
       .subscribe(value => {
@@ -227,7 +227,7 @@ export class PaidmodeComponent implements OnInit {
     return this.paymentData.hasPaypalButton(this.paypal_initialized, this.paymentMethods[this.userPayMethodForm.value.typePaymentIndex]);
   }
 
-  // can make payment 
+  // can make payment
   canPay() {
     return this.paymentData.canShowPayment(this.userPayMethodForm.valid,this.paymentMethods[this.userPayMethodForm.value.typePaymentIndex],this.userPayMethodForm.value.phone, this.errorPhone);
   }
@@ -455,7 +455,7 @@ export class PaidmodeComponent implements OnInit {
         }
       }, error => {
 
-  
+
         if (error && error.error && error.error.message === 'error') {
           if (error.error.user_not_found) {
             this.errorService.renewSession().then((data: any) => {
@@ -835,7 +835,7 @@ export class PaidmodeComponent implements OnInit {
         this.contributionData.montant).then(montantSansFees => {
 
           if (montantSansFees) {
-          
+
           const params = {
             seance_id: this.contributionData.seance_id,
             typecontribution_id: this.contributionData.typecontribution_id,
@@ -948,7 +948,7 @@ export class PaidmodeComponent implements OnInit {
       }
     }, error => {
 
-     
+
       if (error && error.error && error.error.message === 'error') {
         if (error.error.user_not_found) {
           this.errorService.renewSession().then((data: any) => {
@@ -982,7 +982,7 @@ export class PaidmodeComponent implements OnInit {
         this.sendResponsePerOperator(reponse, contributionData.operator);
       }
     }, error => {
-  
+
 
       if (error && error.error && error.error.message === 'error') {
 
@@ -1136,7 +1136,7 @@ export class PaidmodeComponent implements OnInit {
       this.translate.get(['TRANSACTION_CANCEL', 'TOPUP_MSG9']).subscribe(trans => {
         this.ui.presentAlert(`${trans.TRANSACTION_CANCEL}`, `${trans.TOPUP_MSG9} ${refence}`);
       });
-    }, 300000);
+    }, 120000);
   }
 
   // exit the payment directly

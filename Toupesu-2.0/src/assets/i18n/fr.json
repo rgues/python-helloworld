@@ -961,7 +961,8 @@
 
     "M_ACCOUNT_INFO":"Compte",
     "M_NEW_TONTINE_EVENT":"Créer une Tontine Event",
-    "M_CREATE_TONTINE":"Je démarre une Tontine",
+    "M_CREATE_TONTINE":"Je démarre une Tontine.",
+    "M_CREATE_TONTINE_DEMO":"Je démarre une Tontine Demo avec les administrateurs de Toupesu.",
     "M_NAME_REQUIRED":"Le nom est requis",
     "M_DESCRIPTION_REQUIRED":"La description est requise",
     "M_TYPE_REQUIRED":"Le type est requis.",
@@ -1355,6 +1356,7 @@
     "caisse emprunt":"caisse emprunt",
     "caisse secours":"caisse secours",
     "caisse":"caisse",
+    " secours":"secours",
     "DESTINATION_TEXT":"Destination des fonds",
     "BANK_TEXT":"Transfert Bancaire",
     "SOURCE_FOUND_TEXT":"Source des fonds",
@@ -1468,7 +1470,7 @@
     "INVITATIONS_UNAUTHORIZED":"Vous n'êtes pas autorisé à faire des invitations.",
     "ADMIN_EVENT_NOT_FOUND":"Vous n'êtes pas administrateur de cette tontine.",
     "PAY_TEXT":"Payer",
-    "DOWNLOAD_TEXT":"Télécharger l'application Toupesu en cliquant sur ce lien :",
+    "DOWNLOAD_TEXT":"Si vous n'avez pas encore l'application dans votre téléphone, téléchargez en cliquant sur ce lien :",
     "TYPE_DESCRIPTION_MSG" : "Type désigne l'ordre de bouffage des membres.",
     "TYPE_PAIEMENT_MSG": "<strong>Banque Traditionnelle</strong> vous offre la possibilité de payer par cash, transfert bancaire ou d'utiliser les méthodes de paiement électronique et une gestion manuelle de votre tontine.<br/> <strong>Portemonnaie Virtuelle</strong> vous offre le paiement électronique et une gestion automatisée de votre tontine.",
     "COUNTRY_MSG":"Le pays determine la devise de la tontine.",
@@ -1785,7 +1787,9 @@
     "BALANCE_INSUFFICIENT_TEXT":"Le solde de votre portemonnaie est insuffisant.",
     "SECOURS_TEXT":"secours",
     "PREFIX_TEXT":"Choisir le préfixe",
-    "TONTINE_DEMO_TEXT":"Créer Tontine Demo",
+    "TONTINE_DEMO_TEXT":"Tontine Demo",
     "TONTINE_NEW_DEMO_MSG1":"Cliquer sur le bouton the button ci-dessous et faites votre première contribution dans la tontine.",
-    "SESSION_START":"Cycle débute le"
+    "SESSION_START":"Cycle débute le",
+    "SOCIAL_NETWORK_TEXT":"Réseaux Sociaux",
+    "ACTIVE_TONTINE_TEXT":"Aucune tontine active pour le moment."
 }

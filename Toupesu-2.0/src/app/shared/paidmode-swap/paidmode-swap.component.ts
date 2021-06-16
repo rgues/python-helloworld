@@ -143,7 +143,7 @@ export class PaidmodeSwapComponent implements OnInit {
     return this.userPayMethodForm.get('montant');
   }
 
-  // Init form 
+  // Init form
   initPaymentForm() {
     const currentPayment = this.paymentData.getDefaultPaymentMethod();
     this.userPayMethodForm = this.fb.group({
@@ -209,7 +209,7 @@ export class PaidmodeSwapComponent implements OnInit {
     return this.paymentData.hasPaypalButton(this.paypal_initialized, this.paymentMethods[this.userPayMethodForm.value.typePaymentIndex]);
   }
 
-  // can make payment 
+  // can make payment
   canPay() {
     return this.paymentData.canShowPayment(this.userPayMethodForm.valid, this.paymentMethods[this.userPayMethodForm.value.typePaymentIndex], this.userPayMethodForm.value.phone, this.errorPhone);
   }
@@ -963,7 +963,7 @@ export class PaidmodeSwapComponent implements OnInit {
       }
     }, error => {
 
-      
+
       if (error && error.error && error.error.message === 'error') {
         if (error.error.user_not_found) {
           this.errorService.renewSession().then((data: any) => {
@@ -1142,7 +1142,7 @@ export class PaidmodeSwapComponent implements OnInit {
       this.translate.get(['TRANSACTION_CANCEL', 'TOPUP_MSG9']).subscribe(trans => {
         this.ui.presentAlert(`${trans.TRANSACTION_CANCEL}`, `${trans.TOPUP_MSG9} ${refence}`);
       });
-    }, 300000);
+    }, 120000);
   }
 
   // exit the payment directly

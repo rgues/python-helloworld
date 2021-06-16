@@ -6,7 +6,7 @@ import { States } from '../models/countries';
 import { LocationService } from '../service/location.service';
 import { InvitationsService } from 'src/app/dashboard/invitations/service/invitations.service';
 import { ErrorService } from '../service/error.service';
-import { ModalController } from '@ionic/angular';
+import { ModalController, Platform } from '@ionic/angular';
 import { CountriesComponent } from '../countries/countries.component';
 import { FormUtilsService } from '../service/form-utils.service';
 import { InivitationErrorService } from '../../dashboard/invitations/service/inivitation-error.service';
@@ -16,6 +16,7 @@ import { EventService } from '../service/events.service';
 import { UiService } from '../service/ui.service';
 import { UtilService } from '../service/util.service';
 import { AuthService } from 'src/app/auth/service/auth.service';
+import { PluginService } from '../service/plugin.service';
 
 interface Invitations {
   emailOrPhone: string;
@@ -37,15 +38,20 @@ export class TontineInvitedComponent implements OnInit {
   errorPhone: boolean;
   errorEmail: boolean;
   loading: boolean;
+  loadingTontines: boolean;
   sendListContact: Invitations[];
   spinner: any;
   curentTontine: any;
+  shareData: any;
+  allTontines: any;
 
   constructor(
     private fb: FormBuilder,
     private tontine: TontineService,
+    private platform: Platform,
     private zone: NgZone,
     private translate: TranslateService,
+    private plugin: PluginService,
     private modatCtrl: ModalController,
     private invitation: InvitationsService,
     private formUtil: FormUtilsService,
@@ -63,7 +69,10 @@ export class TontineInvitedComponent implements OnInit {
     this.errorPhone = false;
     this.errorEmail = false;
     this.loading = false;
+    this.loadingTontines = false;
     this.sendListContact = [];
+    this.shareData = [];
+    this.allTontines = [];
     this.curentTontine = this.tontine.getCurrentTontineData();
   }
 
@@ -95,16 +104,17 @@ export class TontineInvitedComponent implements OnInit {
     return this.formInvited.get('country_id');
   }
 
-  // Init the form 
+  // Init the form
   initFormInvitation() {
     this.formInvited = this.fb.group({
       tontine_id: ['', Validators.required],
       tontineName:[''],
       members: [[]],
-      sendMode: ['sms', Validators.required],
+      sendMode: ['network', Validators.required],
       emailOrPhone: [''],
       sendList: new FormArray([]),
       phoneid: [''],
+      code:[''],
       country_id: [''],
       countryName: ['']
     });
@@ -122,8 +132,8 @@ export class TontineInvitedComponent implements OnInit {
 
   // can add new member
   canAddNewMember() {
-    return !this.formInvited.value.phoneid 
-           || !this.formInvited.value.emailOrPhone 
+    return !this.formInvited.value.phoneid
+           || !this.formInvited.value.emailOrPhone
            || this.formInvited.value.emailOrPhone && ((!this.errorPhone && this.sendMode.value === 'sms') || (!this.errorEmail && this.sendMode.value === 'email'));
   }
 
@@ -134,9 +144,9 @@ export class TontineInvitedComponent implements OnInit {
 
   // Can invite member
   canInviteMember() {
-    return this.formInvited.invalid 
-           || this.loading 
-           || this.formInvited.value.emailOrPhone && (!this.errorPhone && !this.errorEmail) 
+    return this.formInvited.invalid
+           || this.loading
+           || this.formInvited.value.emailOrPhone && (!this.errorPhone && !this.errorEmail)
            || (!this.formInvited.value.emailOrPhone && this.sendList.length === 0);
   }
 
@@ -156,10 +166,11 @@ export class TontineInvitedComponent implements OnInit {
     this.removeSpace();
     this.errorPhone = false;
     this.errorEmail = false;
-    if (mode === 'sms') {
-      this.errorPhone = this.formUtil.validatePhone(this.formInvited.value.emailOrPhone);
-    } else if (mode === 'email') {
-      this.errorEmail = this.formUtil.validateEmail(this.formInvited.value.emailOrPhone);
+    if (mode === 'sms' || mode === 'email') {
+      this.errorPhone =  mode === 'sms' ? this.formUtil.validatePhone(this.formInvited.value.emailOrPhone) :  this.formUtil.validateEmail(this.formInvited.value.emailOrPhone);
+      this.tontines =  this.allTontines.filter(data => { return data.tontine.administrator === 1});
+    }  else {
+      this.tontines =  this.allTontines.filter(data => { return data.tontine.active === 1});
     }
   }
 
@@ -256,6 +267,7 @@ export class TontineInvitedComponent implements OnInit {
           if (ans && ans.role === 'select') {
             this.formInvited.get('tontine_id').setValue(ans.data.id);
             this.formInvited.get('tontineName').setValue(ans.data.name);
+            this.formInvited.get('code').setValue(ans.data.code);
           }
         });
       });
@@ -263,12 +275,15 @@ export class TontineInvitedComponent implements OnInit {
 
   // Get the list of tontines
   getListOftontines() {
+    this.loadingTontines = true;
     this.tontine.getMyTontine().subscribe((reponse: any) => {
       if (reponse && reponse.message === 'success') {
+        this.loadingTontines = false;
         if (reponse.liste_tontine && reponse.liste_tontine.length > 0) {
           this.zone.run(() => {
             reponse.liste_tontine = this.util.oderByTontineDate(reponse.liste_tontine);
-            this.tontines =  reponse.liste_tontine.filter(data => { return data.tontine.administrator === 1});
+            this.allTontines =  reponse.liste_tontine;
+            this.tontines =  reponse.liste_tontine.filter(data => { return data.tontine.active === 1});
           });
 
           if (this.tontines &&  this.tontines.length) {
@@ -278,27 +293,32 @@ export class TontineInvitedComponent implements OnInit {
                 if (currentTontine && currentTontine.length > 0) {
                   this.formInvited.get('tontine_id').setValue(currentTontine[0].tontine.tontine_id);
                   this.formInvited.get('tontineName').setValue(currentTontine[0].tontine.name);
+                  this.formInvited.get('code').setValue(currentTontine[0].tontine.code_invitation);
                 } else {
                   this.formInvited.get('tontine_id').setValue(this.tontines[0].tontine.tontine_id);
                   this.formInvited.get('tontineName').setValue(this.tontines[0].tontine.name);
+                  this.formInvited.get('code').setValue(this.tontines[0].tontine.code_invitation);
                 }
               } else {
                 this.formInvited.get('tontine_id').setValue(this.tontines[0].tontine.tontine_id);
                 this.formInvited.get('tontineName').setValue(this.tontines[0].tontine.name);
+                this.formInvited.get('code').setValue(this.tontines[0].tontine.code_invitation);
               }
             }, 500);
           }
-     
+
         }
       }
     }, error => {
       if (error && error.error && error.error.user_not_found) {
         this.errorService.renewSession().then((data:any) => {
+            this.loadingTontines = false;
             if (data && data.result === "OK") {
                 this.getListOftontines();
             }
         });
       } else {
+        this.loadingTontines = false;
         this.errorService.manageError(error);
       }
     });
@@ -347,4 +367,21 @@ export class TontineInvitedComponent implements OnInit {
         }
       });
   }
+
+
+    // Share the app with friends
+    shareCode() {
+      let link = '';
+      if (this.platform.is('android')) {
+        link = 'https://bit.ly/2Zr78Me';
+      } else {
+        link = 'https://apple.co/2yrfLeM';
+      }
+      this.translate.get(['SHARE_CODE_MESSAGE', 'SHARE_CODE_TITLE', 'DOWNLOAD_TEXT']).subscribe(trans => {
+        this.shareData.push(trans.SHARE_CODE_MESSAGE);
+        this.shareData.push(trans.DOWNLOAD_TEXT);
+        this.shareData.push(trans.SHARE_CODE_TITLE);
+      });
+      this.plugin.share(`${this.shareData[0]}  ${this.formInvited.value.tontineName} \n\n Code : ${this.formInvited.value.code} \n\n ${this.shareData[1]} \n `, `${this.shareData[2]}`, link);
+    }
 }

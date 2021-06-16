@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';import { UserService } from 'src/app/dashboard/user/service/user.service';
-;
+import { UtilService } from './util.service';
 
 
 interface PaymentMethod {
@@ -13,7 +13,8 @@ interface PaymentMethod {
   label?: string;
   handling_fees?: number;
   type_handling_fees?: string;
-  type ?: string
+  type ?: string;
+  poids ?: number;
 }
 
 @Injectable({
@@ -25,6 +26,7 @@ export class PaymentGlobalDataService {
 
   constructor(
     private translate: TranslateService,
+    private util: UtilService,
     private userService: UserService
   ) { }
 
@@ -76,7 +78,7 @@ export class PaymentGlobalDataService {
     return canShow;
   }
 
-  // can make payment 
+  // can make payment
   canShowPayment(formValid: boolean, paymentData: any, phone: string, hasPhoneError: boolean) {
     let canpay = false;
     if (formValid && paymentData && paymentData.name && (paymentData.name === 'WALLET' || paymentData.name === 'OZOW' || (phone && !hasPhoneError && (paymentData.name === 'ORANGE MONEY' || paymentData.name === 'MTN MOBILE MONEY')))) {
@@ -97,24 +99,12 @@ export class PaymentGlobalDataService {
 
   // Format payment method response
   formatPaymentMethodResponseContribution(paymentMethodsData: any) {
-    const paymentMethods: PaymentMethod[] = [];
+    let paymentMethods: PaymentMethod[] = [];
 
     paymentMethodsData.forEach(payment => {
 
       if (payment.active === 1) {
         switch (payment.name) {
-
-          case 'ORANGE MONEY':
-            this.translate.get('REGISTER_MPHONE').subscribe(value => {
-              paymentMethods.push({
-                id: payment.id, country_id: payment.country_id, logo: 'assets/orange.jpg',
-                currency: payment.currency, name: payment.name, placeholder: value,
-                handling_fees: payment.handling_fees,
-                type_handling_fees: payment.type_handling_fees,
-                type: 'OPERATOR'
-              });
-            });
-            break;
 
           case 'MTN MOBILE MONEY':
             this.translate.get('REGISTER_MPHONE').subscribe(value => {
@@ -122,22 +112,26 @@ export class PaymentGlobalDataService {
                 id: payment.id, country_id: payment.country_id, logo: 'assets/mtn.jpg',
                 currency: payment.currency, name: payment.name, placeholder: value,
                 handling_fees: payment.handling_fees,
-                type_handling_fees: payment.type_handling_fees
+                type_handling_fees: payment.type_handling_fees,
+                type: 'OPERATOR',
+                poids: 1
               });
             });
             break;
 
-          case 'PAYPAL':
-            this.translate.get('EMAIL_TEXT').subscribe(value => {
-              paymentMethods.push({
-                id: payment.id, country_id: payment.country_id, logo: 'assets/paypal.jpg',
-                currency: payment.currency, name: payment.name, placeholder: value,
-                handling_fees: payment.handling_fees,
-                type_handling_fees: payment.type_handling_fees,
-                type: 'OPERATOR'
+            case 'ORANGE MONEY':
+              this.translate.get('REGISTER_MPHONE').subscribe(value => {
+                paymentMethods.push({
+                  id: payment.id, country_id: payment.country_id, logo: 'assets/orange.jpg',
+                  currency: payment.currency, name: payment.name, placeholder: value,
+                  handling_fees: payment.handling_fees,
+                  type_handling_fees: payment.type_handling_fees,
+                  type: 'OPERATOR',
+                  poids: 2
+                });
               });
-            });
-            break;
+              break;
+
 
           case 'OZOW':
             this.translate.get('EMAIL_TEXT').subscribe(value => {
@@ -146,7 +140,22 @@ export class PaymentGlobalDataService {
                 currency: payment.currency, name: payment.name, placeholder: value,
                 handling_fees: payment.handling_fees,
                 type_handling_fees: payment.type_handling_fees,
-                type: 'OPERATOR'
+                type: 'OPERATOR',
+                poids: 3
+              });
+            });
+            break;
+
+
+          case 'PAYPAL':
+            this.translate.get('EMAIL_TEXT').subscribe(value => {
+              paymentMethods.push({
+                id: payment.id, country_id: payment.country_id, logo: 'assets/paypal.jpg',
+                currency: payment.currency, name: payment.name, placeholder: value,
+                handling_fees: payment.handling_fees,
+                type_handling_fees: payment.type_handling_fees,
+                type: 'OPERATOR',
+                poids: 4
               });
             });
             break;
@@ -156,30 +165,21 @@ export class PaymentGlobalDataService {
         }
       }
     });
+
+    paymentMethods =  this.util.orderByKeyDown(paymentMethods,'poids');
 
     return paymentMethods;
   }
 
   // Format the payment response for debt
   formatPaymentMethodForDebt(paymentMethodsData: any) {
-    const paymentMethods: PaymentMethod[] = [];
-    
+    let paymentMethods: PaymentMethod[] = [];
+
     paymentMethodsData.forEach(payment => {
 
       if (payment.active === 1) {
-        
-        switch (payment.name) {
 
-          case 'ORANGE MONEY':
-            this.translate.get('REGISTER_MPHONE').subscribe(value => {
-              paymentMethods.push({
-                id: payment.id, country_id: payment.country_id, logo: 'assets/orange.jpg',
-                currency: payment.currency, name: payment.name, placeholder: value,
-                handling_fees :  payment.handling_fees,
-                type_handling_fees : payment.type_handling_fees
-              });
-            });
-            break;
+        switch (payment.name) {
 
           case 'MTN MOBILE MONEY':
             this.translate.get('REGISTER_MPHONE').subscribe(value => {
@@ -187,7 +187,8 @@ export class PaymentGlobalDataService {
                 id: payment.id, country_id: payment.country_id, logo: 'assets/mtn.jpg',
                 currency: payment.currency, name: payment.name, placeholder: value,
                 handling_fees :  payment.handling_fees,
-                type_handling_fees : payment.type_handling_fees
+                type_handling_fees : payment.type_handling_fees,
+                poids: 1
               });
             });
             break;
@@ -198,10 +199,23 @@ export class PaymentGlobalDataService {
                 id: payment.id, country_id: payment.country_id, logo: 'assets/paypal.jpg',
                 currency: payment.currency, name: payment.name, placeholder: value,
                 handling_fees :  payment.handling_fees,
-                type_handling_fees : payment.type_handling_fees
+                type_handling_fees : payment.type_handling_fees,
+                poids: 2
               });
             });
             break;
+
+            case 'ORANGE MONEY':
+              this.translate.get('REGISTER_MPHONE').subscribe(value => {
+                paymentMethods.push({
+                  id: payment.id, country_id: payment.country_id, logo: 'assets/orange.jpg',
+                  currency: payment.currency, name: payment.name, placeholder: value,
+                  handling_fees :  payment.handling_fees,
+                  type_handling_fees : payment.type_handling_fees,
+                  poids: 3
+                });
+              });
+              break;
 
           case 'OZOW':
             this.translate.get('EMAIL_TEXT').subscribe(value => {
@@ -209,25 +223,31 @@ export class PaymentGlobalDataService {
                 id: payment.id, country_id: payment.country_id, logo: 'assets/ozow.png',
                 currency: payment.currency, name: payment.name, placeholder: value,
                 handling_fees :  payment.handling_fees,
-                type_handling_fees : payment.type_handling_fees
+                type_handling_fees : payment.type_handling_fees,
+                poids: 4
               });
             });
             break;
+
+
 
             case 'CASH':
               paymentMethods.push({
                 id: payment.id, country_id: payment.country_id, logo: 'assets/wallet-icon.svg',
                 currency: payment.currency, name: payment.name, placeholder: '',
                 handling_fees :  payment.handling_fees,
-                type_handling_fees : payment.type_handling_fees
+                type_handling_fees : payment.type_handling_fees,
+                poids: 5
               });
-              break;    
+              break;
 
           default:
             break;
         }
       }
     });
+
+    paymentMethods =  this.util.orderByKeyDown(paymentMethods,'poids');
 
     return paymentMethods;
   }
@@ -235,24 +255,12 @@ export class PaymentGlobalDataService {
 
   // format payment method for recharge
   formatPaymentMethodRecharge(paymentMethodsData: any, tontine: any) {
-    const paymentMethods: PaymentMethod[] = [];
-    
+    let paymentMethods: PaymentMethod[] = [];
+
     paymentMethodsData.forEach(payment => {
 
       if (payment.active === 1) {
         switch (payment.name) {
-
-          case 'ORANGE MONEY':
-            this.translate.get('REGISTER_MPHONE').subscribe(value => {
-              paymentMethods.push({
-                id: payment.id, country_id: payment.country_id, logo: 'assets/orange.jpg',
-                currency: payment.currency, name: payment.name, placeholder: value,
-                handling_fees: payment.handling_fees,
-                type_handling_fees: payment.type_handling_fees,
-                type: 'OPERATOR'
-              });
-            });
-            break;
 
           case 'MTN MOBILE MONEY':
             this.translate.get('REGISTER_MPHONE').subscribe(value => {
@@ -261,19 +269,21 @@ export class PaymentGlobalDataService {
                 currency: payment.currency, name: payment.name, placeholder: value,
                 handling_fees: payment.handling_fees,
                 type_handling_fees: payment.type_handling_fees,
-                type: 'OPERATOR'
+                type: 'OPERATOR',
+                poids: 1
               });
             });
             break;
 
-          case 'PAYPAL':
-            this.translate.get('EMAIL_TEXT').subscribe(value => {
+          case 'ORANGE MONEY':
+            this.translate.get('REGISTER_MPHONE').subscribe(value => {
               paymentMethods.push({
-                id: payment.id, country_id: payment.country_id, logo: 'assets/paypal.jpg',
+                id: payment.id, country_id: payment.country_id, logo: 'assets/orange.jpg',
                 currency: payment.currency, name: payment.name, placeholder: value,
                 handling_fees: payment.handling_fees,
                 type_handling_fees: payment.type_handling_fees,
-                type: 'OPERATOR'
+                type: 'OPERATOR',
+                poids: 2
               });
             });
             break;
@@ -285,7 +295,21 @@ export class PaymentGlobalDataService {
                 currency: payment.currency, name: payment.name, placeholder: value,
                 handling_fees: payment.handling_fees,
                 type_handling_fees: payment.type_handling_fees,
-                type: 'OPERATOR'
+                type: 'OPERATOR',
+                poids: 3
+              });
+            });
+            break;
+
+          case 'PAYPAL':
+            this.translate.get('EMAIL_TEXT').subscribe(value => {
+              paymentMethods.push({
+                id: payment.id, country_id: payment.country_id, logo: 'assets/paypal.jpg',
+                currency: payment.currency, name: payment.name, placeholder: value,
+                handling_fees: payment.handling_fees,
+                type_handling_fees: payment.type_handling_fees,
+                type: 'OPERATOR',
+                poids: 4
               });
             });
             break;
@@ -297,7 +321,8 @@ export class PaymentGlobalDataService {
                 currency: payment.currency, name: payment.name, placeholder: '',
                 handling_fees: payment.handling_fees,
                 type_handling_fees: payment.type_handling_fees,
-                type: 'CASH'
+                type: 'CASH',
+                poids: 5
               });
             }
             break;
@@ -308,13 +333,14 @@ export class PaymentGlobalDataService {
       }
     });
 
+    paymentMethods =  this.util.orderByKeyDown(paymentMethods,'poids');
     return paymentMethods;
   }
 
 
   // format withdraw data
   formatWithdrawData(paymentData: any) {
-    const paymentMethods: PaymentMethod[] = [];
+    let paymentMethods: PaymentMethod[] = [];
     paymentData.forEach(payment => {
       if (payment.active === 1) {
         switch (payment.name) {
@@ -322,21 +348,24 @@ export class PaymentGlobalDataService {
           case 'MTN MOBILE MONEY':
             paymentMethods.push({
               id: payment.id, country_id: payment.country_id,
-              logo: 'assets/mtn.jpg', name: payment.name, label: payment.name, currency: payment.currency
+              logo: 'assets/mtn.jpg', name: payment.name, label: payment.name, currency: payment.currency,
+              poids: 1
             });
             break;
 
           case 'ORANGE MONEY':
             paymentMethods.push({
               id: payment.id, country_id: payment.country_id,
-              logo: 'assets/orange.jpg', name: payment.name, label: payment.name, currency: payment.currency
+              logo: 'assets/orange.jpg', name: payment.name, label: payment.name, currency: payment.currency,
+              poids: 2
             });
             break;
 
           case 'PAYPAL':
             paymentMethods.push({
               id: payment.id, country_id: payment.country_id,
-              logo: 'assets/paypal.jpg', name: payment.name, label: `${payment.name}(${payment.currency})`, currency: payment.currency
+              logo: 'assets/paypal.jpg', name: payment.name, label: `${payment.name}(${payment.currency})`, currency: payment.currency,
+              poids: 3
             });
             break;
 
@@ -345,10 +374,11 @@ export class PaymentGlobalDataService {
         }
       }
     });
+    paymentMethods =  this.util.orderByKeyDown(paymentMethods,'poids');
     return paymentMethods;
   }
 
-  // Format countries data 
+  // Format countries data
   formatCountriesData(countriesData: any, hasAll ?: boolean ) {
     const states = [];
     countriesData.forEach(country => {
@@ -398,7 +428,7 @@ export class PaymentGlobalDataService {
     }
   }
 
-  
+
   notIn(paymentMethods: any[], paymentName: any) {
     let methodNotIn = true;
     paymentMethods.forEach(pay => {

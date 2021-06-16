@@ -142,7 +142,7 @@ export class PaidmodeDebtComponent implements OnInit {
   }
 
 
-  // init form message 
+  // init form message
   initFormMessage() {
     this.translate.get(['REGISTER_PHONE_REQUIRED', 'AMOUNT_REQUIRED', 'PAID_MODE_REQUIRED', 'M_COUNTRY_REQUIRED'])
       .subscribe(value => {
@@ -209,7 +209,7 @@ export class PaidmodeDebtComponent implements OnInit {
     return this.paymentData.hasPaypalButton(this.paypal_initialized, this.paymentMethods[this.userPayMethodForm.value.typePaymentIndex]);
   }
 
-  // can make payment 
+  // can make payment
   canPay() {
     return this.paymentData.canShowPayment(this.userPayMethodForm.valid,this.paymentMethods[this.userPayMethodForm.value.typePaymentIndex],this.userPayMethodForm.value.phone,this.errorPhone);
   }
@@ -467,7 +467,7 @@ export class PaidmodeDebtComponent implements OnInit {
         }
       }, error => {
 
-    
+
         if (error && error.error && error.error.message === 'error') {
           if (error.error.user_not_found) {
             this.errorService.renewSession().then((data: any) => {
@@ -987,7 +987,7 @@ export class PaidmodeDebtComponent implements OnInit {
       }
     }, error => {
 
-     
+
       if (error && error.error && error.error.message === 'error') {
 
         if (error.error.user_not_found) {
@@ -1023,10 +1023,10 @@ export class PaidmodeDebtComponent implements OnInit {
         this.sendResponsePerOperator(reponse, contributionData.operator);
       }
     }, error => {
-    
+
       if (error && error.error && error.error.message === 'error') {
         if (error.error.user_not_found) {
- 
+
           this.errorService.renewSession().then((data: any) => {
             if (data && data.result === "OK") {
               this.ui.dismissLoading();
@@ -1155,7 +1155,7 @@ export class PaidmodeDebtComponent implements OnInit {
     });
   }
 
-  
+
   // Show payment confirmation dialog
   showPaymentResult() {
     this.loading = false;
@@ -1179,7 +1179,7 @@ export class PaidmodeDebtComponent implements OnInit {
       this.translate.get(['TRANSACTION_CANCEL', 'TOPUP_MSG9']).subscribe(trans => {
         this.ui.presentAlert(`${trans.TRANSACTION_CANCEL}`, `${trans.TOPUP_MSG9} ${refence}`);
       });
-    }, 300000);
+    }, 120000);
   }
 
 

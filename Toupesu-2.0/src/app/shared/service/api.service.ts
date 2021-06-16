@@ -19,7 +19,7 @@ export class ApiService {
     public loadingController: LoadingController,
     public alertController: AlertController
   ) {
-      this.baseUrl =     'https://dev.toupesu.com/toupesu_v2_0/'; // 'https://api.toupesu.com/' ;  // 
+      this.baseUrl =  'https://api.toupesu.com/' ;  //  'https://dev.toupesu.com/toupesu_v2_0/'; //
   }
 
   public getJSON(): Observable<any> {

@@ -963,6 +963,7 @@
     "M_ACCOUNT_INFO":"Account info",
     "M_NEW_TONTINE_EVENT":"New tontine event",
     "M_CREATE_TONTINE":"I start my Tontine",
+    "M_CREATE_TONTINE_DEMO":"I start Demo Tontine with Toupesu administrators.",
     "M_NAME_REQUIRED":"Name is required",
     "M_DESCRIPTION_REQUIRED":"Description is required",
     "M_TYPE_REQUIRED":"Type is required.",
@@ -1357,8 +1358,9 @@
     "caisse contribution":"Contribution Balance",
     "caisse penalite":"Penalties Balance",
     "caisse emprunt":"Loaning Balance",
-    "caisse secours":"Emergency fund",
+    "caisse secours":"Succor Balance",
     "caisse":"checkout",
+    " secours":"succor",
     "DESTINATION_TEXT":"Destination of fund",
     "BANK_TEXT":"Bank transfert",
     "SOURCE_FOUND_TEXT":"Source of fund",
@@ -1473,7 +1475,7 @@
     "INVITATIONS_UNAUTHORIZED":"You are not authorized to make this invitation.",
     "ADMIN_EVENT_NOT_FOUND":"You are not an administrator on this event.",
     "PAY_TEXT":"Pay",
-    "DOWNLOAD_TEXT":"Download Toupesu app by cliking on this link :",
+    "DOWNLOAD_TEXT":"If you don't have the app, please download it  by cliking on this link :",
     "TYPE_DESCRIPTION_MSG" : "Type assigns the jackpot order of members.",
     "TYPE_PAIEMENT_MSG": "<strong>Traditional Banking</strong> offers the possibility to pay via cash,bank transfert or use  online payment and manage your tontine manually.<br/> <strong>Online Wallet</strong> offers online payment and automatic tontine management.",
     "COUNTRY_MSG":"Country determines the currency of the tontine.",
@@ -1790,7 +1792,10 @@
     "BALANCE_INSUFFICIENT_TEXT":"Your wallet balance is insufficient.",
     "SECOURS_TEXT":"help",
     "PREFIX_TEXT":"Choose the prefix",
-    "TONTINE_DEMO_TEXT":"New Tontine Demo",
+    "TONTINE_DEMO_TEXT":"Demo Tontine",
     "TONTINE_NEW_DEMO_MSG1":"Click on the button bellow and start make your fisrt contribution to the tontine.",
-    "SESSION_START":"Session started on"
+    "SESSION_START":"Session started on",
+    "SOCIAL_NETWORK_TEXT":"Social Network",
+    "ACTIVE_TONTINE_TEXT":"No active Tontines yet."
+
     }

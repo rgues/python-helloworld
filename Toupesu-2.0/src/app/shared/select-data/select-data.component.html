@@ -14,7 +14,7 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  
+
   <ion-grid *ngIf="listData && listData.length > 0 ">
     <ion-row>
       <ion-col size="12">
@@ -31,6 +31,10 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+
+  <div  *ngIf="listData && listData.length === 0">
+    <p  class="ion-padding ion-text-center"> {{ 'ACTIVE_TONTINE_TEXT' | translate }}</p>
+  </div>
 
   <ion-infinite-scroll threshold="250px" (ionInfinite)="infinteScrollData($event)">
     <ion-infinite-scroll-content

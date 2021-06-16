@@ -87,7 +87,6 @@ export class TontineDetailPage implements OnInit {
     this.tontineId = this.activeRoute.snapshot.params.tontineId;
     this.user = this.userService.getUserData();
     const tontineData = this.tontine.getCurrentTontineData();
-    console.log(tontineData);
     this.currentSeance = tontineData.seance_courante;
     this.currentAmount = [];
     this.seancesList = [];
@@ -178,7 +177,8 @@ export class TontineDetailPage implements OnInit {
     const tontineData = this.tontine.getCurrentTontineData();
     if (tontineData && tontineData.tontine) {
       this.setTontineData(tontineData);
-      this.tontine.getTontineDetail(tontineData.tontine.tontine_id).subscribe((reponse: any) => {
+      console.log(tontineData.tontine.active);
+      this.tontine.getTontineDetail(tontineData.tontine.tontine_id, tontineData.tontine.active).subscribe((reponse: any) => {
         if (reponse.infos_tontine && reponse.infos_tontine.length > 0) {
           this.tontine.setCurrentTontineData(reponse.infos_tontine[0]);
           const tontineData = this.tontine.getCurrentTontineData();
@@ -639,7 +639,7 @@ export class TontineDetailPage implements OnInit {
       && this.hascheckPreviousSeance
       && this.hasCycle(currentTontine)
       && this.cautionAmount > 0
-      && (currentTontine.seance_courante && currentTontine.seance_courante.numero_seance < 2 || !currentTontine.seance_courante)
+     // && (currentTontine.seance_courante && currentTontine.seance_courante.numero_seance < 2 || !currentTontine.seance_courante )
     ) {
       ican = true;
     }

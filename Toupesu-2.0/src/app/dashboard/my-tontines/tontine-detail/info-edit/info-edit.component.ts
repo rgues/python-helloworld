@@ -133,7 +133,7 @@ export class InfoEditComponent implements OnInit {
     return this.infoEditForm.get('caution_amount');
   }
 
-  // Init periodicity 
+  // Init periodicity
   getPeriodicity() {
     this.location.get(['TONTINE_PERIODICITY_DAY', 'TONTINE_PERIODICITY_WEEK', 'TONTINE_PERIODICITY_MONTH'])
       .subscribe(data => {
@@ -143,7 +143,7 @@ export class InfoEditComponent implements OnInit {
       });
   }
 
-  // Can edit Info 
+  // Can edit Info
   canEditInfo() {
     let canEdit = false;
     if (((!this.currentSeance && this.currentTontine.tontine.active === 0) || (!this.currentSeance && !this.previousSeance && this.currentTontine.tontine.active === 1) ||
@@ -156,8 +156,8 @@ export class InfoEditComponent implements OnInit {
   // can edit caution
   canEditCaution(cautiondId) {
     let ican = false;
-    if (cautiondId && (this.currentSeance && this.currentSeance.numero_seance < 3) 
-       || !cautiondId && (this.currentSeance && this.currentSeance.numero_seance < 1) 
+    if (cautiondId && (this.currentSeance && this.currentSeance.numero_seance < 2)
+       || !cautiondId && (this.currentSeance && this.currentSeance.numero_seance < 1)
        || !this.currentSeance
     ) {
       ican = true;
@@ -235,7 +235,7 @@ export class InfoEditComponent implements OnInit {
       tontine_date: [this.dateService.formatDateTiret(this.startDateSelect)],
       with_caution: [formData && formData.caution_id ? true : false],
       caution_id: [formData && formData.caution_id ? formData.caution_id : null],
-      type_caution: [formData && formData.caution_type ? formData.caution_type : 'member'], //value = part ou member  
+      type_caution: [formData && formData.caution_type ? formData.caution_type : 'member'], //value = part ou member
       caution_amount: [formData && formData.caution_amount ? formData.caution_amount : 0, Validators.compose([Validators.min(0)])]
     });
 

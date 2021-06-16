@@ -177,9 +177,9 @@ export class TopUpComponent implements OnInit {
       });
   }
 
-  // Init form 
+  // Init form
   initPaymentForm() {
-    const currentPayment = this.paymentData.getDefaultPaymentMethod();
+    const currentPayment =  this.paymentData.getDefaultPaymentMethod();
     this.userPayMethodForm = this.fb.group({
       country_id: ['', Validators.required],
       country_prefix: [''],
@@ -244,7 +244,7 @@ export class TopUpComponent implements OnInit {
     return this.paymentData.hasPaypalButton(this.paypal_initialized,this.paymentMethods[this.userPayMethodForm.value.typePaymentIndex]);
   }
 
-  // can make payment 
+  // can make payment
   canPay() {
     return this.paymentData.canShowPayment(this.userPayMethodForm.valid,this.paymentMethods[this.userPayMethodForm.value.typePaymentIndex],this.userPayMethodForm.value.phone,this.errorPhone);
   }
@@ -402,7 +402,7 @@ export class TopUpComponent implements OnInit {
         }
       });
       this.states = this.paymentData.formatCountriesData(countries);
-    
+
       // Get the the current country
       this.getCurrentCountry(false);
 
@@ -438,7 +438,7 @@ export class TopUpComponent implements OnInit {
       this.updatePaymentMethod(0);
     }
   }
-  
+
   // Update the form data with payment method data
   updatePaymentMethod(index) {
     if (this.paymentMethods && this.paymentMethods[index]) {
@@ -482,7 +482,7 @@ export class TopUpComponent implements OnInit {
     this.userPayMethodForm.get('montant_device_arrivee').setValue(this.userPayMethodForm.value.montantSansFees);
 
     this.updatePayPalAmount();
-    
+
   }
 
 
@@ -998,7 +998,7 @@ export class TopUpComponent implements OnInit {
       this.translate.get(['TRANSACTION_CANCEL', 'TOPUP_MSG9']).subscribe(trans => {
         this.ui.presentAlert(`${trans.TRANSACTION_CANCEL}`, `${trans.TOPUP_MSG9} ${refence}`);
       });
-    }, 300000);
+    }, 120000);
   }
 
   // exit the payment directly

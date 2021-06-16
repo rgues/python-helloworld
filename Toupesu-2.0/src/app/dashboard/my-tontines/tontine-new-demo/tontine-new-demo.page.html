@@ -7,12 +7,12 @@
         <ion-img class="logo" [src]="'assets/logo-toupesu.svg'"></ion-img>
     </ion-title>
   </ion-toolbar>
-  <ion-toolbar class="ion-text-center subtitle">
-    <ion-title>{{'M_CREATE_TONTINE' | translate }}</ion-title>
-  </ion-toolbar>
 </ion-header>
 
 <ion-content class="tontine-new">
+  <div>
+    <p class="ion-text-center">{{'M_CREATE_TONTINE_DEMO' | translate }}</p>
+  </div>
   <form [formGroup]="createTontineForm">
     <ion-grid>
       <ion-row>

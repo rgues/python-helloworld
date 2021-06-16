@@ -4,7 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { States } from '../models/countries';
 import { LocationService } from '../service/location.service';
 import { TontinesEventsService } from 'src/app/dashboard/tontines-events/services/tontines-events.service';
-import { ModalController } from '@ionic/angular';
+import { ModalController, Platform } from '@ionic/angular';
 import { CountriesComponent } from '../countries/countries.component';
 import { FormUtilsService } from '../service/form-utils.service';
 import { InivitationErrorService } from '../../dashboard/invitations/service/inivitation-error.service';
@@ -12,6 +12,7 @@ import { ErrorService } from '../service/error.service';
 import { UiService } from '../service/ui.service';
 import { EventService } from '../service/events.service';
 import { AuthService } from 'src/app/auth/service/auth.service';
+import { PluginService } from '../service/plugin.service';
 
 interface Invitations {
   emailOrPhone: string;
@@ -35,10 +36,13 @@ export class TontineInvitedEventComponent implements OnInit {
   spinner: any;
   tontineEventData: any;
   sendListContact: Invitations[];
+  shareData: any;
 
   constructor(
     private fb: FormBuilder,
     private modatCtrl: ModalController,
+    private plugin: PluginService,
+    private platform: Platform,
     private event: TontinesEventsService,
     private events: EventService,
     private translate: TranslateService,
@@ -84,12 +88,12 @@ export class TontineInvitedEventComponent implements OnInit {
     return this.formInvited.get('country_id');
   }
 
-  // init the form 
+  // init the form
   initFormInvitation() {
     this.formInvited = this.fb.group({
       tontine_event_id: [this.tontineEventData && this.tontineEventData.id ? this.tontineEventData.id : '', Validators.required],
       members: [[]],
-      sendMode: ['sms', Validators.required],
+      sendMode: ['network', Validators.required],
       emailOrPhone: [''],
       sendList: new FormArray([]),
       phoneid: [''],
@@ -105,8 +109,8 @@ export class TontineInvitedEventComponent implements OnInit {
 
   // can add member
   canAddMember() {
-    return !this.formInvited.value.phoneid 
-            || !this.formInvited.value.emailOrPhone 
+    return !this.formInvited.value.phoneid
+            || !this.formInvited.value.emailOrPhone
             || this.formInvited.value.emailOrPhone && ((!this.errorPhone && this.sendMode.value === 'sms') || (!this.errorEmail && this.sendMode.value === 'email'));
   }
 
@@ -117,8 +121,8 @@ export class TontineInvitedEventComponent implements OnInit {
 
   // can send invitation
   canSendInvitation() {
-    return this.formInvited.invalid 
-           || this.loading 
+    return this.formInvited.invalid
+           || this.loading
            || this.formInvited.value.emailOrPhone && (!this.errorPhone && !this.errorEmail) || (!this.formInvited.value.emailOrPhone && this.sendList.length === 0);
   }
 
@@ -280,4 +284,21 @@ export class TontineInvitedEventComponent implements OnInit {
         }
       });
   }
+
+    // Share the app with friends
+    shareCode() {
+      let link = '';
+      if (this.platform.is('android')) {
+        link = 'https://bit.ly/2Zr78Me';
+      } else {
+        link = 'https://apple.co/2yrfLeM';
+      }
+      this.translate.get(['SHARE_EVENT_MESSAGE', 'SHARE_EVENT_TITLE', 'DOWNLOAD_TEXT']).subscribe(trans => {
+        this.shareData.push(trans.SHARE_CODE_MESSAGE);
+        this.shareData.push(trans.DOWNLOAD_TEXT);
+        this.shareData.push(trans.SHARE_CODE_TITLE);
+      });
+      this.plugin.share(`${this.shareData[0]} ${this.tontineEventData.title} \n\n Code :  ${this.tontineEventData.codeEvent} \n\n ${this.shareData[1]}`, `${this.shareData[2]}`,link);
+    }
+
 }

@@ -237,7 +237,7 @@ export class PaidmodeTontineComponent implements OnInit {
     return this.paymentData.hasPaypalButton(this.paypal_initialized, this.paymentMethods && this.paymentMethods[this.paymentForm.value.typePaymentIndex]);
   }
 
-  // can make payment 
+  // can make payment
   canRecharge() {
     return this.paymentData.canMakeRecharge(this.paymentForm.valid, this.paymentMethods[this.paymentForm.value.typePaymentIndex], this.paymentForm.value.phone, this.errorPhone);
   }
@@ -555,11 +555,11 @@ export class PaidmodeTontineComponent implements OnInit {
           this.router.navigate(['dashboard', 'my-tontines', this.currentTontine.tontine.tontine_id, 'wallet']);
         }
       }, error => {
-       
+
 
         if (error && error.error && error.error.message === 'error') {
           if (error.error.user_not_found) {
-         
+
             this.error.renewSession().then((data: any) => {
               if (data && data.result === "OK") {
                 this.ui.dismissLoading();
@@ -617,11 +617,11 @@ export class PaidmodeTontineComponent implements OnInit {
         }
       }, error => {
 
-       
+
         if (error && error.error && error.error.message === 'error') {
 
           if (error.error.user_not_found) {
-         
+
             this.error.renewSession().then((data: any) => {
               if (data && data.result === "OK") {
                 this.ui.dismissLoading();
@@ -679,11 +679,11 @@ export class PaidmodeTontineComponent implements OnInit {
         this.router.navigate(['dashboard', 'my-tontines', this.currentTontine.tontine.tontine_id, 'wallet']);
       }
     }, error => {
-      
+
 
       if (error && error.error) {
         if (error.error.user_not_found) {
-      
+
           this.error.renewSession().then((data: any) => {
             if (data && data.result === "OK") {
               this.ui.dismissLoading();
@@ -1049,7 +1049,7 @@ export class PaidmodeTontineComponent implements OnInit {
     }
   }
 
-  // Setup the paypal payment 
+  // Setup the paypal payment
   setupPayPay() {
     if (!this.paypal_initialized) {
       this.initPayPal();
@@ -1144,11 +1144,11 @@ export class PaidmodeTontineComponent implements OnInit {
           this.sendResponsePerOperator(reponse, data.operator);
         }
       }, error => {
-      
+
         if (error && error.error && error.error.message === 'error') {
 
           if (error.error.user_not_found) {
-         
+
             this.error.renewSession().then((data: any) => {
               if (data && data.result === "OK") {
                 this.ui.dismissLoading();
@@ -1186,11 +1186,11 @@ export class PaidmodeTontineComponent implements OnInit {
         }
       }, error => {
 
-       
+
         if (error && error.error && error.error.message === 'error') {
 
           if (error.error.user_not_found) {
-   
+
             this.error.renewSession().then((data: any) => {
               if (data && data.result === "OK") {
                 this.ui.dismissLoading();
@@ -1333,7 +1333,7 @@ export class PaidmodeTontineComponent implements OnInit {
       this.translate.get(['TRANSACTION_CANCEL', 'TOPUP_MSG9']).subscribe(trans => {
         this.ui.presentAlert(`${trans.TRANSACTION_CANCEL}`, `${trans.TOPUP_MSG9} ${refence}`);
       });
-    }, 300000);
+    }, 120000);
   }
 
   // exit the payment directly

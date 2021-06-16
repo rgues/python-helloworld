@@ -550,7 +550,7 @@ export class TontineNewDemoPage implements OnInit {
         this.loading = false;
         if (reponse && reponse.message === 'success') {
           this.tontineCode = reponse.code_invitation;
-          this.location.get(['TONTINE_NEW_DEMO_MSG1']).subscribe(value => {
+          this.location.get(['TONTINE_NEW_DEMO_MSG1','TONTINE_NEW_MSG1']).subscribe(value => {
             this.invitationMessage = `${value.TONTINE_NEW_MSG1}  <strong>${this.tontineCode}
               </strong>, ${value.TONTINE_NEW_DEMO_MSG1}`;
           });

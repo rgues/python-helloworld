@@ -341,7 +341,7 @@ export class SessionPage implements OnInit {
       && this.hascheckPreviousSeance
       && this.hasCycle(currentTontine)
       && this.cautionAmount > 0
-      && (currentTontine.seance_courante && currentTontine.seance_courante.numero_seance < 2 || !currentTontine.seance_courante)
+     // && (currentTontine.seance_courante && currentTontine.seance_courante.numero_seance < 2 || !currentTontine.seance_courante)
     ) {
       ican = true;
     }

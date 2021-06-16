@@ -49,12 +49,19 @@ export class DashboardMenuComponent implements OnInit {
     this.router.navigate(['/dashboard/contact-us']);
   }
 
+
+  // Go to tontine demo
+  goToTontineDemo() {
+    this.closeDashboardMenu();
+    this.router.navigate(['dashboard','my-tontines','new-demo']);
+  }
+
   // Get the list of countries manage by Toupesu
   getCountries(refresher: boolean) {
       this.location.getAllCountries(refresher).
         then((countries: any) => {});
   }
-  
+
   // Get all the word countries
   getWordCountries(refresh) {
       this.location.getWordCountries(refresh).then((countries: any) => {
@@ -71,5 +78,5 @@ export class DashboardMenuComponent implements OnInit {
     this.navController.setDirection('root');
     this.router.navigate(['/auth']);
   }
-  
+
 }
