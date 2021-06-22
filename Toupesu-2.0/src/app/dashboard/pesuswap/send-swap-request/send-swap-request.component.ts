@@ -9,6 +9,7 @@ import { SwapErrorService } from 'src/app/dashboard/pesuswap/services/swap-error
 import { SwapGlobalDataService } from '../services/swap-global-data.service';
 import { SwapService } from '../services/swap.service';
 import { UiService } from 'src/app/shared/service/ui.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-send-swap-request',
@@ -30,6 +31,7 @@ export class SendSwapRequestComponent implements OnInit {
   constructor(
     private modatCtrl: ModalController,
     private translate: TranslateService,
+    private router: Router,
     private zone: NgZone,
     private constant: ConstantService,
     private swapData: SwapGlobalDataService,
@@ -77,7 +79,7 @@ export class SendSwapRequestComponent implements OnInit {
   get fees() {
     return this.swapRequestForm.get('fees');
   }
-  
+
   get type_swapId() {
     return this.swapRequestForm.get('type_swap_id');
   }
@@ -121,6 +123,12 @@ export class SendSwapRequestComponent implements OnInit {
   // Get the swap type
   getType(type: string) {
     return this.constant.getTypeSwap(type);
+  }
+
+  // Go to top up
+  goToTopUp() {
+    this.closeAddMember();
+    this.router.navigate(['dashboard','my-wallet']);
   }
 
   // Get the list of type of swap
@@ -208,7 +216,7 @@ export class SendSwapRequestComponent implements OnInit {
           this.closeAddMember('make-request');
         }
       }, error => {
-     
+
         if (error && error.error && error.error.message === "error") {
 
           if (error && error.error && error.error.solde_wallet_is_not_sufficient) {

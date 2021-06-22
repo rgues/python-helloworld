@@ -167,12 +167,12 @@ export class LocationService {
     getwordCountriesData() {
       return this.localStorage.getItem('word-countries');
     }
-  
+
     // Set all word countries
     setwordCountriesData(countries: any) {
       this.localStorage.setItem('word-countries', countries);
     }
-  
+
     // Set all word countries
     removewordCountriesData() {
       this.localStorage.removeItem('word-countries');
@@ -278,7 +278,7 @@ export class LocationService {
         observer.next(countries);
       }, error => {
         this.http.get(`assets/json/countries.json`).subscribe((countries: any) => { observer.next(countries); });
-      }); 
+      });
     });
   }
 
@@ -388,6 +388,7 @@ export class LocationService {
   getCurrentCountryInfo(refresher: boolean) {
     return new Promise((resolve) => {
       this.getPositionUser().subscribe((position: any) => {
+        console.log(position);
         this.getAllCountriesInfos(refresher).then((countries: any) => {
           if (countries && countries.length > 0) {
             let currentCountryData = null;

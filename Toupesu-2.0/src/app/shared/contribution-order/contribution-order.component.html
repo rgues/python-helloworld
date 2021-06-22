@@ -1,6 +1,11 @@
 <ion-header>
   <ion-toolbar>
     <ion-title class="ion-text-center">{{'DEBT_MAKE_PAYMENT' | translate }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button slot="icon-only" (click)="closeContribute('close')">
+        <ion-icon color="warning" name="close-circle-outline" ></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
   <ion-toolbar class="ion-text-center">
     <ion-segment (ionChange)="segmentChanged()" value="bank">
@@ -16,13 +21,13 @@
 
 <ion-content class="tontine-contribute">
   <p class="ion-text-center" *ngIf="loading">
-    <ion-spinner  name="circles"></ion-spinner> 
+    <ion-spinner  name="circles"></ion-spinner>
   </p>
   <ion-grid *ngIf="balanceOnlineAmount > 0 || balanceOfflineAmount > 0">
     <ion-row>
       <ion-col>
         <p class="ion-no-margin">
-          {{ 'PAY_BENEFICIARY_TEXT' | translate }} <b>{{ tontineName }}</b>.         
+          {{ 'PAY_BENEFICIARY_TEXT' | translate }} <b>{{ tontineName }}</b>.
         </p>
         <h4 class="ion-no-margin" *ngIf="isModeSelected === true">
           <small>
@@ -46,20 +51,20 @@
         </div>
       </ion-col>
     </ion-row>
-  </ion-grid> 
+  </ion-grid>
 
   <div *ngIf="balanceOnlineAmount <= 0 && balanceOfflineAmount <= 0  && !loading">
     <p class="ion-padding">{{ 'INTIATE_AMOUNT_COMPLETE_PAY_TEXT' | translate }}</p>
   </div>
 </ion-content>
 
-<ion-footer class="ion-padding ion-text-center">
+<!-- <ion-footer class="ion-padding ion-text-center">
     <ion-grid>
       <ion-row>
         <ion-col>
-            <ion-button expand="full" 
+            <ion-button expand="full"
                   fill="outline"
-                  color="warning" 
+                  color="warning"
                   class="ion-text-uppercase"
                   shape="round" (click)="closeContribute('close')">
               {{ 'CANCEL_TEXT' | translate }}
@@ -67,4 +72,4 @@
         </ion-col>
       </ion-row>
     </ion-grid>
-</ion-footer>
+</ion-footer> -->

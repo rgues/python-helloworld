@@ -1,10 +1,15 @@
 <ion-header>
   <ion-toolbar>
     <ion-title class="ion-text-center">{{'DEBT_MAKE_PAYMENT' | translate }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button slot="icon-only" (click)="closeContribute('cancel')">
+        <ion-icon color="warning" name="close-circle-outline" ></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
   <ion-toolbar class="ion-text-left">
     <ion-segment  (ionChange)="segmentChanged($event)" value="0">
-  
+
       <ion-segment-button value="0">
         <ion-label class="ion-text-capitalize">{{ 'ONLINE_TEXT' | translate }}</ion-label>
       </ion-segment-button>
@@ -16,7 +21,7 @@
         <ion-label class="ion-text-capitalize">{{ 'BANK_TEXT' | translate }}</ion-label>
       </ion-segment-button>
 
-     
+
     </ion-segment>
   </ion-toolbar>
 </ion-header>
@@ -26,7 +31,7 @@
     <ion-row>
       <ion-col>
         <p class="ion-no-margin">
-          {{ 'MAKING_PAYMENT_TEXT' | translate }} <b>{{ tontineName }}</b>.         
+          {{ 'MAKING_PAYMENT_TEXT' | translate }} <b>{{ tontineName }}</b>.
         </p>
         <h4 class="ion-no-margin">
           <small>
@@ -48,16 +53,16 @@
         </div>
       </ion-col>
     </ion-row>
-  </ion-grid> 
+  </ion-grid>
 </ion-content>
 
-<ion-footer class="ion-padding ion-text-center">
+<!-- <ion-footer class="ion-padding ion-text-center">
     <ion-grid>
       <ion-row>
         <ion-col>
-            <ion-button expand="full" 
+            <ion-button expand="full"
                   fill="outline"
-                  color="warning" 
+                  color="warning"
                   class="ion-text-uppercase"
                   shape="round" (click)="closeContribute('cancel')">
               {{ 'CANCEL_TEXT' | translate }}
@@ -66,3 +71,4 @@
       </ion-row>
     </ion-grid>
 </ion-footer>
+ -->

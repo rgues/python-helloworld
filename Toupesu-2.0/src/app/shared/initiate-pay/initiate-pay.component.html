@@ -1,7 +1,11 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title class="ion-text-center">{{type ==='new' ? ('NEW_PAYMENT' | translate) : ('INITIATE_PAIEMENT' | translate)
-      }}</ion-title>
+    <ion-title class="ion-text-center">{{type ==='new' ? ('NEW_PAYMENT' | translate) : ('INITIATE_PAIEMENT' | translate)}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button slot="icon-only" (click)="closeContribute()">
+        <ion-icon color="warning" name="close-circle-outline" ></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -123,7 +127,7 @@
 
     <ion-row *ngIf="!loading && listCaisse && listCaisse.length > 0">
       <ion-col>
-        <ion-button expand="full" [disabled]="hasError() || formPayment.invalid  
+        <ion-button expand="full" [disabled]="hasError() || formPayment.invalid
             || (currentPaymentData.somme !== totalAmount) || totalAmount === 0" color="warning"
           class="ion-text-uppercase" shape="round" (click)="iniatePayment()">
           {{ 'SUBMIT_TEXT' | translate }}
@@ -132,7 +136,7 @@
     </ion-row>
   </ion-grid>
 
-  
+
   <ion-row *ngIf="!loading && listCaisse && listCaisse.length === 0">
     <ion-col>
       <p class="ion-text-center">
@@ -143,7 +147,7 @@
 
 </ion-content>
 
-<ion-footer class="ion-padding ion-text-center">
+<!-- <ion-footer class="ion-padding ion-text-center">
   <ion-grid>
     <ion-row>
       <ion-col>
@@ -154,4 +158,4 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-</ion-footer>
+</ion-footer> -->

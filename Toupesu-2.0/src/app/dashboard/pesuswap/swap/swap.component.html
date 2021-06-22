@@ -10,25 +10,25 @@
   </p>
   <p>
     <b>
-    <ion-text color="warning">{{requestData.amountFrom}}</ion-text> 
-    <ion-icon name="arrow-forward"></ion-icon> 
+    <ion-text color="warning">{{requestData.amountFrom}}</ion-text>
+    <ion-icon name="arrow-forward"></ion-icon>
     <ion-text color="primary">{{requestData.amountTo}}</ion-text>
     </b>
   </p>
   <p>
    {{ 'EXCHANGE_RATE' | translate }}: 1 {{requestData.request[0].from}} = {{swaprate}} {{requestData.request[0].to}}<br/>
-   <span *ngIf="requestData.exchange_rate">{{ 'USER_RATE' | translate }}: 1 {{requestData.request[0].from}} = {{requestData.exchange_rate}} {{requestData.request[0].to}}<br/></span> 
+   <span *ngIf="requestData.exchange_rate">{{ 'USER_RATE' | translate }}: 1 {{requestData.request[0].from}} = {{requestData.exchange_rate}} {{requestData.request[0].to}}<br/></span>
     {{ 'MATCHING_FEES_TEXT' | translate }}: {{requestData.fees}} {{requestData.request[0].to}} <br/>
     {{ 'SWAP_TOTAL_AMOUNT' | translate }} : {{ requestData.amountSwap}} {{requestData.request[0].to}}
   </p>
   <p>
-    {{ 'SWAP_TYPE_TEXT' | translate }}: {{ requestData.type === 1 ?  ('INSTANT_TEXT' | translate) : ('DELAYED_TEXT' | translate) }} 
-  </p> 
+    {{ 'SWAP_TYPE_TEXT' | translate }}: {{ requestData.type === 1 ?  ('INSTANT_TEXT' | translate) : ('DELAYED_TEXT' | translate) }}
+  </p>
 
   <p *ngIf="requestData.type === 1 && canMakeRequest" class="ion-padding-vertical"><strong>
     <ion-text color="danger">
     {{ 'INSTANT_SWAP_MESSAGE' | translate}}
-    </ion-text>    
+    </ion-text>
   </strong></p>
 
   <p *ngIf="!canMakeRequest" class="ion-no-margin">
@@ -37,11 +37,26 @@
   </ion-text>
   </p>
 
+  <ion-grid *ngIf="!canMakeRequest">
+    <ion-row>
+      <ion-col size="12">
+        <ion-button expand="full" color="warning" class="ion-text-uppercase" shape="round" (click)="goToTopUp()">
+          {{ 'TONTINE_LIST_TEXT10' | translate }}
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
   <p *ngIf="requestData.type === 2 && canMakeRequest" class="ion-padding-vertical"><strong>
     <ion-text color="danger">
     {{ 'DELAYED_SWAP_MESSAGE' | translate}}
-    </ion-text>    
+    </ion-text>
   </strong></p>
+
+
+
+
 
 </ion-content>
 
@@ -49,8 +64,8 @@
   <ion-grid>
     <ion-row>
       <ion-col size="6">
-          <ion-button expand="full" 
-                color="warning" 
+          <ion-button expand="full"
+                color="warning"
                 [disabled]="!canMakeRequest"
                 class="ion-text-uppercase"
                 shape="round" (click)="matchedSwapRequest()">
@@ -58,9 +73,9 @@
           </ion-button>
       </ion-col>
       <ion-col size="6">
-          <ion-button expand="full" 
+          <ion-button expand="full"
                 fill="outline"
-                color="warning" 
+                color="warning"
                 class="ion-text-uppercase"
                 shape="round" (click)="closeSwap()">
             {{ 'CANCEL_TEXT' | translate }}

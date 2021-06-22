@@ -1,6 +1,11 @@
 <ion-header>
   <ion-toolbar>
     <ion-title class="ion-text-center">{{ 'CONTRIBUTE_MSG' | translate }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button slot="icon-only" (click)="closeContribute('close')">
+        <ion-icon color="warning" name="close-circle-outline" ></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -9,13 +14,13 @@
   <app-paidmode-seance-caution [amountPay]="contribAmount"></app-paidmode-seance-caution>
 </ion-content>
 
-<ion-footer class="ion-padding ion-text-center">
+<!-- <ion-footer class="ion-padding ion-text-center">
     <ion-grid>
       <ion-row>
         <ion-col>
-          <ion-button expand="full" 
+          <ion-button expand="full"
                 fill="outline"
-                color="warning" 
+                color="warning"
                 class="ion-text-uppercase"
                 shape="round" (click)="closeContribute('close')">
             {{ 'CANCEL_TEXT' | translate }}
@@ -23,4 +28,4 @@
       </ion-col>
       </ion-row>
     </ion-grid>
-</ion-footer>
+</ion-footer> -->

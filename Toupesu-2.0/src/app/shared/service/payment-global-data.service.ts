@@ -398,6 +398,7 @@ export class PaymentGlobalDataService {
             country_prefixe: country.country_prefixe,
             code_country: country.code_country,
             default_country: country.default_country,
+            active: country.active,
             country_label: value,
             country_key: countryLabel
           });

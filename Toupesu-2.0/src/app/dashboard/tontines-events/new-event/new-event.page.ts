@@ -172,7 +172,7 @@ export class NewEventPage implements OnInit {
     });
   }
 
-  // check the date 
+  // check the date
   checkDate(date: any) {
     const dateParm = new Date();
     const currentDate = new Date(dateParm.getFullYear(), dateParm.getMonth(), dateParm.getDate(), 0, 0, 0, 0);
@@ -214,7 +214,7 @@ export class NewEventPage implements OnInit {
     });
   }
 
-  // show tontine message alert 
+  // show tontine message alert
   async showMessage(translations: string[], country: any) {
     let currentLang = this.location.getCurrentUserLanguage();
     currentLang = currentLang && currentLang.code_langue ? currentLang.code_langue.toLocaleLowerCase() : 'en';
@@ -283,11 +283,10 @@ export class NewEventPage implements OnInit {
     this.states.forEach(state => {
       if (state.country_name === currentCountry) {
         this.createEventForm.get('active').setValue(state.active);
-        if (state.active === 1) {
-          this.createEventForm.get('currency').setValue(state.device_name);
-          this.createEventForm.get('country_key').setValue(state.country_key);
-          this.createEventForm.get('country_id').setValue(state.country_id);
-        } else {
+        this.createEventForm.get('currency').setValue(state.device_name);
+        this.createEventForm.get('country_key').setValue(state.country_key);
+        this.createEventForm.get('country_id').setValue(state.country_id);
+        if (state.active === 0) {
           const translation = [];
           this.translate.get(['NEWS_TITLE', 'NEWSLETTER_TEXT1', 'NEWSLETTER_TEXT2', 'NEWS_EMAIL', 'CANCEL_TEXT', 'YES_TEXT']).subscribe(trans => {
             translation.push(trans.NEWS_TITLE);
@@ -366,7 +365,7 @@ export class NewEventPage implements OnInit {
 
         }
       }, error => {
-      
+
         if (error && error.error && error.error.message === 'error') {
           if (error.error.user_not_found) {
             this.error.renewSession().then((data: any) => {

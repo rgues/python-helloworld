@@ -89,7 +89,7 @@ export class TontineNewPage implements OnInit {
     this.isDateValid = true;
     this.minAmountMessage = '';
     this.user = this.userService.getUserData();
- 
+
     this.tontinename = '';
     this.minDate = this.dateService.formatDateTiret(new Date ());
     this.paymentTypes = [];
@@ -148,7 +148,7 @@ export class TontineNewPage implements OnInit {
     return this.createTontineForm.get('caution_amount');
   }
 
-  // Init periodicity 
+  // Init periodicity
   getPeriodicity() {
     this.location.get(['TONTINE_PERIODICITY_DAY', 'TONTINE_PERIODICITY_WEEK', 'TONTINE_PERIODICITY_MONTH'])
     .subscribe(data => {
@@ -258,7 +258,7 @@ export class TontineNewPage implements OnInit {
       tontine_date: [''],
       startDate: [this.dateService.formatDateTiret(this.dateService.addDays(this.startDateSelect,1)), Validators.compose([Validators.required])],
       with_caution: [false],
-      type_caution: ['member'], //value = part ou member  
+      type_caution: ['member'], //value = part ou member
       caution_amount: [0, Validators.compose([Validators.min(0)])]
     });
     this.getCurrentDateInfo(this.createTontineForm.value.startDate, this.createTontineForm.value.frequency);
@@ -337,7 +337,7 @@ export class TontineNewPage implements OnInit {
       this.ShowTontinePeriodicityMonthly = true;
       this.location.get(['MSG_TONTINE_WEEK1', 'MSG_TONTINE_MONTH1', 'MSG_TONTINE_MONTH3',
         'MSG_TONTINE_MONTH3A', 'MSG_TONTINE_MONTH3B', 'MSG_TONTINE_MONTH3C', 'MSG_TONTINE_MONTH3D']).subscribe(data => {
-        
+
           var OcurrencyPosition
           switch (this.MonthDayOccurency) {
             case 1:
@@ -359,7 +359,7 @@ export class TontineNewPage implements OnInit {
             this.MsgTontinePeriodicity += data.MSG_TONTINE_MONTH1 + ".";
             this.MonthDayOccurencyLabel = OcurrencyPosition + trans + data.MSG_TONTINE_MONTH3;
           });
-      
+
         });
 
       // Check if Radio button for monthly option is checked - begin
@@ -411,10 +411,11 @@ export class TontineNewPage implements OnInit {
   setToStorage(data: any) {
     this.localStorage.setItem('app-tontines', JSON.stringify(data));
   }
-  
-  // Set the default active country 
+
+  // Set the default active country
   getCurrentCountry(refresher: boolean) {
     this.locate.getCurrentCountryInfo(refresher).then((country: any) => {
+
       if (country) {
         this.defaultState = country.settings;
         if (this.defaultState && this.defaultState.active === 1) {
@@ -477,7 +478,7 @@ export class TontineNewPage implements OnInit {
     });
   }
 
-    // show tontine message alert 
+    // show tontine message alert
     async  showMessage(translations: string[], country: any) {
       let currentLang = this.locate.getCurrentUserLanguage();
       currentLang = currentLang && currentLang.code_langue ? currentLang.code_langue.toLocaleLowerCase() : 'en';
@@ -531,12 +532,12 @@ export class TontineNewPage implements OnInit {
                   this.ui.presentToast(trans);
                 });
               }
-          
+
             }
           }
         ]
       });
-  
+
       await alert.present();
     }
 
@@ -546,11 +547,10 @@ export class TontineNewPage implements OnInit {
       this.states.forEach(state => {
         if (state.country_name === currentCountry) {
           this.createTontineForm.get('active').setValue(state.active);
-          if (state.active === 1 ) {
-            this.createTontineForm.get('currency').setValue(state.device_name);
-            this.createTontineForm.get('country_key').setValue(state.country_key);
-            this.minAmountMessage = `${this.minAmount} ${state.device_name}`;
-          } else {
+          this.createTontineForm.get('currency').setValue(state.device_name);
+          this.createTontineForm.get('country_key').setValue(state.country_key);
+          this.minAmountMessage = `${this.minAmount} ${state.device_name}`;
+          if (state.active === 0 ) {
             const translation = [];
             this.location.get(['NEWS_TITLE', 'NEWSLETTER_TEXT1','NEWSLETTER_TEXT2', 'NEWS_EMAIL','CANCEL_TEXT', 'YES_TEXT']).subscribe(trans => {
               translation.push(trans.NEWS_TITLE);
@@ -561,7 +561,7 @@ export class TontineNewPage implements OnInit {
               this.showMessage(translation, state);
             });
           }
-        } 
+        }
       });
     }
   }
@@ -592,7 +592,7 @@ export class TontineNewPage implements OnInit {
           this.typesCaution = cautions;
       });
     }
-  
+
     // validate caution
     isCautionValid(formData: any) {
       return this.tontineData.isCautionValid(formData);
@@ -601,20 +601,20 @@ export class TontineNewPage implements OnInit {
     // can create a tontine
     canCreateTontine() {
       let ican = false;
-      if (this.loading 
-        || !this.isDateValid 
-        || this.createTontineForm.invalid 
-        || this.createTontineForm.value.active === 0 
-        || (this.createTontineForm.value.frequency==='Month' 
-        && (this.createTontineForm.value.monthFrequencyOption !== 0 
+      if (this.loading
+        || !this.isDateValid
+        || this.createTontineForm.invalid
+        || this.createTontineForm.value.active === 0
+        || (this.createTontineForm.value.frequency==='Month'
+        && (this.createTontineForm.value.monthFrequencyOption !== 0
         && this.createTontineForm.value.monthFrequencyOption !== 1))
         || !this.isCautionValid(this.createTontineForm.value)
-      ) { 
+      ) {
         ican = true;
       }
       return ican;
     }
-  
+
   // Create the tontine
   createTontine() {
     // when the tontine is created, we get the code generee and display it
@@ -654,7 +654,7 @@ export class TontineNewPage implements OnInit {
         } else {
           this.errorService.manageError(error);
         }
-      }); 
+      });
   }
 
 }

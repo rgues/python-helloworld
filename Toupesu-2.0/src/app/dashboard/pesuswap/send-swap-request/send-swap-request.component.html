@@ -67,9 +67,22 @@
     {{ 'CANT_MAKE_INSTANT_SWAP_DESCRIPTION' | translate : {balance : (amountSwap + ' ' + swapRequestForm.value.currency_from) } }}
   </p>
 
+  <ion-grid *ngIf="swapType === 1 && !canMakeRequest">
+    <ion-row>
+      <ion-col size="12">
+        <ion-button expand="full" color="warning" class="ion-text-uppercase" shape="round" (click)="goToTopUp()">
+          {{ 'TONTINE_LIST_TEXT10' | translate }}
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
   <p class="ion-padding-vertical" *ngIf="swapType === 2" [innerHTML]="'DELAYED_SWAP_DESCRIPTION' | translate">
   </p>
-  <p class="ion-padding-vertical"><strong>{{ 'EXPIRED_REQUEST_TEXT' | translate }}</strong></p>
+
+  <p *ngIf="canMakeRequest" class="ion-padding-vertical"><strong>{{ 'EXPIRED_REQUEST_TEXT' | translate }}</strong></p>
+
+
 
 </ion-content>
 

@@ -7,6 +7,7 @@ import { SwapErrorService } from 'src/app/dashboard/pesuswap/services/swap-error
 import { SwapGlobalDataService } from '../services/swap-global-data.service';
 import { SwapService } from '../services/swap.service';
 import { UiService } from 'src/app/shared/service/ui.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-swap',
@@ -23,6 +24,7 @@ export class SwapComponent implements OnInit {
   constructor(
     private modatCtrl: ModalController,
     private translate: TranslateService,
+    private router: Router,
     private currency: CurrencyService,
     private errorService: ErrorService,
     private ui: UiService,
@@ -43,6 +45,12 @@ export class SwapComponent implements OnInit {
 
   closeSwap(ans?: any) {
     this.modatCtrl.dismiss(ans, 'cancel');
+  }
+
+  // Go to top up
+  goToTopUp() {
+    this.closeSwap();
+    this.router.navigate(['/dashboard/my-wallet']);
   }
 
   // get the swap rate
@@ -82,7 +90,7 @@ export class SwapComponent implements OnInit {
           this.closeSwap('match-request');
         }
       }, error => {
-       
+
         if (error && error.error && error.error.message === "error") {
           if (error && error.error && error.error.user_not_found) {
             this.errorService.renewSession().then((data: any) => {

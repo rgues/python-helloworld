@@ -1,21 +1,26 @@
 <ion-header>
     <ion-toolbar>
       <ion-title class="ion-text-center">{{ 'M_CONTRIBUTION_PAYMENT' | translate }}</ion-title>
+      <ion-buttons slot="end">
+        <ion-button slot="icon-only" (click)="closePayContribution()">
+          <ion-icon color="warning" name="close-circle-outline" ></ion-icon>
+        </ion-button>
+      </ion-buttons>
     </ion-toolbar>
   </ion-header>
-  
+
   <ion-content class="tontine-penality">
     <h4 class="ion-padding-horizontal"><small> {{ 'TONTINE_EVENT_TEXT9' | translate }}: <b>{{ eventName }}</b></small></h4>
     <app-paidmode-event [amountPay]="1"></app-paidmode-event>
   </ion-content>
-  
-  <ion-footer class="ion-padding ion-text-center">
+
+<!--   <ion-footer class="ion-padding ion-text-center">
       <ion-grid>
         <ion-row>
           <ion-col>
-              <ion-button expand="full" 
+              <ion-button expand="full"
                     fill="outline"
-                    color="warning" 
+                    color="warning"
                     class="ion-text-uppercase"
                     shape="round" (click)="closePayContribution()">
                 {{ 'CANCEL_TEXT' | translate }}
@@ -23,4 +28,4 @@
           </ion-col>
         </ion-row>
       </ion-grid>
-  </ion-footer>
+  </ion-footer> -->

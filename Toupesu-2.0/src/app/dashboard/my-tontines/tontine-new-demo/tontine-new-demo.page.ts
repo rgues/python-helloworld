@@ -480,11 +480,10 @@ export class TontineNewDemoPage implements OnInit {
       this.states.forEach(state => {
         if (state.country_name === currentCountry) {
           this.createTontineForm.get('active').setValue(state.active);
-          if (state.active === 1 ) {
-            this.createTontineForm.get('currency').setValue(state.device_name);
-            this.createTontineForm.get('country_key').setValue(state.country_key);
-            this.minAmountMessage = `${this.minAmount} ${state.device_name}`;
-          } else {
+          this.createTontineForm.get('currency').setValue(state.device_name);
+          this.createTontineForm.get('country_key').setValue(state.country_key);
+          this.minAmountMessage = `${this.minAmount} ${state.device_name}`;
+          if (state.active === 0 ) {
             const translation = [];
             this.location.get(['NEWS_TITLE', 'NEWSLETTER_TEXT1','NEWSLETTER_TEXT2', 'NEWS_EMAIL','CANCEL_TEXT', 'YES_TEXT']).subscribe(trans => {
               translation.push(trans.NEWS_TITLE);
