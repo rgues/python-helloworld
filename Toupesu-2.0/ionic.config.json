@@ -1,7 +1,0 @@
-{
-  "name": "Toupesu-2.0",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular"
-}
